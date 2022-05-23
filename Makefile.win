@@ -1,0 +1,34 @@
+# Project: core_of_creation
+# Makefile created by Embarcadero Dev-C++ 6.3
+
+CPP      = g++.exe -D__DEBUG__
+CC       = gcc.exe -D__DEBUG__
+WINDRES  = windres.exe
+OBJ      = core.o painter.o librarian.o
+LINKOBJ  = core.o painter.o librarian.o
+LIBS     = -L"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib" -L"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/lib" -L"C:/sdl2_lib/SDL2-2.0.22/x86_64-w64-mingw32/lib" -L"C:/sdl2_lib/SDL2-2.0.22/i686-w64-mingw32/lib" -L"C:/sdl2_lib/SDL2_image-2.0.5/i686-w64-mingw32/lib" -L"C:/sdl2_lib/SDL2_image-2.0.5/x86_64-w64-mingw32/lib" -L"C:/sdl2_lib/SDL2_mixer-2.0.4/i686-w64-mingw32/lib" -L"C:/sdl2_lib/SDL2_mixer-2.0.4/x86_64-w64-mingw32/lib" -static-libgcc -lmingw32 -lSDL2main -lSDL2 -g3
+INCS     = -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include"
+CXXINCS  = -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include/c++" -I"C:/sdl2_lib/SDL2-2.0.22/x86_64-w64-mingw32/include/SDL2" -I"C:/sdl2_lib/SDL2-2.0.22/i686-w64-mingw32/include/SDL2" -I"C:/sdl2_lib/SDL2_image-2.0.5/i686-w64-mingw32/include/SDL2" -I"C:/sdl2_lib/SDL2_image-2.0.5/x86_64-w64-mingw32/include/SDL2" -I"C:/sdl2_lib/SDL2_mixer-2.0.4/i686-w64-mingw32/include/SDL2" -I"C:/sdl2_lib/SDL2_mixer-2.0.4/x86_64-w64-mingw32/include/SDL2"
+BIN      = core_of_creation.exe
+CXXFLAGS = $(CXXINCS) -g3
+CFLAGS   = $(INCS) -g3
+DEL      = C:\Program Files (x86)\Embarcadero\Dev-Cpp\DevCpp.exe INTERNAL_DEL
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${DEL} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+core.o: core.cpp
+	$(CPP) -c core.cpp -o core.o $(CXXFLAGS)
+
+painter.o: painter.cpp
+	$(CPP) -c painter.cpp -o painter.o $(CXXFLAGS)
+
+librarian.o: librarian.cpp
+	$(CPP) -c librarian.cpp -o librarian.o $(CXXFLAGS)
