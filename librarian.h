@@ -30,6 +30,19 @@ struct chunk
 	struct block ***blocks;
 };
 
+struct world
+{
+	char * world_name;
+	
+	int chunk_size_x;
+	int chunk_size_y;
+	int chunk_size_z;
+	
+	bool allocated = false;
+	
+	struct chunk ***chunks;
+};
+
 class librarian
 {
 	private:

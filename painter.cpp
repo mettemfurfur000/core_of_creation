@@ -40,7 +40,7 @@ void surface_array::arr_free()
 	this->arr_size = 0;
 }
 
-void surface_array::load_bmp(int index, char * file)
+void surface_array::load_bmp(int index, char *file)
 {
 	this->media_lib[index] = SDL_LoadBMP_RW(SDL_RWFromFile(file, "rb"), 1);
 	if( this->media_lib[index] == NULL )
@@ -49,7 +49,7 @@ void surface_array::load_bmp(int index, char * file)
 	}
 }
 
-void texture_array::arr_init(int size)
+void animation::arr_init(int size)
 {
 	this->arr_size = size;
 	this->texture_lib = new SDL_Texture * [arr_size];
@@ -60,7 +60,7 @@ void texture_array::arr_init(int size)
 	}
 }
 
-void texture_array::arr_resize(int new_size)
+void animation::arr_resize(int new_size)
 {
 	SDL_Texture ** Btexture_lib = new SDL_Texture * [new_size];
 	for(int i=0;i<this->arr_size;i++)
@@ -79,7 +79,7 @@ void texture_array::arr_resize(int new_size)
 	delete [] Btexture_lib;
 }
 
-void texture_array::arr_free()
+void animation::arr_free()
 {
 	for(int i=0;i<this->arr_size;i++)
 	{
@@ -89,7 +89,7 @@ void texture_array::arr_free()
 	this->arr_size = 0;
 }
 
-void texture_array::load_from_surface(int index, SDL_Renderer * renderer, SDL_Surface * surface)
+void animation::load_from_surface(int index, SDL_Renderer *renderer, SDL_Surface *surface)
 {
 	texture_lib[index] = SDL_CreateTextureFromSurface(renderer,surface);
 	if(this->texture_lib[index] == NULL)
@@ -98,7 +98,7 @@ void texture_array::load_from_surface(int index, SDL_Renderer * renderer, SDL_Su
 	}
 }
 
-void texture_array::load_bmp(int index, SDL_Renderer * renderer,char * file)
+void animation::load_bmp(int index, SDL_Renderer *renderer,char *file)
 {
 	SDL_Surface * temp = SDL_LoadBMP_RW(SDL_RWFromFile(file, "rb"), 1);
 	if( temp == NULL )
@@ -170,7 +170,7 @@ void painter::quit()
 	printf("[PAINTER][L] - Succesfully Quit!\n");
 }
 	
-void painter::lock(SDL_Surface * screen)
+void painter::lock(SDL_Surface *screen)
 {
 	if(SDL_MUSTLOCK(screen))
 	{
@@ -182,7 +182,7 @@ void painter::lock(SDL_Surface * screen)
    	}
 }
 	
-void painter::unlock(SDL_Surface * screen)
+void painter::unlock(SDL_Surface *screen)
 {
 	if(SDL_MUSTLOCK(screen))
 	{
@@ -200,12 +200,44 @@ void painter::update()
 	SDL_RenderPresent(this->base_renderer);
 }
 
-void painter::draw_texture(draw_object * obj,int frameshift)
+//void painter::draw_texture(draw_object * obj,int frameshift)
+//{
+//	SDL_RenderCopy(this->base_renderer, obj->texture.texture_lib[obj->frame/obj->step], NULL, &obj->rect);
+//	obj->frame+=frameshift;
+//	if(obj->frame >= obj->texture.arr_size*obj->step)
+//	{
+//		obj->frame = 0;
+//	}
+//}
+
+void texture_bank::arr_init(int size)
 {
-	SDL_RenderCopy(this->base_renderer, obj->texture.texture_lib[obj->frame/obj->step], NULL, &obj->rect);
-	obj->frame+=frameshift;
-	if(obj->frame >= obj->texture.arr_size*obj->step)
+	this->bank = new animation[size];
+	this->size_of_bank = size;
+}
+
+void texture_bank::arr_free()
+{
+	for(int i=0;i<this->size_of_bank;i++)
 	{
-		obj->frame = 0;
+		this->bank[i].arr_free();
 	}
+}
+
+void texture_bank::load_all()
+{
+	system( "dir /b /a-d * > file_names.txt" );
+	FILE * f = fopen("file_names.txt","r");
+	if(f==NULL)
+	{
+		printf("[TEX_BANK][E] - Have failed to open 'file_names.txt'\n");
+		return;
+	}
+	printf("[TEX_BANK][L] - Start loading textures\n");
+	
+	char filename[128];
+	fgets(filename,128,f);
+	sprintf(filename,"textures/%s")
+	
+	fclose(f);
 }
