@@ -1,125 +1,18 @@
 #include "painter.h"
 
-void surface_array::arr_init(int size)
-{
-	this->arr_size = size;
-	this->media_lib = new SDL_Surface * [arr_size];
-	
-	for(int i=0;i<this->arr_size;i++)
-	{
-		this->media_lib[i] = NULL;
-	}
-}
-
-void surface_array::arr_resize(int new_size)
-{
-	SDL_Surface ** Bmedia_lib = new SDL_Surface * [new_size];
-	for(int i=0;i<this->arr_size;i++)
-	{
-		Bmedia_lib[i] = this->media_lib[i];
-	}
-	
-	this->arr_free();
-	this->arr_init(new_size);
-	
-	for(int i=0;i<this->arr_size;i++)
-	{
-		this->media_lib[i] = Bmedia_lib[i];
-	}
-	
-	delete [] Bmedia_lib;
-}
-
-void surface_array::arr_free()
-{
-	for(int i=0;i<this->arr_size;i++)
-	{
-		SDL_FreeSurface(this->media_lib[i]);
-	}
-	delete [] this->media_lib;
-	this->arr_size = 0;
-}
-
-void surface_array::load_bmp(int index, char *file)
-{
-	this->media_lib[index] = SDL_LoadBMP_RW(SDL_RWFromFile(file, "rb"), 1);
-	if( this->media_lib[index] == NULL )
-	{
-		printf( "[PAINTER][E] SDL_LoadBMP_RW Error: %s (file:'%s')\n", SDL_GetError() , file );
-	}
-}
-
-void animation::arr_init(int size)
-{
-	this->arr_size = size;
-	this->texture_lib = new SDL_Texture * [arr_size];
-	
-	for(int i=0;i<this->arr_size;i++)
-	{
-		this->texture_lib[i] = NULL;
-	}
-}
-
-void animation::arr_resize(int new_size)
-{
-	SDL_Texture ** Btexture_lib = new SDL_Texture * [new_size];
-	for(int i=0;i<this->arr_size;i++)
-	{
-		Btexture_lib[i] = this->texture_lib[i];
-	}
-	
-	this->arr_free();
-	this->arr_init(new_size);
-	
-	for(int i=0;i<this->arr_size;i++)
-	{
-		this->texture_lib[i] = Btexture_lib[i];
-	}
-	
-	delete [] Btexture_lib;
-}
-
-void animation::arr_free()
-{
-	for(int i=0;i<this->arr_size;i++)
-	{
-		SDL_DestroyTexture(this->texture_lib[i]);
-	}
-	delete [] this->texture_lib;
-	this->arr_size = 0;
-}
-
-void animation::load_from_surface(int index, SDL_Renderer *renderer, SDL_Surface *surface)
-{
-	texture_lib[index] = SDL_CreateTextureFromSurface(renderer,surface);
-	if(this->texture_lib[index] == NULL)
-	{
-		printf( "[PAINTER][E] - SDL_CreateTextureFromSurface Error: %s\n", SDL_GetError() );
-	}
-}
-
-void animation::load_bmp(int index, SDL_Renderer *renderer,char *file)
-{
-	SDL_Surface * temp = SDL_LoadBMP_RW(SDL_RWFromFile(file, "rb"), 1);
-	if( temp == NULL )
-	{
-		printf( "[PAINTER][E] SDL_LoadBMP_RW Error: %s (file:'%s')\n", SDL_GetError() , file );
-	}
-	
-	this->texture_lib[index] = SDL_CreateTextureFromSurface(renderer,temp);
-	if(this->texture_lib[index] == NULL)
-	{
-		printf( "[PAINTER][E] - SDL_CreateTextureFromSurface Error: %s\n", SDL_GetError() );
-	}
-}
-
 painter::painter()
 {
 	printf("[PAINTER][L] - Initialization...\n");
 	if(!this->basic_init())
 	{
-		printf("[PAINTER][E] - Initialization Fail\n");
+		printf("[PAINTER][E] - SDL2 Initialization Fail\n");
+		exit(1004);
 	}
+	this->block_tex_lib.init(1024);
+	this->block_tex_lib.base_renderer = this->base_renderer;
+	
+	this->block_tex_lib.automatic_load("blocks\\");
+	
 	printf("[PAINTER][L] - Initialization Done!\n");
 }
 
@@ -200,44 +93,12 @@ void painter::update()
 	SDL_RenderPresent(this->base_renderer);
 }
 
-//void painter::draw_texture(draw_object * obj,int frameshift)
-//{
-//	SDL_RenderCopy(this->base_renderer, obj->texture.texture_lib[obj->frame/obj->step], NULL, &obj->rect);
-//	obj->frame+=frameshift;
-//	if(obj->frame >= obj->texture.arr_size*obj->step)
-//	{
-//		obj->frame = 0;
-//	}
-//}
-
-void texture_bank::arr_init(int size)
+void painter::simple_draw(int x,int y,int w,int h,SDL_Texture * tex)
 {
-	this->bank = new animation[size];
-	this->size_of_bank = size;
-}
-
-void texture_bank::arr_free()
-{
-	for(int i=0;i<this->size_of_bank;i++)
-	{
-		this->bank[i].arr_free();
-	}
-}
-
-void texture_bank::load_all()
-{
-	system( "dir /b /a-d * > file_names.txt" );
-	FILE * f = fopen("file_names.txt","r");
-	if(f==NULL)
-	{
-		printf("[TEX_BANK][E] - Have failed to open 'file_names.txt'\n");
-		return;
-	}
-	printf("[TEX_BANK][L] - Start loading textures\n");
-	
-	char filename[128];
-	fgets(filename,128,f);
-	sprintf(filename,"textures/%s")
-	
-	fclose(f);
+	SDL_Rect r;
+	r.x = x;
+	r.y = y;
+	r.h = h;
+	r.w = w;
+	SDL_RenderCopy(this->base_renderer,tex,NULL,&r);
 }

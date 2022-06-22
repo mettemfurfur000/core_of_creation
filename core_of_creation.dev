@@ -11,15 +11,15 @@ ResourceIncludes=
 MakeIncludes=
 Compiler=
 CppCompiler=
-Linker=
+Linker=_@@_
 IsCpp=1
 Icon=
-ExeOutput=
-ObjectOutput=
+ExeOutput=build
+ObjectOutput=o_files
 LogOutput=
 LogOutputEnabled=0
 OverrideOutput=0
-OverrideOutputName=
+OverrideOutputName=core_of_creation.exe
 HostApplication=
 UseCustomMakefile=0
 CustomMakefile=
@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;1;0;0;0;4;0;0;0
-UnitCount=5
+UnitCount=9
 
 [VersionInfo]
 Major=1
@@ -39,14 +39,14 @@ Build=0
 LanguageID=1033
 CharsetID=1252
 CompanyName=
-FileVersion=
+FileVersion=1.0.0.0
 FileDescription=Developed using the Dev-C++ IDE
 InternalName=
 LegalCopyright=
 LegalTrademarks=
 OriginalFilename=
 ProductName=
-ProductVersion=
+ProductVersion=1.0.0.0
 AutoIncBuildNr=0
 SyncProduct=1
 
@@ -61,9 +61,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit6]
-FileName=keeper.cpp
+FileName=tex_lib.h
 CompileCpp=1
-Folder=cpp_s
+Folder=headers
 Compile=1
 Link=1
 Priority=1000
@@ -71,7 +71,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit7]
-FileName=librarian.cpp
+FileName=tex_lib.cpp
 CompileCpp=1
 Folder=cpp_s
 Compile=1
@@ -114,6 +114,26 @@ BuildCmd=
 FileName=librarian.cpp
 CompileCpp=1
 Folder=cpp_s
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit8]
+FileName=creator.cpp
+CompileCpp=1
+Folder=cpp_s
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit9]
+FileName=creator.h
+CompileCpp=1
+Folder=headers
 Compile=1
 Link=1
 Priority=1000

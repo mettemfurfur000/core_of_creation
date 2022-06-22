@@ -7,7 +7,10 @@ librarian::librarian()
 
 void librarian::block_create(struct block &dest,int id,int durability,int storage_size,char *data)
 {
-	dest = {id,durability,storage_size};
+	dest.id = id;
+	dest.durability = durability;
+	dest.storage_size = storage_size;
+	
 	int string_size;
 	
 	//data init

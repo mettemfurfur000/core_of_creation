@@ -53,7 +53,7 @@ class librarian
 		librarian();
 		void block_create(block &dest,int id,int durability,int storage_size,char *data);
 		//for single blocks
-		void save(char * filename,block source); 
+		void save(char * filename,block source);
 		void load(char * filename,block &out);
 		//for 1-2-3d chunks
 		void chunk_save(char * filename,chunk &source);

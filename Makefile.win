@@ -4,15 +4,15 @@
 CPP      = g++.exe -D__DEBUG__
 CC       = gcc.exe -D__DEBUG__
 WINDRES  = windres.exe
-OBJ      = o_files/core.o o_files/painter.o o_files/librarian.o
-LINKOBJ  = o_files/core.o o_files/painter.o o_files/librarian.o
-LIBS     = -L"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib" -L"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/lib" -L"C:/sdl2_lib/SDL2-2.0.22/x86_64-w64-mingw32/lib" -L"C:/sdl2_lib/SDL2-2.0.22/i686-w64-mingw32/lib" -L"C:/sdl2_lib/SDL2_image-2.0.5/i686-w64-mingw32/lib" -L"C:/sdl2_lib/SDL2_image-2.0.5/x86_64-w64-mingw32/lib" -L"C:/sdl2_lib/SDL2_mixer-2.0.4/i686-w64-mingw32/lib" -L"C:/sdl2_lib/SDL2_mixer-2.0.4/x86_64-w64-mingw32/lib" -static-libgcc -lmingw32 -lSDL2main -lSDL2 -g3
-INCS     = -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include"
-CXXINCS  = -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include/c++" -I"C:/sdl2_lib/SDL2-2.0.22/x86_64-w64-mingw32/include/SDL2" -I"C:/sdl2_lib/SDL2-2.0.22/i686-w64-mingw32/include/SDL2" -I"C:/sdl2_lib/SDL2_image-2.0.5/i686-w64-mingw32/include/SDL2" -I"C:/sdl2_lib/SDL2_image-2.0.5/x86_64-w64-mingw32/include/SDL2" -I"C:/sdl2_lib/SDL2_mixer-2.0.4/i686-w64-mingw32/include/SDL2" -I"C:/sdl2_lib/SDL2_mixer-2.0.4/x86_64-w64-mingw32/include/SDL2"
+OBJ      = o_files/core.o o_files/painter.o o_files/librarian.o o_files/tex_lib.o o_files/creator.o
+LINKOBJ  = o_files/core.o o_files/painter.o o_files/librarian.o o_files/tex_lib.o o_files/creator.o
+LIBS     = -L"C:/Cave/Programming/Dev-Cpp/TDM-GCC-64/lib" -L"C:/Cave/Programming/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/lib" -L"C:/Cave/Programming/sdl2_lib/SDL2-2.0.22/x86_64-w64-mingw32/lib" -L"C:/Cave/Programming/sdl2_lib/SDL2_mixer-2.0.4/x86_64-w64-mingw32/lib" -lmingw32 -lSDL2main -lSDL2 -g3
+INCS     = -I"C:/Cave/Programming/Dev-Cpp/TDM-GCC-64/include" -I"C:/Cave/Programming/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Cave/Programming/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include" -I"C:/Cave/Programming/sdl2_lib/SDL2-2.0.22/x86_64-w64-mingw32/include/SDL2" -I"C:/Cave/Programming/sdl2_lib/SDL2_mixer-2.0.4/x86_64-w64-mingw32/include/SDL2"
+CXXINCS  = -I"C:/Cave/Programming/Dev-Cpp/TDM-GCC-64/include" -I"C:/Cave/Programming/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Cave/Programming/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include" -I"C:/Cave/Programming/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include/c++" -I"C:/Cave/Programming/sdl2_lib/SDL2-2.0.22/x86_64-w64-mingw32/include/SDL2" -I"C:/Cave/Programming/sdl2_lib/SDL2_mixer-2.0.4/x86_64-w64-mingw32/include/SDL2"
 BIN      = build/core_of_creation.exe
 CXXFLAGS = $(CXXINCS) -g3
 CFLAGS   = $(INCS) -g3
-DEL      = C:\Program Files (x86)\Embarcadero\Dev-Cpp\devcpp.exe INTERNAL_DEL
+DEL      = C:\Cave\Programming\Dev-Cpp\devcpp.exe INTERNAL_DEL
 
 .PHONY: all all-before all-after clean clean-custom
 
@@ -32,3 +32,9 @@ o_files/painter.o: painter.cpp
 
 o_files/librarian.o: librarian.cpp
 	$(CPP) -c librarian.cpp -o o_files/librarian.o $(CXXFLAGS)
+
+o_files/tex_lib.o: tex_lib.cpp
+	$(CPP) -c tex_lib.cpp -o o_files/tex_lib.o $(CXXFLAGS)
+
+o_files/creator.o: creator.cpp
+	$(CPP) -c creator.cpp -o o_files/creator.o $(CXXFLAGS)
