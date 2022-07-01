@@ -18,6 +18,27 @@ void tex_lib::init(int size)
 	}
 }
 
+void tex_lib::resize(int new_size)
+{
+	SDL_Texture ** tmp = new SDL_Texture * [size];
+	for(int i=0;i<size;i++) // <
+	{
+		tmp[i] = textures[i];
+	}
+	
+	delete[] textures;
+	
+	size = new_size;
+	textures = new SDL_Texture * [size]; //resize
+	
+	for(int i=0;i<size;i++) // >
+	{
+		textures[i] = tmp[i];
+	}
+	
+	delete[] tmp;
+}
+
 void tex_lib::load_from_bmp(char * filename,int index)
 {
 	if(textures[index]!=NULL)
@@ -35,13 +56,18 @@ void tex_lib::load_from_bmp(char * filename,int index)
 	SDL_FreeSurface(tmpsrfc);
 }
 
+/*
+path can be 
+
+"blocks\\"
+"ui\\menu\\"
+
+or something idk
+
+*/
+
 void tex_lib::automatic_load(char * path)
 {
-	//*path can be 
-	//blocks\\
-	//ui\\menu\\
-	//*
-	
 	char command[256];
 	
 	char c;
@@ -51,7 +77,11 @@ void tex_lib::automatic_load(char * path)
 	
 	FILE * list = fopen("tmp.txt","r");
 	char filename[300];
+	char full_filename[300];
+	
 	int index = 0;
+	
+	int pathlen = strlen(path);
 	
 	c = fgetc(list);
 	if(list!=0&&!feof(list))
@@ -59,12 +89,23 @@ void tex_lib::automatic_load(char * path)
 		ungetc(c,list);
 		while(!feof(list))
 		{
-			fgets(filename,300,list);
-			if(filename != NULL &&filename[0] != 0)
-				this->load_from_bmp(filename,index);
+			if(index > size)
+			{
+				printf("[tex_lib][W] - Textures Overflow! ");
+				resize(size+64);
+				printf("New size - %d\n",size);
+				return;
+			}
+			memset(filename,0,300);
+			memset(full_filename,0,300);
+			fscanf(list,"%s",filename);
+			sprintf(full_filename,"%s%s",path,filename);
+			
+			if(full_filename[pathlen] != 0)
+				this->load_from_bmp(full_filename,index);
 			else
 				break;
-			memset (filename,0,300);
+			
 			index++;
 		}
 	}

@@ -12,18 +12,18 @@
 
 struct block
 {
-	short id;
-	int durability;
-	unsigned char storage_size;
-	char *data;
-	struct block *storage;
+	short id = 0;
+	int durability = 0;
+	unsigned char storage_size = 0;
+	char * data = NULL;
+	struct block * storage = NULL;
 };
 
 struct chunk
 {
-	int size_x;
-	int size_y;
-	int size_z;
+	int size_x = 0;
+	int size_y = 0;
+	int size_z = 0;
 	
 	bool allocated = false;
 	
@@ -33,10 +33,10 @@ struct chunk
 struct world
 {
 	char * world_name;
-	
-	int chunk_size_x;
-	int chunk_size_y;
-	int chunk_size_z;
+
+	int size_x = 0;
+	int size_y = 0;
+	int size_z = 0;
 	
 	bool allocated = false;
 	
@@ -55,9 +55,18 @@ class librarian
 		//for single blocks
 		void save(char * filename,block source);
 		void load(char * filename,block &out);
+		void block_delete(block &b);
+		void block_clone(block source,block &dest);
 		//for 1-2-3d chunks
 		void chunk_save(char * filename,chunk &source);
 		void chunk_load(char * filename,chunk &dest);
+		
+		void chunk_allocate(chunk &dest);
+		void chunk_free(chunk &source);
+		
+		//for worlds
+		void world_save(world &source);
+		void world_load(world &dest);
 		
 		void info(block source,int level=0);
 };

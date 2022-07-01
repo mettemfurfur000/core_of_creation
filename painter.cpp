@@ -8,7 +8,7 @@ painter::painter()
 		printf("[PAINTER][E] - SDL2 Initialization Fail\n");
 		exit(1004);
 	}
-	this->block_tex_lib.init(1024);
+	this->block_tex_lib.init(128);
 	this->block_tex_lib.base_renderer = this->base_renderer;
 	
 	this->block_tex_lib.automatic_load("blocks\\");
@@ -101,4 +101,18 @@ void painter::simple_draw(int x,int y,int w,int h,SDL_Texture * tex)
 	r.h = h;
 	r.w = w;
 	SDL_RenderCopy(this->base_renderer,tex,NULL,&r);
+}
+
+void painter::dev_draw_all(tex_lib &source)
+{
+	int seg_x = this->SCREEN_WIDTH/16;
+	int seg_y = this->SCREEN_HEIGHT/16;
+	for(int i=0;i<16;i++)
+	{
+		for(int j=0;j<16;j++)
+		{
+			if(j+i*16 > source.size) return;
+			simple_draw(i*seg_x,j*seg_y,seg_x,seg_y,source.textures[j+i*16]);
+		}
+	}	
 }

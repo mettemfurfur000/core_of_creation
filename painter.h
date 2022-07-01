@@ -29,6 +29,8 @@ public:
 	bool basic_init();
 	void quit();
 	
+	void dev_draw_all(tex_lib &source);
+	
 	void simple_draw(int x,int y,int w,int h,SDL_Texture * tex);
 	
 	void lock(SDL_Surface *screen);

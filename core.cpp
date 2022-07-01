@@ -1,12 +1,13 @@
 #include <SDL.h>
 #include <stdio.h>
 
-#include "librarian.h"
+#include "creator.h"
 #include "painter.h"
 
 int main(int argc, char* argv[])
 {
 	painter m;
+	creator c;
 	SDL_bool loopShouldStop = SDL_FALSE;
 
 	const Uint8 *state;
@@ -26,10 +27,12 @@ int main(int argc, char* argv[])
                 	break;
             }
         }
-        
         m.clean();
-        SDL_Delay(15);
+        
+        m.dev_draw_all(m.block_tex_lib);
+        
         m.update();
+        SDL_Delay(15);
         
         state = SDL_GetKeyboardState(NULL);
 		if (state[SDL_SCANCODE_X]) 
