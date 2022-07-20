@@ -1,8 +1,4 @@
-#include <SDL.h>
-#include <stdio.h>
-
-#include "creator.h"
-#include "painter.h"
+#include "designer.h"
 
 int main(int argc, char* argv[])
 {

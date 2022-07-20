@@ -8,6 +8,7 @@ painter::painter()
 		printf("[PAINTER][E] - SDL2 Initialization Fail\n");
 		exit(1004);
 	}
+	
 	this->block_tex_lib.init(128);
 	this->block_tex_lib.base_renderer = this->base_renderer;
 	
@@ -27,6 +28,12 @@ bool painter::basic_init()
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
 	{
 		printf( "[PAINTER][E] - SDL_INIT_VIDEO Error: %s\n", SDL_GetError() );
+		return false;
+	}
+	
+	if( TTF_Init() < 0)
+	{
+		printf("[PAINTER][E] - SDL2_TTF Initialization Fail: %s\n",SDL_GetError());
 		return false;
 	}
 	
@@ -60,6 +67,7 @@ void painter::quit()
 	base_window = NULL;
 
 	SDL_Quit();
+	TTF_Quit();
 	printf("[PAINTER][L] - Succesfully Quit!\n");
 }
 	
@@ -101,6 +109,12 @@ void painter::simple_draw(int x,int y,int w,int h,SDL_Texture * tex)
 	r.h = h;
 	r.w = w;
 	SDL_RenderCopy(this->base_renderer,tex,NULL,&r);
+}
+
+void painter::box_draw(SDL_Rect &box,Uint8 r,Uint8 g,Uint8 b,Uint8 a)
+{
+	SDL_SetRenderDrawColor(this->base_renderer,r,g,b,a);
+	SDL_RenderDrawRect(this->base_renderer,&box);
 }
 
 void painter::dev_draw_all(tex_lib &source)
