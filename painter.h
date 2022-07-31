@@ -1,11 +1,9 @@
-#include <SDL.h>
-#include <iostream>
-
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 
 #include "tex_lib.h"
 #include "fonts_lib.h"
+#include "designer.h"
 
 #pragma once
 
@@ -20,6 +18,8 @@ class painter
 public:
 	int SCREEN_WIDTH = 640;
 	int SCREEN_HEIGHT = 480;
+	
+	SDL_Rect windowrect;
 	
 	SDL_Window * base_window = NULL;
 	SDL_Surface * base_surface = NULL;
@@ -39,7 +39,10 @@ public:
 	
 	void simple_draw(int x,int y,int w,int h,SDL_Texture * tex);
 	void box_draw(SDL_Rect &box,Uint8 r,Uint8 g,Uint8 b,Uint8 a);
+	void box_draw(SDL_Rect &box,SDL_Color &color);
 	
+	void menustack_draw(menu ** mstack,int size);
+	void menu_draw(menu Menu);
 	void simple_text(char * text,int x,int y,int size);
 	
 	void lock(SDL_Surface *screen);

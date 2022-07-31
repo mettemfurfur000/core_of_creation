@@ -1,2 +1,6 @@
-boulder.bmp
-stone.bmp
+LICENSE.txt
+ModernDOS8x14.ttf
+ModernDOS8x16.ttf
+ModernDOS8x8.ttf
+ModernDOS9x14.ttf
+ModernDOS9x16.ttf

@@ -4,7 +4,8 @@
 class font_lib
 {
 public:
-	TTF_Font ** fonts;
+	TTF_Font **fonts;
+	char **fontnames;
 	int size = 0;
 	
 	int fontsize = 0;
@@ -15,6 +16,6 @@ public:
 	void resize(int new_size);
 	~font_lib();
 	
-	void font_load(char * filename,int index);
+	int font_load(char * filename,char * true_filename,int index);
 	void automatic_load(char * path);
 };
