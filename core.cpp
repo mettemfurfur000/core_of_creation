@@ -74,5 +74,6 @@ int main(int argc, char* argv[])
 		    d.menustack[0]->shape.x++;
 		}
     }
+    m.quit();
     return 0;
 }

@@ -13,7 +13,7 @@ painter::painter()
 	block_tex_lib.base_renderer = this->base_renderer;
 	block_tex_lib.automatic_load("blocks\\");
 	
-	normal_fonts.init(4,16);
+	normal_fonts.init(4,18);
 	normal_fonts.automatic_load("fonts\\");
 	
 	windowrect.x = 0;
@@ -22,11 +22,6 @@ painter::painter()
 	windowrect.w = SCREEN_WIDTH;
 	
 	printf("[PAINTER][L] - Initialization Done!\n");
-}
-
-painter::~painter()
-{
-	quit();
 }
 
 bool painter::basic_init()
@@ -72,7 +67,9 @@ void painter::quit()
 
 	SDL_DestroyWindow(base_window);
 	base_window = NULL;
-
+	
+	this->normal_fonts.close_all();
+	
 	SDL_Quit();
 	TTF_Quit();
 	printf("[PAINTER][L] - Succesfully Quit!\n");

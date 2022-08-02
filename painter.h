@@ -10,7 +10,7 @@
 //┌─────────────────────┐//
 //│*    The Painter    *│//
 //│                     │//
-//│ *God of the grapgh* │//
+//│* God of the grapgh *│//
 //└─────────────────────┘//
 
 class painter
@@ -30,7 +30,6 @@ public:
 	font_lib normal_fonts;
 	
 	painter();
-	~painter();
 	
 	bool basic_init();
 	void quit();
