@@ -6,13 +6,13 @@ CC       = gcc.exe -D__DEBUG__
 WINDRES  = windres.exe
 OBJ      = o_files/core.o o_files/painter.o o_files/librarian.o o_files/tex_lib.o o_files/creator.o o_files/designer.o o_files/fonts_lib.o
 LINKOBJ  = o_files/core.o o_files/painter.o o_files/librarian.o o_files/tex_lib.o o_files/creator.o o_files/designer.o o_files/fonts_lib.o
-LIBS     = -L"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib" -L"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/lib" -L"C:/sdl2/SDL2-2.0.22/x86_64-w64-mingw32/lib" -L"C:/sdl2/SDL2_image-2.6.0/x86_64-w64-mingw32/lib" -L"C:/sdl2/SDL2_ttf-2.20.0/x86_64-w64-mingw32/lib" -static-libgcc -lmingw32 -lSDL2main -lSDL2 -lSDL2_ttf -g3
-INCS     = -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include" -I"C:/sdl2/SDL2-2.0.22/x86_64-w64-mingw32/include/SDL2" -I"C:/sdl2/SDL2_image-2.6.0/x86_64-w64-mingw32/include/SDL2" -I"C:/sdl2/SDL2_ttf-2.20.0/x86_64-w64-mingw32/include/SDL2"
-CXXINCS  = -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include/c++" -I"C:/sdl2/SDL2-2.0.22/x86_64-w64-mingw32/include/SDL2" -I"C:/sdl2/SDL2_image-2.6.0/x86_64-w64-mingw32/include/SDL2" -I"C:/sdl2/SDL2_ttf-2.20.0/x86_64-w64-mingw32/include/SDL2"
+LIBS     = -L"C:/Dev-Cpp/TDM-GCC-64/lib" -L"C:/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/lib" -L"C:/sdl2/SDL2-2.0.22/x86_64-w64-mingw32/lib" -L"C:/sdl2/SDL2_ttf-2.20.0/x86_64-w64-mingw32/lib" -L"C:/sdl2/SDL2_image-2.6.0/x86_64-w64-mingw32/lib" -static-libgcc -lmingw32  -lSDL2main  -lSDL2 -lSDL2_ttf -lSDL2_image -g3
+INCS     = -I"C:/Dev-Cpp/TDM-GCC-64/include" -I"C:/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include" -I"C:/sdl2/SDL2-2.0.22/x86_64-w64-mingw32/include/SDL2" -I"C:/sdl2/SDL2_ttf-2.20.0/x86_64-w64-mingw32/include/SDL2" -I"C:/sdl2/SDL2_image-2.6.0/x86_64-w64-mingw32/include/SDL2" -I"C:/json"
+CXXINCS  = -I"C:/Dev-Cpp/TDM-GCC-64/include" -I"C:/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include" -I"C:/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include/c++" -I"C:/sdl2/SDL2-2.0.22/x86_64-w64-mingw32/include/SDL2" -I"C:/sdl2/SDL2_ttf-2.20.0/x86_64-w64-mingw32/include/SDL2" -I"C:/sdl2/SDL2_image-2.6.0/x86_64-w64-mingw32/include/SDL2" -I"C:/json"
 BIN      = build/core_of_creation.exe
 CXXFLAGS = $(CXXINCS) -g3
 CFLAGS   = $(INCS) -g3
-DEL      = C:\Program Files (x86)\Embarcadero\Dev-Cpp\devcpp.exe INTERNAL_DEL
+DEL      = C:\Dev-Cpp\devcpp.exe INTERNAL_DEL
 
 .PHONY: all all-before all-after clean clean-custom
 

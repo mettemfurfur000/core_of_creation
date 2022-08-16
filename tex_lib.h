@@ -1,6 +1,8 @@
 #include <SDL.h>
 #include <iostream>
 
+#include "templates.hpp"
+
 #pragma once
 
 class tex_lib
@@ -11,7 +13,7 @@ public:
 	SDL_Renderer * base_renderer = NULL;
 	
 	void init(int size);
-	void resize(int new_size);
+	void resize();
 	~tex_lib();
 	
 	void load_from_bmp(char * filename,int index);

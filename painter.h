@@ -2,7 +2,6 @@
 #include <SDL_ttf.h>
 
 #include "tex_lib.h"
-#include "fonts_lib.h"
 #include "designer.h"
 
 #pragma once
@@ -25,10 +24,10 @@ public:
 	SDL_Surface * base_surface = NULL;
 	SDL_Renderer * base_renderer = NULL;
 	
+	designer Designer;
+	
 	tex_lib block_tex_lib;
-	
-	font_lib normal_fonts;
-	
+
 	painter();
 	
 	bool basic_init();
@@ -36,13 +35,13 @@ public:
 	
 	void dev_draw_all(tex_lib &source);
 	
-	void simple_draw(int x,int y,int w,int h,SDL_Texture * tex);
+	void simple_draw(int x,int y,int w,int h,SDL_Texture *tex);
 	void box_draw(SDL_Rect &box,Uint8 r,Uint8 g,Uint8 b,Uint8 a);
 	void box_draw(SDL_Rect &box,SDL_Color &color);
 	
-	void menustack_draw(menu ** mstack,int size);
-	void menu_draw(menu Menu);
-	void simple_text(char * text,int x,int y,int size);
+	void menustack_draw();
+	void menu_draw(menu &Menu);
+	void text_draw(menu &Menu,text &Text);
 	
 	void lock(SDL_Surface *screen);
 	void unlock(SDL_Surface *screen);

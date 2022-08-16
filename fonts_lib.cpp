@@ -1,72 +1,27 @@
 #include "fonts_lib.h"
 
-void font_lib::init(int size_,int fontsize_)
+void font_lib::init(int size,int fontsize)
 {
-	this->fontsize = fontsize_;
-	
-	this->size = size_;
-	
-	fonts = new ttf_pointer [size];
-	fontnames = new char *[size];
+	this->fontsize = fontsize;
+	this->size = size;
+	t_init(this->fonts,size);
+	t_init(this->fontnames,size);
 }
 
-void font_lib::resize(int new_size)
+void font_lib::resize()
 {
-	//resizint fonts
-	ttf_pointer *tmp = new ttf_pointer [size];
-	for(int i=0;i<size;i++)
-	{
-		tmp[i].font = fonts[i].font;
-	}
-	
-	delete[] this->fonts;
-	this->fonts = new ttf_pointer [new_size];
-	for(int i=0;i<new_size;i++)
-	{
-		this->fonts[i].font = 0;
-	}
-	for(int i=0;i<size;i++)
-	{
-		this->fonts[i].font = tmp[i].font;
-	}
-	
-	delete[] tmp;
-//resizing fontnames
-	char **ctmp = new char *[size];
-	
-	for(int i=0;i<size;i++)
-	{
-		ctmp[i] = new char [strlen(this->fontnames[i])];
-		strcpy(ctmp[i],this->fontnames[i]);
-		delete[] this->fontnames[i];
-	}
-	
-	delete[] this->fontnames;
-	this->fontnames = new char *[new_size];
-	for(int i=0;i<new_size;i++)
-	{
-		this->fontnames[i] = 0;
-	}
-	for(int i=0;i<size;i++)
-	{
-		fontnames[i] = new char [strlen(ctmp[i])];
-		strcpy(this->fontnames[i],ctmp[i]);
-		delete[] ctmp[i];
-	}
-	
-	delete[] ctmp;
-	
-	this->size = new_size;
+	t_resize(this->fonts,this->size,4);
+	t_resize(this->fontnames,this->size,4);
 }
 
 void font_lib::close_all()
 {
 	for(int i=0;i<size;i++)
 	{
-		if(fonts[i].font!=NULL)
+		if(fonts[i])
 		{
-			printf("[font_lib][L] - Closing font %s on %p\n",fontnames[i],fonts[i].font);
-			TTF_CloseFont(fonts[i].font);
+			printf("[font_lib][L] - Closing font %s on %p\n",fontnames[i],fonts[i]);
+			TTF_CloseFont(fonts[i]);
 		}
 		if(fontnames[i])
 		{
@@ -79,15 +34,15 @@ int font_lib::font_load(char * filename,char * true_filename,int index)
 {
 	if(index >= size)
 	{
-		resize(size+4);
+		resize();
 		printf("[font_lib][W] - Resizing lib... new size: %d\n",size);
 	}
 	
-	fonts[index].font = TTF_OpenFont(filename, fontsize);
+	fonts[index] = TTF_OpenFont(filename, fontsize);
 	
-	if(fonts[index].font == NULL)
+	if(fonts[index] == NULL)
 	{
-		printf("[font_lib][E] - Error while font loading: %s\n",SDL_GetError());
+		printf("[font_lib][E] - Error while loading font '%s': %s\n",filename,SDL_GetError());
 		return 1;
     }
     
@@ -101,8 +56,7 @@ int font_lib::font_load(char * filename,char * true_filename,int index)
 		return 1;
     }
     
-    printf("[font_lib][L] - Normal loading %s font\n",fontnames[index]);
-    printf("[font_lib][L] - Pointer Value: %p\n",fonts[index].font);
+    printf("[font_lib][L] - %p : %s font\n",fonts[index],fontnames[index]);
     return 0;
 }
 
@@ -146,4 +100,26 @@ void font_lib::automatic_load(char * path)
 	}
 	printf("[font_lib][L] - Loaded %d fonts\n",index);
 	fclose(list);
+}
+
+TTF_Font * font_lib::GetByName(char * name)
+{
+	int i = 0;
+	
+	while(strcmp(name,this->fontnames[i])!=0&&i<this->size) i++;
+	
+	if(!(i<this->size)) return NULL;
+	
+	return this->fonts[i];
+}
+
+char * font_lib::GetByPointer(TTF_Font * pointer)
+{
+	int i = 0;
+	
+	while(pointer!=this->fonts[i]&&i<this->size) i++;
+	
+	if(!(i<this->size)) return NULL;
+	
+	return this->fontnames[i];
 }

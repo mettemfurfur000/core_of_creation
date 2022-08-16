@@ -5,7 +5,6 @@ int main(int argc, char* argv[])
 {
 	painter m;
 	creator c;
-	designer d;
 	SDL_bool loopShouldStop = SDL_FALSE;
 
 	const Uint8 *state;
@@ -23,13 +22,23 @@ int main(int argc, char* argv[])
 	bcol.r = 0;
 	bcol.g = 255;
 	bcol.b = 64;
+	bcol.a = 0;
 	SDL_Color mcol;
 	mcol.r = 1;
 	mcol.g = 64;
 	mcol.b = 64;
+	mcol.a = 0;
 	
-	d.create_menu("MAIN_MENU",temp,bcol,mcol,2);
+	m.Designer.create_menu("MAIN_MENU",temp,bcol,mcol,2);
+	m.Designer.text_create("MAIN_MENU",10,10,"test_text\namongus","DOSMINI.ttf");
+
+	m.Designer.save_menu("MAIN_MENU","menusaves");
 	
+	m.Designer.delete_menu("MAIN_MENU");
+	
+	m.Designer.load_menu("MAIN_MENU","menusaves");
+
+
 	while (!loopShouldStop)
     {
         while (SDL_PollEvent(&event))
@@ -46,7 +55,7 @@ int main(int argc, char* argv[])
         }
         m.clean();
         
-        m.menustack_draw(d.menustack,d.menustack_size);
+        m.menustack_draw();
         
         m.update();
         SDL_Delay(15);
@@ -59,21 +68,24 @@ int main(int argc, char* argv[])
 		}
 		if (state[SDL_SCANCODE_W]) 
 		{
-		    d.menustack[0]->shape.y--;
+		    m.Designer.menustack[0]->shape.y--;
 		}
 		if (state[SDL_SCANCODE_S]) 
 		{
-		    d.menustack[0]->shape.y++;
+		    m.Designer.menustack[0]->shape.y++;
 		}
 		if (state[SDL_SCANCODE_A]) 
 		{
-		    d.menustack[0]->shape.x--;
+		    m.Designer.menustack[0]->shape.x--;
 		}
 		if (state[SDL_SCANCODE_D]) 
 		{
-		    d.menustack[0]->shape.x++;
+		    m.Designer.menustack[0]->shape.x++;
 		}
     }
+    
+    
+    
     m.quit();
     return 0;
 }

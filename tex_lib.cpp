@@ -10,33 +10,13 @@ tex_lib::~tex_lib()
 
 void tex_lib::init(int size)
 {
-	textures = new SDL_Texture * [size];
+	t_init(this->textures,size);
 	this->size = size;
-	for(int i=0;i<this->size;i++)
-	{
-		textures[i] = NULL;
-	}
 }
 
-void tex_lib::resize(int new_size)
+void tex_lib::resize()
 {
-	SDL_Texture ** tmp = new SDL_Texture * [size];
-	for(int i=0;i<size;i++) // <
-	{
-		tmp[i] = textures[i];
-	}
-	
-	delete[] textures;
-	
-	size = new_size;
-	textures = new SDL_Texture * [size]; //resize
-	
-	for(int i=0;i<size;i++) // >
-	{
-		textures[i] = tmp[i];
-	}
-	
-	delete[] tmp;
+	t_resize(this->textures,this->size,32);
 }
 
 void tex_lib::load_from_bmp(char * filename,int index)
@@ -92,7 +72,7 @@ void tex_lib::automatic_load(char * path)
 			if(index > size)
 			{
 				printf("[tex_lib][W] - Textures Overflow! ");
-				resize(size+64);
+				resize();
 				printf("New size - %d\n",size);
 				return;
 			}

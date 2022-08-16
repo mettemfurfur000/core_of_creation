@@ -13,8 +13,8 @@ painter::painter()
 	block_tex_lib.base_renderer = this->base_renderer;
 	block_tex_lib.automatic_load("blocks\\");
 	
-	normal_fonts.init(4,18);
-	normal_fonts.automatic_load("fonts\\");
+	Designer.normal_fonts.init(4,18);
+	Designer.normal_fonts.automatic_load("fonts\\");
 	
 	windowrect.x = 0;
 	windowrect.y = 0;
@@ -68,7 +68,7 @@ void painter::quit()
 	SDL_DestroyWindow(base_window);
 	base_window = NULL;
 	
-	this->normal_fonts.close_all();
+	this->Designer.normal_fonts.close_all();
 	
 	SDL_Quit();
 	TTF_Quit();
@@ -143,7 +143,7 @@ void painter::dev_draw_all(tex_lib &source)
 	}	
 }
 
-void painter::menu_draw(menu Menu)
+void painter::menu_draw(menu &Menu)
 {
 	box_draw(Menu.shape,Menu.border_color);
 	
@@ -155,12 +155,32 @@ void painter::menu_draw(menu Menu)
 	temp.y += Menu.border_thickness;
 	
 	box_draw(temp,Menu.menu_color);
+///////////////////////////
+	for(int i=0;i<Menu.texts_size;i++)
+	{
+		if(Menu.texts[i]) text_draw(Menu,*Menu.texts[i]);
+	}
 }
 
-void painter::menustack_draw(menu **mstack,int size)
+void painter::text_draw(menu &Menu,text &Text)
 {
-	for(int i = 0;i<size;i++)
+	SDL_Color defcolor = {255,255,255,255};
+	SDL_Surface * tmp = TTF_RenderText_Blended_Wrapped(Text.font,Text.string,defcolor,Menu.shape.w-Text.pos_x);
+	
+	SDL_Texture * tmptex = SDL_CreateTextureFromSurface(this->base_renderer, tmp);
+	SDL_FreeSurface(tmp);
+	
+	SDL_Rect dest = {Menu.shape.x+Text.pos_x,Menu.shape.y+Text.pos_y,0,0};
+	SDL_QueryTexture(tmptex, NULL, NULL, &dest.w, &dest.h);
+	
+	SDL_RenderCopy(this->base_renderer,tmptex,0,&dest);
+	SDL_DestroyTexture(tmptex);
+}
+
+void painter::menustack_draw()
+{
+	for(int i = 0;i<Designer.menustack_size;i++)
 	{
-		if(mstack[i]!=NULL) menu_draw(*mstack[i]);
+		if(Designer.menustack[i]) menu_draw(*Designer.menustack[i]);
 	}
 }

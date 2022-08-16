@@ -1,28 +1,26 @@
 #include <SDL_ttf.h>
 #include <iostream>
 
-struct ttf_pointer
-{
-	TTF_Font * font = NULL;
-};
+#include "templates.hpp"
 
 class font_lib
 {
 public:
-	ttf_pointer *fonts;
+	TTF_Font** fonts = NULL;
+	char** fontnames = NULL;
 	
-	char **fontnames;
 	int size = 0;
-	
 	int fontsize = 0;
 	
 	SDL_Renderer * base_renderer = NULL;
 	
 	void init(int size,int fontsize);
 	void close_all();
-	
-	void resize(int new_size);
+	void resize();
 	
 	int font_load(char * filename,char * true_filename,int index);
 	void automatic_load(char * path);
+	
+	TTF_Font * GetByName(char * name);
+	char * GetByPointer(TTF_Font * pointer);
 };

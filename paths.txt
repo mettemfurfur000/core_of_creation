@@ -1,0 +1,9 @@
+include:
+C:\sdl2\SDL2-2.0.22\x86_64-w64-mingw32\include\SDL2
+C:\sdl2\SDL2_ttf-2.20.0\x86_64-w64-mingw32\include\SDL2
+C:\sdl2\SDL2_image-2.6.0\x86_64-w64-mingw32\include\SDL2
+
+lib:
+C:\sdl2\SDL2-2.0.22\x86_64-w64-mingw32\lib
+C:\sdl2\SDL2_ttf-2.20.0\x86_64-w64-mingw32\lib
+C:\sdl2\SDL2_image-2.6.0\x86_64-w64-mingw32\lib
