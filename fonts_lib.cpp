@@ -5,7 +5,7 @@ void font_lib::init(int size,int fontsize)
 	this->fontsize = fontsize;
 	this->size = size;
 	t_init(this->fonts,size);
-	t_init(this->fontnames,size);
+	this->fontnames = new std::string [size];
 }
 
 void font_lib::resize()
@@ -23,11 +23,12 @@ void font_lib::close_all()
 			printf("[font_lib][L] - Closing font %s on %p\n",fontnames[i],fonts[i]);
 			TTF_CloseFont(fonts[i]);
 		}
-		if(fontnames[i])
+		if(fontnames[i].length())
 		{
-			delete[] fontnames[i];
+			fontnames[i].clear();
 		}
 	}
+	delete[] fontnames;
 }
 	
 int font_lib::font_load(char * filename,char * true_filename,int index)
@@ -45,18 +46,17 @@ int font_lib::font_load(char * filename,char * true_filename,int index)
 		printf("[font_lib][E] - Error while loading font '%s': %s\n",filename,SDL_GetError());
 		return 1;
     }
+    ;
+    this->fontnames[index] = true_filename;
     
-    fontnames[index] = new char [strlen(true_filename)+1];
-	strcpy(fontnames[index],true_filename);
-    
-    if(fontnames[index] == NULL)
+    if(fontnames[index].length()==0)
 	{
 		printf("[font_lib][E] - Error while copying name of file\n");
-		delete[] fontnames[index];
+		this->fontnames[index].clear();
 		return 1;
     }
     
-    printf("[font_lib][L] - %p : %s font\n",fonts[index],fontnames[index]);
+    printf("[font_lib][L] - %p : %s font\n",fonts[index],fontnames[index].c_str());
     return 0;
 }
 
@@ -106,14 +106,14 @@ TTF_Font * font_lib::GetByName(char * name)
 {
 	int i = 0;
 	
-	while(strcmp(name,this->fontnames[i])!=0&&i<this->size) i++;
+	while(this->fontnames[i] == name && i < this->size) i++;
 	
 	if(!(i<this->size)) return NULL;
 	
 	return this->fonts[i];
 }
 
-char * font_lib::GetByPointer(TTF_Font * pointer)
+std::string font_lib::GetByPointer(TTF_Font * pointer)
 {
 	int i = 0;
 	

@@ -165,7 +165,7 @@ void painter::menu_draw(menu &Menu)
 void painter::text_draw(menu &Menu,text &Text)
 {
 	SDL_Color defcolor = {255,255,255,255};
-	SDL_Surface * tmp = TTF_RenderText_Blended_Wrapped(Text.font,Text.string,defcolor,Menu.shape.w-Text.pos_x);
+	SDL_Surface * tmp = TTF_RenderText_Blended_Wrapped(Text.font,Text.text.c_str(),defcolor,Menu.shape.w-Text.pos_x);
 	
 	SDL_Texture * tmptex = SDL_CreateTextureFromSurface(this->base_renderer, tmp);
 	SDL_FreeSurface(tmp);

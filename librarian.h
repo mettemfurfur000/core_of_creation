@@ -1,6 +1,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <string>
 
 #include "templates.hpp"
 
@@ -17,7 +18,7 @@ struct block
 	short id = 0;
 	int durability = 0;
 	unsigned char storage_size = 0;
-	char * data = NULL;
+	std::string data;
 	struct block * storage = NULL;
 };
 
@@ -34,7 +35,7 @@ struct chunk
 
 struct world
 {
-	char * world_name;
+	std::string world_name;
 
 	int size_x = 0;
 	int size_y = 0;
@@ -53,7 +54,7 @@ class librarian
 		void block_load(FILE * f,block &dest);
 	public:
 		librarian();
-		void block_create(block &dest,int id,int durability,int storage_size,char *data);
+		void block_create(struct block &dest,int id,int durability,int storage_size,std::string data);
 		//for single blocks
 		void save(char * filename,block source);
 		void load(char * filename,block &out);

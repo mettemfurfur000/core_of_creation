@@ -56,6 +56,22 @@ void t_resize(T** &arr,int &size,int increment)
 }
 
 template<typename T>
+void t_resize(T* &arr,int &size,int increment)
+{
+	int new_size = size + increment;
+	T* res = new T [new_size];
+	
+	for(int i=0;i<size;i++)
+	{
+		res[i] = arr[i];
+	}
+	
+	size += increment;
+	delete[] arr;
+	arr = res;
+}
+
+template<typename T>
 void t_init(T** &arr,int size)
 {
 	arr = new T *[size];

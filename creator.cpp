@@ -16,7 +16,7 @@ void creator::dev_blocks_gen()
 {
 	for(int i=0;i<16;i++)
 	{
-		Librarian.block_create(blocklib.blocks[0][0][i],i+1,rand()%1000,0,0);
+		Librarian.block_create(blocklib.blocks[0][0][i],i+1,rand()%1000,0,"void");
 	}
 }
 

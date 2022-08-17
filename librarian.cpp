@@ -5,26 +5,13 @@ librarian::librarian()
 	sizeofblock = sizeof(struct block);
 }
 
-void librarian::block_create(struct block &dest,int id,int durability,int storage_size,char *data)
+void librarian::block_create(struct block &dest,int id,int durability,int storage_size,std::string data)
 {
 	dest.id = id;
 	dest.durability = durability;
 	dest.storage_size = storage_size;
 	
-	int string_size;
-	
-	//data init
-	if(data!=0)
-	{
-		string_size = strlen(data);
-		dest.data = new char[string_size];
-		strcpy(dest.data,data);
-	}else{
-		char temp[128] = "void";
-		string_size = strlen(temp);
-		dest.data = new char[string_size];
-		strcpy(dest.data,temp);
-	}
+	dest.data = data;
 	
 	//storage init and voiding
 	if(storage_size>0)
@@ -39,7 +26,6 @@ void librarian::block_create(struct block &dest,int id,int durability,int storag
 
 void librarian::block_delete(block &b)
 {
-	delete[] b.data;
 	if(b.storage_size>0)
 	{
 		for(int i=0;i<b.storage_size;i++)
@@ -61,13 +47,16 @@ void librarian::block_save(FILE * f,struct block source)
 		byte_pointer++;
 	}
 	//and print data string
-	int i=0;
-	int data_size = strlen(source.data);
-	while(source.data[i-1]!='\0')
+	int data_size = source.data.length()+1;
+	char * cstr = new char [data_size];
+	std::strcpy (cstr, source.data.c_str());
+	
+	for(int i=0;i<data_size;i++)
 	{
-		putc(source.data[i],f);
-		i++;
+		putc(cstr[i],f);
 	}
+	
+	delete[] cstr;
 	//and check storage
 	if(source.storage_size>0)
 	{
@@ -91,7 +80,7 @@ void librarian::block_load(FILE * f,struct block &dest)
 		byte_pointer[i] = c;
 		i++;
 	}
-
+	
 	i = 0;
 	c = getc(f);
 	while(c!='\0')
@@ -116,7 +105,7 @@ void librarian::block_clone(block source,block &dest)
 	dest.durability = source.durability;
 	dest.storage_size = source.storage_size;
 	
-	strcpy(dest.data,source.data);
+	dest.data = source.data;
 	
 	dest.storage = source.storage;
 }
@@ -241,7 +230,7 @@ void librarian::load(char * filename,block &out)
 //world
 void librarian::world_save(world &source)
 {
-	if(source.world_name==0)
+	if(source.world_name.length()==0)
 	{
 		printf("[LIBRARIAN][E] - Failed world save! world_name is null!\n");
 		return;
@@ -265,7 +254,7 @@ void librarian::world_save(world &source)
 
 void librarian::world_load(world &dest)
 {
-	if(dest.world_name==0)
+	if(dest.world_name.length()==0)
 	{
 		printf("[LIBRARIAN][E] - Failed world load! world_name is null!\n");
 		return;
@@ -307,7 +296,7 @@ void librarian::info(struct block source,int level)
 	putspaces(level);
 	printf("storage size = %d\n",source.storage_size);
 	putspaces(level);
-	printf("data = %s\n",source.data);
+	printf("data = %s\n",source.data.c_str());
 	if(source.storage_size>0)
 	{
 		putspaces(level);

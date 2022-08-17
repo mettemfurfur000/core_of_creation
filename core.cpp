@@ -32,11 +32,11 @@ int main(int argc, char* argv[])
 	m.Designer.create_menu("MAIN_MENU",temp,bcol,mcol,2);
 	m.Designer.text_create("MAIN_MENU",10,10,"test_text\namongus","DOSMINI.ttf");
 
-	m.Designer.save_menu("MAIN_MENU","menusaves");
+	//m.Designer.save_menu("MAIN_MENU","menusaves");
 	
-	m.Designer.delete_menu("MAIN_MENU");
+	//m.Designer.delete_menu("MAIN_MENU");
 	
-	m.Designer.load_menu("MAIN_MENU","menusaves");
+	//m.Designer.load_menu("MAIN_MENU","menusaves");
 
 
 	while (!loopShouldStop)

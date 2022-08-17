@@ -10,11 +10,10 @@
 
 struct text
 {
-	char * string = NULL;
-	int strsize;
+	std::string text;
+	std::string font_name;
 	
 	TTF_Font * font = NULL;
-	int fontnamesize;
 	
 	int pos_x;
 	int pos_y;
@@ -32,9 +31,7 @@ public:
 	bool focused;
 	bool pressed;
 	
-	char* string;
-	
-	int strsize;
+	std::string text;
 
 	void update();
 };
@@ -42,8 +39,7 @@ public:
 class menu
 {
 public:
-	char * name = NULL;
-	int namesize;
+	std::string name;
 	
 	SDL_Rect shape;
 	
