@@ -25,14 +25,18 @@ int main(int argc, char* argv[])
 	std::string txt = "test_text\namongus";
 	std::string dosmini = "DOSMINI.ttf";
 	
-	//m.Designer.create_menu(mainmenu,temp,bcol,mcol,2);
-	//m.Designer.text_create(mainmenu,10,10,txt,dosmini);
+	m.Designer.create_menu(mainmenu,temp,bcol,mcol,2);
+	m.Designer.text_create(mainmenu,10,10,txt,dosmini);
+	
+	SDL_Rect but = {50,50,60,20};
+	
+	m.Designer.button_create(mainmenu,"boop",dosmini,but,bcol);
 
-	//m.Designer.save_menu("MAIN_MENU","menusaves");
+	m.Designer.save_menu("MAIN_MENU","menusaves");
 	
 	//m.Designer.delete_menu("MAIN_MENU");
 	
-	m.Designer.load_menu("MAIN_MENU","menusaves");
+	//m.Designer.load_menu("MAIN_MENU","menusaves");
 
 	while (!loopShouldStop)
     {
@@ -78,8 +82,6 @@ int main(int argc, char* argv[])
 		    m.Designer.menustack[0]->shape.x++;
 		}
     }
-    
-    
     
     m.quit();
     return 0;

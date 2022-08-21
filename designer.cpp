@@ -11,9 +11,9 @@ void button::update()
 	SDL_PumpEvents();
 	Uint32 state = SDL_GetMouseState(&x,&y);
 	
-	if(x >= pos_x && x <= pos_x + size_x)
+	if(x >= shape.x && x <= (shape.x + shape.w))
 	{
-		if(y >= pos_y && y <= pos_y + size_y)
+		if(y >= shape.y && y <= (shape.y + shape.h))
 		{
 			focused = true;
 			if( !locked && ((state & SDL_BUTTON_LMASK) != 0))
@@ -22,6 +22,29 @@ void button::update()
 				return;
 			}
 			pressed = false;
+		}
+	}
+	focused = false;
+}
+
+void button::update(SDL_Rect real_pos)
+{
+	int x,y;
+	SDL_PumpEvents();
+	Uint32 state = SDL_GetMouseState(&x,&y);
+	
+	if(x >= real_pos.x && x <= (real_pos.x + real_pos.w))
+	{
+		if(y >= real_pos.y && y <= (real_pos.y + real_pos.h))
+		{
+			focused = true;
+			if( !locked && ((state & SDL_BUTTON_LMASK) != 0))
+			{
+				pressed = true;
+				return;
+			}
+			pressed = false;
+			return;
 		}
 	}
 	focused = false;
@@ -171,16 +194,22 @@ void designer::save_menu(std::string name,std::string folder)
 		if(Menu->buttons[i])
 		{
 			j["menu"]["buttons"][i]["exist"] = true;
-			j["menu"]["buttons"][i]["pos_x"] = Menu->buttons[i]->pos_x;
-			j["menu"]["buttons"][i]["pos_y"] = Menu->buttons[i]->pos_y;
-			j["menu"]["buttons"][i]["size_x"] = Menu->buttons[i]->size_x;
-			j["menu"]["buttons"][i]["size_y"] = Menu->buttons[i]->size_y;
+			j["menu"]["buttons"][i]["shape"]["x"] = Menu->buttons[i]->shape.x;
+			j["menu"]["buttons"][i]["shape"]["y"] = Menu->buttons[i]->shape.y;
+			j["menu"]["buttons"][i]["shape"]["w"] = Menu->buttons[i]->shape.w;
+			j["menu"]["buttons"][i]["shape"]["h"] = Menu->buttons[i]->shape.h;
+			
+			j["menu"]["buttons"][i]["color"]["r"] = Menu->buttons[i]->color.r;
+			j["menu"]["buttons"][i]["color"]["g"] = Menu->buttons[i]->color.g;
+			j["menu"]["buttons"][i]["color"]["b"] = Menu->buttons[i]->color.b;
+			j["menu"]["buttons"][i]["color"]["a"] = Menu->buttons[i]->color.a;
 			
 			j["menu"]["buttons"][i]["locked"] = Menu->buttons[i]->locked;
 			j["menu"]["buttons"][i]["focused"] = Menu->buttons[i]->focused;
 			j["menu"]["buttons"][i]["pressed"] = Menu->buttons[i]->pressed;
 			
 			j["menu"]["buttons"][i]["text"] = Menu->buttons[i]->text;
+			j["menu"]["buttons"][i]["font_name"] = Menu->buttons[i]->font_name;
 		}else{
 			j["menu"]["buttons"][i]["exist"] = false;
 		}
@@ -251,16 +280,24 @@ void designer::load_menu(std::string name,std::string folder)
 		if(j["menu"]["buttons"][i]["exist"].get<bool>())
 		{
 			Menu->buttons[i] = new button;
-			Menu->buttons[i]->pos_x = j["menu"]["buttons"][i]["pos_x"].get<int>();
-			Menu->buttons[i]->pos_y = j["menu"]["buttons"][i]["pos_y"].get<int>();
-			Menu->buttons[i]->size_x = j["menu"]["buttons"][i]["size_x"].get<int>();
-			Menu->buttons[i]->size_y = j["menu"]["buttons"][i]["size_y"].get<int>();
+			
+			Menu->buttons[i]->shape.x = j["menu"]["buttons"][i]["shape"]["x"].get<int>();
+			Menu->buttons[i]->shape.y = j["menu"]["buttons"][i]["shape"]["y"].get<int>();
+			Menu->buttons[i]->shape.w = j["menu"]["buttons"][i]["shape"]["w"].get<int>();
+			Menu->buttons[i]->shape.h = j["menu"]["buttons"][i]["shape"]["h"].get<int>();
+			
+			Menu->buttons[i]->color.r = j["menu"]["buttons"][i]["color"]["r"].get<int>();
+			Menu->buttons[i]->color.g = j["menu"]["buttons"][i]["color"]["g"].get<int>();
+			Menu->buttons[i]->color.b = j["menu"]["buttons"][i]["color"]["b"].get<int>();
+			Menu->buttons[i]->color.a = j["menu"]["buttons"][i]["color"]["a"].get<int>();
 			
 			Menu->buttons[i]->locked = j["menu"]["buttons"][i]["locked"].get<bool>();
 			Menu->buttons[i]->focused = j["menu"]["buttons"][i]["focused"].get<bool>();
 			Menu->buttons[i]->pressed = j["menu"]["buttons"][i]["pressed"].get<bool>();
 			
 			Menu->buttons[i]->text = j["menu"]["buttons"][i]["text"].get<std::string>();
+			Menu->buttons[i]->font_name = j["menu"]["buttons"][i]["font_name"].get<std::string>();
+			Menu->buttons[i]->font = this->normal_fonts.GetByName(Menu->buttons[i]->font_name);
 		}else{
 			Menu->buttons[i] = 0;
 		}
@@ -279,7 +316,6 @@ void designer::load_menu(std::string name,std::string folder)
 			//
 			Menu->texts[i]->font = this->normal_fonts.GetByName(Menu->texts[i]->font_name);
 			//
-			
 			Menu->texts[i]->pos_x = j["menu"]["texts"][i]["pos_x"].get<int>();
 			Menu->texts[i]->pos_y = j["menu"]["texts"][i]["pos_y"].get<int>();
 		}else{
@@ -312,7 +348,7 @@ void menu::buttons_init(int size)
 
 void designer::text_create(std::string menuname,int x,int y,std::string _text,std::string font)
 {
-	menu * Menu = this->get_menu(menuname.c_str());
+	menu* Menu = this->get_menu(menuname.c_str());
 	
 	int i=0;
 	while(Menu->texts && i < Menu->texts_size) i++; //simple search fot free place
@@ -335,5 +371,34 @@ void designer::text_create(std::string menuname,int x,int y,std::string _text,st
 	}else{
 		Menu->texts[i]->font = this->normal_fonts.GetByName(font);
 		Menu->texts[i]->font_name = font;
+	}
+}
+
+void designer::button_create(std::string menuname,std::string str,std::string font_name,SDL_Rect shape,SDL_Color color)
+{
+	menu* Menu = get_menu(menuname.c_str());
+	
+	int i=0;
+	while(Menu->buttons && i < Menu->buttons_size) i++; //simple search fot free place
+	
+	if(i >= Menu->buttons_size) Menu->buttons_resize(4); //expand if not enough
+	
+	Menu->buttons[i] = new button;
+	Menu->buttons[i]->shape = shape;
+	Menu->buttons[i]->color = color;
+	Menu->buttons[i]->shape = shape;
+	
+	if(str.empty())
+		Menu->buttons[i]->text = " ";
+	else 
+		Menu->buttons[i]->text = str;
+	
+	if(font_name.empty())
+	{
+		Menu->buttons[i]->font = this->normal_fonts.GetByName("default.ttf");
+		Menu->buttons[i]->font_name = "default.ttf";
+	}else{
+		Menu->buttons[i]->font = this->normal_fonts.GetByName(font_name);
+		Menu->buttons[i]->font_name = font_name;
 	}
 }

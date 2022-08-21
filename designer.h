@@ -27,18 +27,21 @@ struct text
 class button
 {
 public:
-	int pos_x;
-	int pos_y;
-	int size_x;
-	int size_y;
+	SDL_Rect shape;
 	
 	bool locked;
 	bool focused;
 	bool pressed;
 	
 	std::string text;
+	std::string font_name;
+	
+	SDL_Color color;
+	
+	TTF_Font * font = NULL;
 
 	void update();
+	void update(SDL_Rect real_pos);
 };
 
 class menu
@@ -89,6 +92,7 @@ public:
 	int delete_menu(char * name); //will return -1 if not exist
 	
 	void text_create(std::string menuname,int x,int y,std::string _text,std::string font);
+	void button_create(std::string menuname,std::string str,std::string font_name,SDL_Rect shape,SDL_Color color);
 	
 	menu * get_menu(std::string name);
 	

@@ -7,7 +7,38 @@
             "r": 0
         },
         "border_thickness": 2,
-        "buttons_size": 0,
+        "buttons": [
+            {
+                "color": {
+                    "a": 0,
+                    "b": 64,
+                    "g": 255,
+                    "r": 0
+                },
+                "exist": true,
+                "focused": false,
+                "font_name": "DOSMINI.ttf",
+                "locked": false,
+                "pressed": false,
+                "shape": {
+                    "h": 20,
+                    "w": 60,
+                    "x": 50,
+                    "y": 50
+                },
+                "text": "boop"
+            },
+            {
+                "exist": false
+            },
+            {
+                "exist": false
+            },
+            {
+                "exist": false
+            }
+        ],
+        "buttons_size": 4,
         "menu_color": {
             "a": 0,
             "b": 64,
@@ -18,8 +49,8 @@
         "name": "MAIN_MENU",
         "resizable": false,
         "shape": {
-            "h": 100,
-            "w": 100,
+            "h": 240,
+            "w": 320,
             "x": 160,
             "y": 120
         },
@@ -28,9 +59,9 @@
             {
                 "exist": true,
                 "font_name": "DOSMINI.ttf",
-                "pos_x": 15,
-                "pos_y": 15,
-                "text": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                "pos_x": 10,
+                "pos_y": 10,
+                "text": "test_text\namongus"
             },
             {
                 "exist": false

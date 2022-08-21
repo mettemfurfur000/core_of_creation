@@ -38,10 +38,14 @@ public:
 	void simple_draw(int x,int y,int w,int h,SDL_Texture *tex);
 	void box_draw(SDL_Rect &box,Uint8 r,Uint8 g,Uint8 b,Uint8 a);
 	void box_draw(SDL_Rect &box,SDL_Color &color);
+	void draw_cool_box(SDL_Rect box,SDL_Color color,int border_w,SDL_Color border_color);
+	void draw_cool_box(SDL_Rect box,SDL_Color color,int border_w,int border_shading);
+	void draw_cool_box(SDL_Rect menu_box,SDL_Rect box,SDL_Color color,int border_w,int border_shading);
 	
 	void menustack_draw();
 	void menu_draw(menu &Menu);
 	void text_draw(menu &Menu,text &Text);
+	void button_draw(menu &Menu,button &Button);
 	
 	void lock(SDL_Surface *screen);
 	void unlock(SDL_Surface *screen);
