@@ -2,11 +2,16 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <fstream>
+#include <json.hpp>
 #include <string>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 #include "fonts_lib.h"
 
 #pragma once
+
+using json = nlohmann::json;
 
 struct text
 {
@@ -79,14 +84,14 @@ public:
 	void init(int start_size);
 	void resize(int increment);
 	
-	void create_menu(char * name,SDL_Rect shape,SDL_Color border_color,SDL_Color menu_color,int border_thickness);
-	void new_menu(char * name);
+	void create_menu(std::string,SDL_Rect shape,SDL_Color border_color,SDL_Color menu_color,int border_thickness);
+	void new_menu(std::string name);
 	int delete_menu(char * name); //will return -1 if not exist
 	
-	void text_create(char* menuname,int x,int y,char *_text,char *font);
+	void text_create(std::string menuname,int x,int y,std::string _text,std::string font);
 	
-	menu * get_menu(char * name);
+	menu * get_menu(std::string name);
 	
-	void save_menu(char * name,char * folder);
-	void load_menu(char * name,char * folder);
+	void save_menu(std::string name,std::string folder);
+	void load_menu(std::string name,std::string folder);
 };

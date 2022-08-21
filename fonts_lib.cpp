@@ -102,7 +102,7 @@ void font_lib::automatic_load(char * path)
 	fclose(list);
 }
 
-TTF_Font * font_lib::GetByName(char * name)
+TTF_Font * font_lib::GetByName(std::string name)
 {
 	int i = 0;
 	

@@ -18,26 +18,21 @@ int main(int argc, char* argv[])
 	temp.x = m.SCREEN_WIDTH/2 - temp.w/2;
 	temp.y = m.SCREEN_HEIGHT/2 - temp.h/2;
 	
-	SDL_Color bcol;
-	bcol.r = 0;
-	bcol.g = 255;
-	bcol.b = 64;
-	bcol.a = 0;
-	SDL_Color mcol;
-	mcol.r = 1;
-	mcol.g = 64;
-	mcol.b = 64;
-	mcol.a = 0;
+	SDL_Color bcol = {0,255,64,0};
+	SDL_Color mcol = {1,64,64,0};
 	
-	m.Designer.create_menu("MAIN_MENU",temp,bcol,mcol,2);
-	m.Designer.text_create("MAIN_MENU",10,10,"test_text\namongus","DOSMINI.ttf");
+	std::string mainmenu = "MAIN_MENU";
+	std::string txt = "test_text\namongus";
+	std::string dosmini = "DOSMINI.ttf";
+	
+	//m.Designer.create_menu(mainmenu,temp,bcol,mcol,2);
+	//m.Designer.text_create(mainmenu,10,10,txt,dosmini);
 
 	//m.Designer.save_menu("MAIN_MENU","menusaves");
 	
 	//m.Designer.delete_menu("MAIN_MENU");
 	
-	//m.Designer.load_menu("MAIN_MENU","menusaves");
-
+	m.Designer.load_menu("MAIN_MENU","menusaves");
 
 	while (!loopShouldStop)
     {

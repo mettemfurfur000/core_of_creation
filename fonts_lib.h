@@ -22,6 +22,6 @@ public:
 	int font_load(char * filename,char * true_filename,int index);
 	void automatic_load(char * path);
 	
-	TTF_Font * GetByName(char * name);
+	TTF_Font * GetByName(std::string name);
 	std::string GetByPointer(TTF_Font * pointer);
 };

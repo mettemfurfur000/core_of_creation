@@ -1,3 +1,4 @@
+default.fon
 DOSBIG.ttf
 DOSMINI.ttf
 LICENSE.txt
