@@ -20,7 +20,7 @@ void font_lib::close_all()
 	{
 		if(fonts[i])
 		{
-			printf("[font_lib][L] - Closing font %s on %p\n",fontnames[i],fonts[i]);
+			printf("[font_lib][L] - Closing font %s on %p\n",fontnames[i].c_str(),fonts[i]);
 			TTF_CloseFont(fonts[i]);
 		}
 		if(fontnames[i].length())

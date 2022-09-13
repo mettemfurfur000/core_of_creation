@@ -5,29 +5,7 @@
 	bool pressed;
 */
 
-void button::update()
-{
-	int x,y;
-	SDL_PumpEvents();
-	Uint32 state = SDL_GetMouseState(&x,&y);
-	
-	if(x >= shape.x && x <= (shape.x + shape.w))
-	{
-		if(y >= shape.y && y <= (shape.y + shape.h))
-		{
-			focused = true;
-			if( !locked && ((state & SDL_BUTTON_LMASK) != 0))
-			{
-				pressed = true;
-				return;
-			}
-			pressed = false;
-		}
-	}
-	focused = false;
-}
-
-void button::update(SDL_Rect real_pos)
+void designer::button_update(button &b,SDL_Rect real_pos)
 {
 	int x,y;
 	SDL_PumpEvents();
@@ -37,17 +15,17 @@ void button::update(SDL_Rect real_pos)
 	{
 		if(y >= real_pos.y && y <= (real_pos.y + real_pos.h))
 		{
-			focused = true;
-			if( !locked && ((state & SDL_BUTTON_LMASK) != 0))
+			b.focused = true;
+			if( !b.locked && ((state & SDL_BUTTON_LMASK) != 0))
 			{
-				pressed = true;
+				b.pressed = true;
 				return;
 			}
-			pressed = false;
+			b.pressed = false;
 			return;
 		}
 	}
-	focused = false;
+	b.focused = false;
 }
 
 void designer::init(int start_size)
@@ -104,13 +82,12 @@ void designer::create_menu(std::string name,SDL_Rect shape,SDL_Color border_colo
 	
 	menustack[j]->name = name;
 	
-	menustack[j]->shape = shape;
+	menustack[j]->menu_box.shape = shape;
 	
-	menustack[j]->border_color = border_color;
-	menustack[j]->menu_color = menu_color;
+	menustack[j]->menu_box.border_color = border_color;
+	menustack[j]->menu_box.color = menu_color;
 	
-	menustack[j]->border_thickness = border_thickness;
-	
+	menustack[j]->menu_box.border_th = border_thickness;
 }
 
 int designer::delete_menu(char * name)
@@ -147,6 +124,71 @@ menu * designer::get_menu(std::string name)
 	return menustack[j]; //it is your menu, i swear!
 }
 
+//nlohman!
+
+//SDL_Rect
+
+void to_json(json& j, const SDL_Rect& p) 
+{
+	j = json
+	{
+		{"x",p.x},
+		{"y",p.y},
+		{"h",p.h},
+		{"w",p.w}
+	};
+}
+
+void from_json(const json& j, SDL_Rect& p) 
+{
+	j.at("x").get_to(p.x);
+	j.at("y").get_to(p.y);
+	j.at("h").get_to(p.h);
+	j.at("w").get_to(p.w);
+}
+
+//SDL_Color
+
+void to_json(json& j, const SDL_Color& p) 
+{
+	j = json
+	{
+		{"r",p.r},
+		{"g",p.g},
+		{"b",p.b},
+		{"a",p.a}
+	};
+}
+
+void from_json(const json& j, SDL_Color& p) 
+{
+	j.at("r").get_to(p.r);
+	j.at("g").get_to(p.g);
+	j.at("b").get_to(p.b);
+	j.at("a").get_to(p.a);
+}
+
+//box
+
+void to_json(json& j, const box& p) 
+{
+	j = json
+	{
+		{"shape",p.shape},
+		{"border_color",p.border_color},
+		{"main_color",p.color},
+		{"border_th",p.border_th}
+	};
+}
+
+void from_json(const json& j, box& p) 
+{
+	j.at("shape").get_to(p.shape);
+	j.at("main_color").get_to(p.color);
+	j.at("border_color").get_to(p.border_color);
+	j.at("border_th").get_to(p.border_th);
+}
+
 void designer::save_menu(std::string name,std::string folder)
 {
 	std::string command;
@@ -167,22 +209,7 @@ void designer::save_menu(std::string name,std::string folder)
 	
 	j["menu"]["name"] = Menu->name;
 	
-	j["menu"]["shape"]["h"] = Menu->shape.h;
-	j["menu"]["shape"]["w"] = Menu->shape.w;
-	j["menu"]["shape"]["x"] = Menu->shape.x;
-	j["menu"]["shape"]["y"] = Menu->shape.y;
-	
-	j["menu"]["border_color"]["r"] = Menu->border_color.r;
-	j["menu"]["border_color"]["g"] = Menu->border_color.g;
-	j["menu"]["border_color"]["b"] = Menu->border_color.b;
-	j["menu"]["border_color"]["a"] = Menu->border_color.a;
-	
-	j["menu"]["menu_color"]["r"] = Menu->menu_color.r;
-	j["menu"]["menu_color"]["g"] = Menu->menu_color.g;
-	j["menu"]["menu_color"]["b"] = Menu->menu_color.b;
-	j["menu"]["menu_color"]["a"] = Menu->menu_color.a;
-	
-	j["menu"]["border_thickness"] = Menu->border_thickness;
+	j["menu"]["menu_box"] = Menu->menu_box;
 	
 	j["menu"]["resizable"] = Menu->resizable;
 	j["menu"]["movable"] = Menu->movable;
@@ -194,15 +221,7 @@ void designer::save_menu(std::string name,std::string folder)
 		if(Menu->buttons[i])
 		{
 			j["menu"]["buttons"][i]["exist"] = true;
-			j["menu"]["buttons"][i]["shape"]["x"] = Menu->buttons[i]->shape.x;
-			j["menu"]["buttons"][i]["shape"]["y"] = Menu->buttons[i]->shape.y;
-			j["menu"]["buttons"][i]["shape"]["w"] = Menu->buttons[i]->shape.w;
-			j["menu"]["buttons"][i]["shape"]["h"] = Menu->buttons[i]->shape.h;
-			
-			j["menu"]["buttons"][i]["color"]["r"] = Menu->buttons[i]->color.r;
-			j["menu"]["buttons"][i]["color"]["g"] = Menu->buttons[i]->color.g;
-			j["menu"]["buttons"][i]["color"]["b"] = Menu->buttons[i]->color.b;
-			j["menu"]["buttons"][i]["color"]["a"] = Menu->buttons[i]->color.a;
+			j["menu"]["buttons"][i]["button_box"] = Menu->buttons[i]->button_box;
 			
 			j["menu"]["buttons"][i]["locked"] = Menu->buttons[i]->locked;
 			j["menu"]["buttons"][i]["focused"] = Menu->buttons[i]->focused;
@@ -225,8 +244,7 @@ void designer::save_menu(std::string name,std::string folder)
 			j["menu"]["texts"][i]["text"] = Menu->texts[i]->text;
 			j["menu"]["texts"][i]["font_name"] = Menu->texts[i]->font_name;
 			
-			j["menu"]["texts"][i]["pos_x"] = Menu->texts[i]->pos_x;
-			j["menu"]["texts"][i]["pos_y"] = Menu->texts[i]->pos_y;
+			j["menu"]["texts"][i]["text_box"] = Menu->texts[i]->text_box;
 		}else{
 			j["menu"]["texts"][i]["exist"] = false;
 		}
@@ -251,22 +269,7 @@ void designer::load_menu(std::string name,std::string folder)
 	
 	Menu->name = j["menu"]["name"].get<std::string>();
 	
-	Menu->shape.h = j["menu"]["shape"]["h"].get<int>();
-	Menu->shape.w = j["menu"]["shape"]["w"].get<int>();
-	Menu->shape.x = j["menu"]["shape"]["x"].get<int>();
-	Menu->shape.y = j["menu"]["shape"]["y"].get<int>();
-	
-	Menu->border_color.r = j["menu"]["border_color"]["r"].get<int>();
-	Menu->border_color.g = j["menu"]["border_color"]["g"].get<int>();
-	Menu->border_color.b = j["menu"]["border_color"]["b"].get<int>();
-	Menu->border_color.a = j["menu"]["border_color"]["a"].get<int>();
-	
-	Menu->menu_color.r = j["menu"]["menu_color"]["r"].get<int>();
-	Menu->menu_color.g = j["menu"]["menu_color"]["g"].get<int>();
-	Menu->menu_color.b = j["menu"]["menu_color"]["b"].get<int>();
-	Menu->menu_color.a = j["menu"]["menu_color"]["a"].get<int>();
-	
-	Menu->border_thickness = j["menu"]["border_thickness"].get<int>();
+	Menu->menu_box = j["menu"]["menu_box"].get<box>();
 	
 	Menu->resizable = j["menu"]["resizable"].get<bool>();
 	Menu->movable = j["menu"]["movable"].get<bool>();
@@ -277,19 +280,12 @@ void designer::load_menu(std::string name,std::string folder)
 	
 	for(int i=0;i<Menu->buttons_size;i++)
 	{
-		if(j["menu"]["buttons"][i]["exist"].get<bool>())
+		j["menu"]["buttons"][i]["exist"].get<bool>();
+		if(j["menu"]["buttons"][i]["exist"])
 		{
 			Menu->buttons[i] = new button;
 			
-			Menu->buttons[i]->shape.x = j["menu"]["buttons"][i]["shape"]["x"].get<int>();
-			Menu->buttons[i]->shape.y = j["menu"]["buttons"][i]["shape"]["y"].get<int>();
-			Menu->buttons[i]->shape.w = j["menu"]["buttons"][i]["shape"]["w"].get<int>();
-			Menu->buttons[i]->shape.h = j["menu"]["buttons"][i]["shape"]["h"].get<int>();
-			
-			Menu->buttons[i]->color.r = j["menu"]["buttons"][i]["color"]["r"].get<int>();
-			Menu->buttons[i]->color.g = j["menu"]["buttons"][i]["color"]["g"].get<int>();
-			Menu->buttons[i]->color.b = j["menu"]["buttons"][i]["color"]["b"].get<int>();
-			Menu->buttons[i]->color.a = j["menu"]["buttons"][i]["color"]["a"].get<int>();
+			Menu->buttons[i]->button_box = j["menu"]["buttons"][i]["button_box"].get<box>();
 			
 			Menu->buttons[i]->locked = j["menu"]["buttons"][i]["locked"].get<bool>();
 			Menu->buttons[i]->focused = j["menu"]["buttons"][i]["focused"].get<bool>();
@@ -308,21 +304,56 @@ void designer::load_menu(std::string name,std::string folder)
 	
 	for(int i=0;i<Menu->texts_size;i++)
 	{
-		if(j["menu"]["texts"][i]["exist"].get<bool>())
+		j["menu"]["texts"][i]["exist"].get<bool>();
+		if(j["menu"]["texts"][i]["exist"])
 		{
 			Menu->texts[i] = new text;
+			Menu->texts[i]->text_box = j["menu"]["texts"][i]["text_box"].get<box>();
 			Menu->texts[i]->text = j["menu"]["texts"][i]["text"].get<std::string>();
 			Menu->texts[i]->font_name = j["menu"]["texts"][i]["font_name"].get<std::string>();
 			//
 			Menu->texts[i]->font = this->normal_fonts.GetByName(Menu->texts[i]->font_name);
 			//
-			Menu->texts[i]->pos_x = j["menu"]["texts"][i]["pos_x"].get<int>();
-			Menu->texts[i]->pos_y = j["menu"]["texts"][i]["pos_y"].get<int>();
+			
 		}else{
 			Menu->texts[i] = 0;
 		}
 	}
 	
+}
+
+void menu::update()
+{
+	if(!movable) return;
+	
+	int x,y;
+	SDL_PumpEvents();
+	Uint32 state = SDL_GetMouseState(&x,&y);
+	
+	if(moving)
+	{
+		menu_box.shape.x += x - mouse_press_pos.x;
+		menu_box.shape.y += y - mouse_press_pos.y;
+	}else{
+		if(menu_box.shape.x < 0) menu_box.shape.x = 0;
+		if(menu_box.shape.y < 0) menu_box.shape.y = 0;
+	}
+	
+	if(x >= menu_box.shape.x && x <= (menu_box.shape.x + menu_box.shape.w))
+	{
+		if(y >= menu_box.shape.y && y <= (menu_box.shape.y + 20))
+		{
+			if( ((state & SDL_BUTTON_LMASK) != 0))
+			{
+				moving = true;
+				mouse_press_pos.x = x;
+				mouse_press_pos.y = y;
+				return;
+			}
+			moving = false;
+			return;
+		}
+	}
 }
 
 void menu::buttons_resize(int increment)
@@ -346,7 +377,7 @@ void menu::buttons_init(int size)
 	this->buttons_size = size;
 }
 
-void designer::text_create(std::string menuname,int x,int y,std::string _text,std::string font)
+void designer::text_create(std::string menuname,int x,int y,int h,int w,std::string _text,std::string font)
 {
 	menu* Menu = this->get_menu(menuname.c_str());
 	
@@ -356,8 +387,10 @@ void designer::text_create(std::string menuname,int x,int y,std::string _text,st
 	if(i >= Menu->texts_size) Menu->texts_resize(4); //expand if not enough
 	
 	Menu->texts[i] = new text;
-	Menu->texts[i]->pos_x = x;
-	Menu->texts[i]->pos_y = y;
+	Menu->texts[i]->text_box.shape.x = x;
+	Menu->texts[i]->text_box.shape.y = y;
+	Menu->texts[i]->text_box.shape.h = h;
+	Menu->texts[i]->text_box.shape.w = w;
 	
 	if(_text.empty()) 
 		Menu->texts[i]->text = "hello, dev~";
@@ -384,9 +417,8 @@ void designer::button_create(std::string menuname,std::string str,std::string fo
 	if(i >= Menu->buttons_size) Menu->buttons_resize(4); //expand if not enough
 	
 	Menu->buttons[i] = new button;
-	Menu->buttons[i]->shape = shape;
-	Menu->buttons[i]->color = color;
-	Menu->buttons[i]->shape = shape;
+	Menu->buttons[i]->button_box.shape = shape;
+	Menu->buttons[i]->button_box.color = color;
 	
 	if(str.empty())
 		Menu->buttons[i]->text = " ";

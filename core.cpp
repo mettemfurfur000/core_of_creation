@@ -25,18 +25,23 @@ int main(int argc, char* argv[])
 	std::string txt = "test_text\namongus";
 	std::string dosmini = "DOSMINI.ttf";
 	
-	m.Designer.create_menu(mainmenu,temp,bcol,mcol,2);
-	m.Designer.text_create(mainmenu,10,10,txt,dosmini);
-	
 	SDL_Rect but = {50,50,60,20};
 	
-	m.Designer.button_create(mainmenu,"boop",dosmini,but,bcol);
-
-	m.Designer.save_menu("MAIN_MENU","menusaves");
+	int n;
+	std::cin >> n;
+	if(n)
+	{
+		m.Designer.load_menu("MAIN_MENU","menusaves");
+	}else{
+		m.Designer.create_menu(mainmenu,temp,bcol,mcol,2);
+		m.Designer.text_create(mainmenu,10,10,50,100,txt,dosmini);
+		m.Designer.button_create(mainmenu,"boop",dosmini,but,bcol);
+	}
 	
+	//
+
 	//m.Designer.delete_menu("MAIN_MENU");
 	
-	//m.Designer.load_menu("MAIN_MENU","menusaves");
 
 	while (!loopShouldStop)
     {
@@ -65,23 +70,9 @@ int main(int argc, char* argv[])
 		    printf("[L] - X key pressed, let's exit!.\n");
 		    break;
 		}
-		if (state[SDL_SCANCODE_W]) 
-		{
-		    m.Designer.menustack[0]->shape.y--;
-		}
-		if (state[SDL_SCANCODE_S]) 
-		{
-		    m.Designer.menustack[0]->shape.y++;
-		}
-		if (state[SDL_SCANCODE_A]) 
-		{
-		    m.Designer.menustack[0]->shape.x--;
-		}
-		if (state[SDL_SCANCODE_D]) 
-		{
-		    m.Designer.menustack[0]->shape.x++;
-		}
     }
+    
+	m.Designer.save_menu("MAIN_MENU","menusaves");
     
     m.quit();
     return 0;

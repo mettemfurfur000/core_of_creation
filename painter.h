@@ -36,11 +36,9 @@ public:
 	void dev_draw_all(tex_lib &source);
 	
 	void simple_draw(int x,int y,int w,int h,SDL_Texture *tex);
-	void box_draw(SDL_Rect &box,Uint8 r,Uint8 g,Uint8 b,Uint8 a);
-	void box_draw(SDL_Rect &box,SDL_Color &color);
-	void draw_cool_box(SDL_Rect box,SDL_Color color,int border_w,SDL_Color border_color);
-	void draw_cool_box(SDL_Rect box,SDL_Color color,int border_w,int border_shading);
-	void draw_cool_box(SDL_Rect menu_box,SDL_Rect box,SDL_Color color,int border_w,int border_shading);
+	void simple_fill(SDL_Rect r,SDL_Color c);
+	void box_draw(box b);
+	void rel_box_draw(SDL_Rect a,box b);
 	
 	void menustack_draw();
 	void menu_draw(menu &Menu);

@@ -13,21 +13,29 @@
 
 using json = nlohmann::json;
 
+struct box
+{
+	SDL_Rect shape;
+	
+	int border_th;
+	
+	SDL_Color color;
+	SDL_Color border_color;
+};
+
 struct text
 {
+	box text_box;
+	
 	std::string text;
 	std::string font_name;
 	
 	TTF_Font * font = NULL;
-	
-	int pos_x;
-	int pos_y;
 };
 
-class button
+struct button
 {
-public:
-	SDL_Rect shape;
+	box button_box;
 	
 	bool locked;
 	bool focused;
@@ -36,12 +44,7 @@ public:
 	std::string text;
 	std::string font_name;
 	
-	SDL_Color color;
-	
 	TTF_Font * font = NULL;
-
-	void update();
-	void update(SDL_Rect real_pos);
 };
 
 class menu
@@ -49,16 +52,17 @@ class menu
 public:
 	std::string name;
 	
-	SDL_Rect shape;
+	box menu_box;
+	box drag_zone;
 	
-	SDL_Color border_color;
-	SDL_Color menu_color;
-	
-	int border_thickness;
+//not saving values(
+	SDL_Point mouse_press_pos;
+	bool moving = false;
+//)
 	
 	bool resizable = false;
 	bool movable = true;
-	bool shown = false;
+	bool shown = true;
 	
 	int buttons_size = 0;
 	button** buttons = NULL;
@@ -71,6 +75,8 @@ public:
 	
 	void buttons_resize(int increment);
 	void texts_resize(int increment);
+	
+	void update();
 };
 
 class designer
@@ -91,8 +97,9 @@ public:
 	void new_menu(std::string name);
 	int delete_menu(char * name); //will return -1 if not exist
 	
-	void text_create(std::string menuname,int x,int y,std::string _text,std::string font);
+	void text_create(std::string menuname,int x,int y,int h,int w,std::string _text,std::string font);
 	void button_create(std::string menuname,std::string str,std::string font_name,SDL_Rect shape,SDL_Color color);
+	void button_update(button &b,SDL_Rect real_pos);
 	
 	menu * get_menu(std::string name);
 	

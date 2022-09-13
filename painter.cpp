@@ -97,7 +97,9 @@ void painter::unlock(SDL_Surface *screen)
 
 void painter::clean()
 {
-	box_draw(windowrect,0,0,0,0);
+	static SDL_Color black_color = {0,0,0,255};
+	
+	simple_fill(this->windowrect,black_color);
 	
 	SDL_RenderClear(this->base_renderer);
 }
@@ -117,55 +119,41 @@ void painter::simple_draw(int x,int y,int w,int h,SDL_Texture * tex)
 	SDL_RenderCopy(this->base_renderer,tex,NULL,&r);
 }
 
-void painter::box_draw(SDL_Rect &box,Uint8 r,Uint8 g,Uint8 b,Uint8 a)
+void painter::simple_fill(SDL_Rect r,SDL_Color c)
 {
-	SDL_SetRenderDrawColor(this->base_renderer,r,g,b,a);
-	SDL_RenderFillRect(this->base_renderer,&box);
+	SDL_SetRenderDrawColor(this->base_renderer,c.r,c.g,c.b,c.a);
+	SDL_RenderFillRect(this->base_renderer,&r);
 }
 
-void painter::box_draw(SDL_Rect &box,SDL_Color &color)
+void painter::box_draw(box b)
 {
-	SDL_SetRenderDrawColor(this->base_renderer,color.r,color.g,color.b,color.a);
-	SDL_RenderFillRect(this->base_renderer,&box);
+	SDL_SetRenderDrawColor(this->base_renderer,b.border_color.r,b.border_color.g,b.border_color.b,b.border_color.a);
+	SDL_RenderFillRect(this->base_renderer,&b.shape);
+	
+	b.shape.h -= b.border_th*2;
+	b.shape.w -= b.border_th*2;
+	b.shape.x += b.border_th;
+	b.shape.y += b.border_th;
+	
+	SDL_SetRenderDrawColor(this->base_renderer,b.color.r,b.color.g,b.color.b,b.color.a);
+	SDL_RenderFillRect(this->base_renderer,&b.shape);
 }
 
-void painter::draw_cool_box(SDL_Rect box,SDL_Color color,int border_w,SDL_Color border_color)
+void painter::rel_box_draw(SDL_Rect a,box b)
 {
-	box_draw(box,border_color);
+	b.shape.x += a.x;
+	b.shape.y += a.y;
 	
-	box.h -= border_w*2;
-	box.w -= border_w*2;
-	box.x += border_w;
-	box.y += border_w;
+	SDL_SetRenderDrawColor(this->base_renderer,b.border_color.r,b.border_color.g,b.border_color.b,b.border_color.a);
+	SDL_RenderFillRect(this->base_renderer,&b.shape);
 	
-	box_draw(box,color);
-}
-
-void painter::draw_cool_box(SDL_Rect box,SDL_Color color,int border_w,int border_shading)
-{
-	box_draw(box,color.r-border_shading,color.g-border_shading,color.b-border_shading,255);
+	b.shape.h -= b.border_th*2;
+	b.shape.w -= b.border_th*2;
+	b.shape.x += b.border_th;
+	b.shape.y += b.border_th;
 	
-	box.h -= border_w*2;
-	box.w -= border_w*2;
-	box.x += border_w;
-	box.y += border_w;
-	
-	box_draw(box,color);
-}
-
-void painter::draw_cool_box(SDL_Rect menu_box,SDL_Rect box,SDL_Color color,int border_w,int border_shading)
-{
-	box.x+=menu_box.x;
-	box.y+=menu_box.y;
-	
-	box_draw(box,color.r-border_shading,color.g-border_shading,color.b-border_shading,255);
-	
-	box.h -= border_w*2;
-	box.w -= border_w*2;
-	box.x += border_w;
-	box.y += border_w;
-	
-	box_draw(box,color);
+	SDL_SetRenderDrawColor(this->base_renderer,b.color.r,b.color.g,b.color.b,b.color.a);
+	SDL_RenderFillRect(this->base_renderer,&b.shape);
 }
 
 void painter::dev_draw_all(tex_lib &source)
@@ -184,7 +172,10 @@ void painter::dev_draw_all(tex_lib &source)
 
 void painter::menu_draw(menu &Menu)
 {
-	draw_cool_box(Menu.shape,Menu.menu_color,Menu.border_thickness,Menu.border_color);
+	Menu.update();
+	
+	box_draw(Menu.menu_box);
+	rel_box_draw(Menu.menu_box.shape,Menu.drag_zone);
 	
 	for(int i=0;i<Menu.texts_size;i++)
 	{
@@ -199,31 +190,38 @@ void painter::menu_draw(menu &Menu)
 
 void painter::text_draw(menu &Menu,text &Text)
 {
+	rel_box_draw(Menu.menu_box.shape,Text.text_box);
+	
+	//text rendering
 	SDL_Color defcolor = {255,255,255,255};
-	SDL_Surface * tmp = TTF_RenderText_Blended_Wrapped(Text.font,Text.text.c_str(),defcolor,Menu.shape.w-Text.pos_x);
+	SDL_Rect dest = {Menu.menu_box.shape.x+Text.text_box.shape.x,Menu.menu_box.shape.y+Text.text_box.shape.y,0,0};
 	
+	SDL_Surface * tmp = TTF_RenderText_Blended_Wrapped(Text.font,Text.text.c_str(),defcolor,Text.text_box.shape.w);
 	SDL_Texture * tmptex = SDL_CreateTextureFromSurface(this->base_renderer, tmp);
-	SDL_FreeSurface(tmp);
 	
-	SDL_Rect dest = {Menu.shape.x+Text.pos_x,Menu.shape.y+Text.pos_y,0,0};
-	SDL_QueryTexture(tmptex, NULL, NULL, &dest.w, &dest.h);
+	SDL_QueryTexture(tmptex, NULL, NULL, &dest.w, &dest.h); //get height and width of texture, store in "dest" struct
 	
 	SDL_RenderCopy(this->base_renderer,tmptex,0,&dest);
+	
+	SDL_FreeSurface(tmp);
 	SDL_DestroyTexture(tmptex);
 }
 
 void painter::button_draw(menu &Menu,button &Button)
 {
 	SDL_Rect t;
-	t.x = Menu.shape.x + Button.shape.x;
-	t.y = Menu.shape.y + Button.shape.y;
-	t.w = Button.shape.w;
-	t.h = Button.shape.h;
-	Button.update(t);
-	draw_cool_box(Menu.shape,Button.shape,Button.color,2,Button.focused ? 5 : 100);
+	t.x = Menu.menu_box.shape.x + Button.button_box.shape.x;
+	t.y = Menu.menu_box.shape.y + Button.button_box.shape.y;
+	t.w = Button.button_box.shape.w;
+	t.h = Button.button_box.shape.h;
+	
+	this->Designer.button_update(Button,t);
+	
+	rel_box_draw(Menu.menu_box.shape,Button.button_box);
+	//focused draw
 	
 	SDL_Color defcolor = {255,255,255,255};
-	SDL_Surface * tmp = TTF_RenderText_Blended_Wrapped(Button.font,Button.text.c_str(),defcolor,Button.shape.w);
+	SDL_Surface * tmp = TTF_RenderText_Blended_Wrapped(Button.font,Button.text.c_str(),defcolor,Button.button_box.shape.w);
 	
 	SDL_Texture * tmptex = SDL_CreateTextureFromSurface(this->base_renderer, tmp);
 	SDL_FreeSurface(tmp);
@@ -231,7 +229,10 @@ void painter::button_draw(menu &Menu,button &Button)
 	int text_h,text_w;
 	SDL_QueryTexture(tmptex, NULL, NULL, &text_w, &text_h);
 	
-	SDL_Rect dest = {Menu.shape.x+Button.shape.x+(Button.shape.w/2-text_w/2),Menu.shape.y+Button.shape.y+(Button.shape.h/2-text_h/2),0,0};
+	SDL_Rect dest = {
+		Menu.menu_box.shape.x+Button.button_box.shape.x+(Button.button_box.shape.w/2-text_w/2),
+		Menu.menu_box.shape.y+Button.button_box.shape.y+(Button.button_box.shape.h/2-text_h/2),
+		0,0};
 	
 	dest.w = text_w;
 	dest.h = text_h;

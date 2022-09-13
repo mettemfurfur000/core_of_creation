@@ -1,31 +1,33 @@
 {
     "menu": {
-        "border_color": {
-            "a": 0,
-            "b": 64,
-            "g": 255,
-            "r": 0
-        },
-        "border_thickness": 2,
         "buttons": [
             {
-                "color": {
-                    "a": 0,
-                    "b": 64,
-                    "g": 255,
-                    "r": 0
+                "button_box": {
+                    "border_color": {
+                        "a": 0,
+                        "b": 0,
+                        "g": 0,
+                        "r": 0
+                    },
+                    "border_th": 0,
+                    "main_color": {
+                        "a": 0,
+                        "b": 64,
+                        "g": 255,
+                        "r": 0
+                    },
+                    "shape": {
+                        "h": 20,
+                        "w": 60,
+                        "x": 50,
+                        "y": 50
+                    }
                 },
                 "exist": true,
                 "focused": false,
                 "font_name": "DOSMINI.ttf",
                 "locked": false,
                 "pressed": false,
-                "shape": {
-                    "h": 20,
-                    "w": 60,
-                    "x": 50,
-                    "y": 50
-                },
                 "text": "boop"
             },
             {
@@ -39,29 +41,57 @@
             }
         ],
         "buttons_size": 4,
-        "menu_color": {
-            "a": 0,
-            "b": 64,
-            "g": 64,
-            "r": 1
+        "menu_box": {
+            "border_color": {
+                "a": 0,
+                "b": 64,
+                "g": 255,
+                "r": 0
+            },
+            "border_th": 2,
+            "main_color": {
+                "a": 0,
+                "b": 64,
+                "g": 64,
+                "r": 1
+            },
+            "shape": {
+                "h": 240,
+                "w": 320,
+                "x": 155,
+                "y": 53
+            }
         },
         "movable": true,
         "name": "MAIN_MENU",
         "resizable": false,
-        "shape": {
-            "h": 240,
-            "w": 320,
-            "x": 160,
-            "y": 120
-        },
-        "shown": false,
+        "shown": true,
         "texts": [
             {
                 "exist": true,
                 "font_name": "DOSMINI.ttf",
-                "pos_x": 10,
-                "pos_y": 10,
-                "text": "test_text\namongus"
+                "text": "test_text\namongus",
+                "text_box": {
+                    "border_color": {
+                        "a": 0,
+                        "b": 0,
+                        "g": 0,
+                        "r": 0
+                    },
+                    "border_th": 0,
+                    "main_color": {
+                        "a": 0,
+                        "b": 0,
+                        "g": 0,
+                        "r": 0
+                    },
+                    "shape": {
+                        "h": 50,
+                        "w": 100,
+                        "x": 10,
+                        "y": 10
+                    }
+                }
             },
             {
                 "exist": false
