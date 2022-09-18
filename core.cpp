@@ -27,22 +27,16 @@ int main(int argc, char* argv[])
 	
 	SDL_Rect but = {50,50,60,20};
 	
-	int n;
-	std::cin >> n;
-	if(n)
+	
+	if(!m.Designer.load_menu("MAIN_MENU","menusaves"))
 	{
-		m.Designer.load_menu("MAIN_MENU","menusaves");
-	}else{
 		m.Designer.create_menu(mainmenu,temp,bcol,mcol,2);
 		m.Designer.text_create(mainmenu,10,10,50,100,txt,dosmini);
 		m.Designer.button_create(mainmenu,"boop",dosmini,but,bcol);
 	}
-	
 	//
-
-	//m.Designer.delete_menu("MAIN_MENU");
+	m.Designer.edit_mode = true;
 	
-
 	while (!loopShouldStop)
     {
         while (SDL_PollEvent(&event))

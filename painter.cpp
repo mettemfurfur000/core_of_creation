@@ -9,6 +9,8 @@ painter::painter()
 		exit(1004);
 	}
 	
+	SDL_SetRenderDrawBlendMode(this->base_renderer,SDL_BLENDMODE_BLEND);
+	
 	block_tex_lib.init(128);
 	block_tex_lib.base_renderer = this->base_renderer;
 	block_tex_lib.automatic_load("blocks\\");
@@ -139,6 +141,30 @@ void painter::box_draw(box b)
 	SDL_RenderFillRect(this->base_renderer,&b.shape);
 }
 
+void painter::rel_box_draw(SDL_Rect a,box b,int border_color_shift)
+{
+	if(border_color_shift)
+	{
+		b.border_color.r+=border_color_shift;
+		b.border_color.g+=border_color_shift;
+		b.border_color.b+=border_color_shift;
+	}
+	
+	b.shape.x += a.x;
+	b.shape.y += a.y;
+	
+	SDL_SetRenderDrawColor(this->base_renderer,b.border_color.r,b.border_color.g,b.border_color.b,b.border_color.a);
+	SDL_RenderFillRect(this->base_renderer,&b.shape);
+	
+	b.shape.h -= b.border_th*2;
+	b.shape.w -= b.border_th*2;
+	b.shape.x += b.border_th;
+	b.shape.y += b.border_th;
+	
+	SDL_SetRenderDrawColor(this->base_renderer,b.color.r,b.color.g,b.color.b,b.color.a);
+	SDL_RenderFillRect(this->base_renderer,&b.shape);
+}
+
 void painter::rel_box_draw(SDL_Rect a,box b)
 {
 	b.shape.x += a.x;
@@ -209,16 +235,20 @@ void painter::text_draw(menu &Menu,text &Text)
 
 void painter::button_draw(menu &Menu,button &Button)
 {
-	SDL_Rect t;
+	SDL_Rect t = Button.button_box.shape;
 	t.x = Menu.menu_box.shape.x + Button.button_box.shape.x;
 	t.y = Menu.menu_box.shape.y + Button.button_box.shape.y;
-	t.w = Button.button_box.shape.w;
-	t.h = Button.button_box.shape.h;
+	
+	//special edition!
+	if(Designer.edit_mode)
+	{
+		Designer.edit_move_object_in_menu(Menu.menu_box,Button.button_box);
+	}
+	//
 	
 	this->Designer.button_update(Button,t);
 	
-	rel_box_draw(Menu.menu_box.shape,Button.button_box);
-	//focused draw
+	rel_box_draw(Menu.menu_box.shape,Button.button_box, Button.focused ? (Button.pressed ? 100 : 50) : 0);
 	
 	SDL_Color defcolor = {255,255,255,255};
 	SDL_Surface * tmp = TTF_RenderText_Blended_Wrapped(Button.font,Button.text.c_str(),defcolor,Button.button_box.shape.w);

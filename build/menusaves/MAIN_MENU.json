@@ -4,34 +4,60 @@
             {
                 "button_box": {
                     "border_color": {
-                        "a": 0,
-                        "b": 0,
-                        "g": 0,
-                        "r": 0
+                        "a": 255,
+                        "b": 75,
+                        "g": 75,
+                        "r": 75
                     },
-                    "border_th": 0,
+                    "border_th": 2,
                     "main_color": {
-                        "a": 0,
+                        "a": 255,
                         "b": 64,
                         "g": 255,
                         "r": 0
                     },
                     "shape": {
-                        "h": 20,
-                        "w": 60,
-                        "x": 50,
-                        "y": 50
+                        "h": 30,
+                        "w": 70,
+                        "x": 143,
+                        "y": 124
                     }
                 },
                 "exist": true,
                 "focused": false,
                 "font_name": "DOSMINI.ttf",
                 "locked": false,
-                "pressed": false,
-                "text": "boop"
+                "pressed": true,
+                "text": "buttone"
             },
             {
-                "exist": false
+                "button_box": {
+                    "border_color": {
+                        "a": 255,
+                        "b": 10,
+                        "g": 90,
+                        "r": 50
+                    },
+                    "border_th": 2,
+                    "main_color": {
+                        "a": 15,
+                        "b": 10,
+                        "g": 15,
+                        "r": 0
+                    },
+                    "shape": {
+                        "h": 20,
+                        "w": 20,
+                        "x": 232,
+                        "y": 112
+                    }
+                },
+                "exist": true,
+                "focused": false,
+                "font_name": "DOSMINI.ttf",
+                "locked": false,
+                "pressed": true,
+                "text": "OK"
             },
             {
                 "exist": false
@@ -41,16 +67,37 @@
             }
         ],
         "buttons_size": 4,
-        "menu_box": {
+        "drag_zone": {
             "border_color": {
-                "a": 0,
+                "a": 255,
                 "b": 64,
                 "g": 255,
                 "r": 0
             },
             "border_th": 2,
             "main_color": {
-                "a": 0,
+                "a": 255,
+                "b": 64,
+                "g": 64,
+                "r": 1
+            },
+            "shape": {
+                "h": 20,
+                "w": 90,
+                "x": 0,
+                "y": 0
+            }
+        },
+        "menu_box": {
+            "border_color": {
+                "a": 255,
+                "b": 64,
+                "g": 255,
+                "r": 0
+            },
+            "border_th": 2,
+            "main_color": {
+                "a": 255,
                 "b": 64,
                 "g": 64,
                 "r": 1
@@ -58,8 +105,8 @@
             "shape": {
                 "h": 240,
                 "w": 320,
-                "x": 155,
-                "y": 53
+                "x": 57,
+                "y": 54
             }
         },
         "movable": true,
@@ -70,7 +117,7 @@
             {
                 "exist": true,
                 "font_name": "DOSMINI.ttf",
-                "text": "test_text\namongus",
+                "text": "albert\nalbert\nhilbert",
                 "text_box": {
                     "border_color": {
                         "a": 0,
@@ -88,8 +135,8 @@
                     "shape": {
                         "h": 50,
                         "w": 100,
-                        "x": 10,
-                        "y": 10
+                        "x": 30,
+                        "y": 40
                     }
                 }
             },

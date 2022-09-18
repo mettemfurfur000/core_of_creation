@@ -13,6 +13,13 @@
 
 using json = nlohmann::json;
 
+struct editable_object
+{
+	SDL_Point old_cursor;
+	
+	bool moving = false;
+};
+
 struct box
 {
 	SDL_Rect shape;
@@ -21,6 +28,8 @@ struct box
 	
 	SDL_Color color;
 	SDL_Color border_color;
+	//
+	editable_object edt;
 };
 
 struct text
@@ -83,12 +92,16 @@ class designer
 {
 public:
 	int menustack_size;
-		
+	
+	bool edit_mode = false;
+	
 	font_lib normal_fonts;
 	
 	menu** menustack;
 	
 	designer();
+	
+	void edit_move_object_in_menu(box menubox,box &objbox);
 	
 	void init(int start_size);
 	void resize(int increment);
@@ -99,10 +112,10 @@ public:
 	
 	void text_create(std::string menuname,int x,int y,int h,int w,std::string _text,std::string font);
 	void button_create(std::string menuname,std::string str,std::string font_name,SDL_Rect shape,SDL_Color color);
-	void button_update(button &b,SDL_Rect real_pos);
+	void button_update(button &b,SDL_Rect &real_pos);
 	
 	menu * get_menu(std::string name);
 	
 	void save_menu(std::string name,std::string folder);
-	void load_menu(std::string name,std::string folder);
+	bool load_menu(std::string name,std::string folder);
 };

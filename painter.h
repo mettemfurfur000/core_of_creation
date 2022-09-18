@@ -39,6 +39,7 @@ public:
 	void simple_fill(SDL_Rect r,SDL_Color c);
 	void box_draw(box b);
 	void rel_box_draw(SDL_Rect a,box b);
+	void rel_box_draw(SDL_Rect a,box b,int border_color_shift);
 	
 	void menustack_draw();
 	void menu_draw(menu &Menu);
