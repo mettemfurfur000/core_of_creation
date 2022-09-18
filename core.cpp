@@ -30,9 +30,7 @@ int main(int argc, char* argv[])
 	
 	if(!m.Designer.load_menu("MAIN_MENU","menusaves"))
 	{
-		m.Designer.create_menu(mainmenu,temp,bcol,mcol,2);
-		m.Designer.text_create(mainmenu,10,10,50,100,txt,dosmini);
-		m.Designer.button_create(mainmenu,"boop",dosmini,but,bcol);
+		exit(1);
 	}
 	//
 	m.Designer.edit_mode = true;

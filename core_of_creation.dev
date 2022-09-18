@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;1;0;0;0;4;0;0;0
-UnitCount=16
+UnitCount=15
 
 [VersionInfo]
 Major=1
@@ -190,17 +190,17 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit15]
-FileName=designer_json.h
+[Unit16]
+FileName=designer_json.cpp
 CompileCpp=1
-Folder=headers
+Folder=cpp_s
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit16]
+[Unit15]
 FileName=designer_json.cpp
 CompileCpp=1
 Folder=cpp_s

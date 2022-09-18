@@ -46,21 +46,21 @@ void designer::edit_move_object_in_menu(box menubox,box &objbox)
 	SDL_PumpEvents();
 	Uint32 state = SDL_GetMouseState(&cursor.x,&cursor.y);
 	
-	if(objbox.moving)
+	if(objbox.ed_pos.moving)
 	{
-		objbox.shape.x += cursor.x - objbox.old_cursor.x;
-		objbox.shape.y += cursor.y - objbox.old_cursor.y;
+		objbox.shape.x += cursor.x - objbox.ed_pos.old_cursor.x;
+		objbox.shape.y += cursor.y - objbox.ed_pos.old_cursor.y;
 	}
 	
 	if(SDL_PointInRectRel(&cursor,objbox.shape,&menubox.shape))
 	{
 		if(state & SDL_BUTTON_LMASK)
 		{
-			objbox.moving = true;
-			objbox.old_cursor = cursor;
+			objbox.ed_pos.moving = true;
+			objbox.ed_pos.old_cursor = cursor;
 			return;
 		}
-		objbox.moving = false;
+		objbox.ed_pos.moving = false;
 		return;
 	}
 }
@@ -200,62 +200,4 @@ void menu::buttons_init(int size)
 {
 	t_init(this->buttons,size);
 	this->buttons_size = size;
-}
-
-void designer::text_create(std::string menuname,int x,int y,int h,int w,std::string _text,std::string font)
-{
-	menu* Menu = this->get_menu(menuname.c_str());
-	
-	int i=0;
-	while(Menu->texts && i < Menu->texts_size) i++; //simple search fot free place
-	
-	if(i >= Menu->texts_size) Menu->texts_resize(4); //expand if not enough
-	
-	Menu->texts[i] = new text;
-	Menu->texts[i]->text_box.shape.x = x;
-	Menu->texts[i]->text_box.shape.y = y;
-	Menu->texts[i]->text_box.shape.h = h;
-	Menu->texts[i]->text_box.shape.w = w;
-	
-	if(_text.empty()) 
-		Menu->texts[i]->text = "hello, dev~";
-	else 
-		Menu->texts[i]->text = _text;
-	
-	if(font.empty())
-	{
-		Menu->texts[i]->font = this->normal_fonts.GetByName("default.ttf");
-		Menu->texts[i]->font_name = "default.ttf";
-	}else{
-		Menu->texts[i]->font = this->normal_fonts.GetByName(font);
-		Menu->texts[i]->font_name = font;
-	}
-}
-
-void designer::button_create(std::string menuname,std::string str,std::string font_name,SDL_Rect shape,SDL_Color color)
-{
-	menu* Menu = get_menu(menuname.c_str());
-	
-	int i=0;
-	while(Menu->buttons && i < Menu->buttons_size) i++; //simple search fot free place
-	
-	if(i >= Menu->buttons_size) Menu->buttons_resize(4); //expand if not enough
-	
-	Menu->buttons[i] = new button;
-	Menu->buttons[i]->button_box.shape = shape;
-	Menu->buttons[i]->button_box.color = color;
-	
-	if(str.empty())
-		Menu->buttons[i]->text = " ";
-	else 
-		Menu->buttons[i]->text = str;
-	
-	if(font_name.empty())
-	{
-		Menu->buttons[i]->font = this->normal_fonts.GetByName("default.ttf");
-		Menu->buttons[i]->font_name = "default.ttf";
-	}else{
-		Menu->buttons[i]->font = this->normal_fonts.GetByName(font_name);
-		Menu->buttons[i]->font_name = font_name;
-	}
 }

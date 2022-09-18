@@ -216,6 +216,13 @@ void painter::menu_draw(menu &Menu)
 
 void painter::text_draw(menu &Menu,text &Text)
 {
+	//special edition!
+	if(Designer.edit_mode)
+	{
+		Designer.edit_move_object_in_menu(Menu.menu_box,Text.text_box);
+	}
+	//
+	
 	rel_box_draw(Menu.menu_box.shape,Text.text_box);
 	
 	//text rendering
@@ -235,23 +242,24 @@ void painter::text_draw(menu &Menu,text &Text)
 
 void painter::button_draw(menu &Menu,button &Button)
 {
-	SDL_Rect t = Button.button_box.shape;
-	t.x = Menu.menu_box.shape.x + Button.button_box.shape.x;
-	t.y = Menu.menu_box.shape.y + Button.button_box.shape.y;
+	SDL_Rect t = Button.text_part.text_box.shape;
+
+	t.x = Menu.menu_box.shape.x + Button.text_part.text_box.shape.x;
+	t.y = Menu.menu_box.shape.y + Button.text_part.text_box.shape.y;
 	
 	//special edition!
 	if(Designer.edit_mode)
 	{
-		Designer.edit_move_object_in_menu(Menu.menu_box,Button.button_box);
+		Designer.edit_move_object_in_menu(Menu.menu_box,Button.text_part.text_box);
 	}
 	//
 	
 	this->Designer.button_update(Button,t);
 	
-	rel_box_draw(Menu.menu_box.shape,Button.button_box, Button.focused ? (Button.pressed ? 100 : 50) : 0);
+	rel_box_draw(Menu.menu_box.shape,Button.text_part.text_box, Button.focused ? (Button.pressed ? 100 : 50) : 0);
 	
 	SDL_Color defcolor = {255,255,255,255};
-	SDL_Surface * tmp = TTF_RenderText_Blended_Wrapped(Button.font,Button.text.c_str(),defcolor,Button.button_box.shape.w);
+	SDL_Surface * tmp = TTF_RenderText_Blended_Wrapped(Button.text_part.font, Button.text_part.text.c_str(), defcolor, Button.text_part.text_box.shape.w);
 	
 	SDL_Texture * tmptex = SDL_CreateTextureFromSurface(this->base_renderer, tmp);
 	SDL_FreeSurface(tmp);
@@ -260,9 +268,11 @@ void painter::button_draw(menu &Menu,button &Button)
 	SDL_QueryTexture(tmptex, NULL, NULL, &text_w, &text_h);
 	
 	SDL_Rect dest = {
-		Menu.menu_box.shape.x+Button.button_box.shape.x+(Button.button_box.shape.w/2-text_w/2),
-		Menu.menu_box.shape.y+Button.button_box.shape.y+(Button.button_box.shape.h/2-text_h/2),
-		0,0};
+		Menu.menu_box.shape.x+Button.text_part.text_box.shape.x+(Button.text_part.text_box.shape.w/2-text_w/2),
+		Menu.menu_box.shape.y+Button.text_part.text_box.shape.y+(Button.text_part.text_box.shape.h/2-text_h/2),
+		0,
+		0
+		};
 	
 	dest.w = text_w;
 	dest.h = text_h;

@@ -65,6 +65,23 @@ void from_json(const json& j, box& p)
 	j.at("border_th").get_to(p.border_th);
 }
 
+void to_json(json& j, const text& p) 
+{
+	j = json
+	{
+		{"text_box",p.text_box},
+		{"text",p.text},
+		{"font_name",p.font_name}
+	};
+}
+
+void from_json(const json& j, text& p) 
+{
+	j.at("text_box").get_to(p.text_box);
+	j.at("text").get_to(p.text);
+	j.at("font_name").get_to(p.font_name);
+}
+
 void designer::save_menu(std::string name,std::string folder)
 {
 	std::string command;
@@ -98,14 +115,12 @@ void designer::save_menu(std::string name,std::string folder)
 		if(Menu->buttons[i])
 		{
 			j["menu"]["buttons"][i]["exist"] = true;
-			j["menu"]["buttons"][i]["button_box"] = Menu->buttons[i]->button_box;
 			
 			j["menu"]["buttons"][i]["locked"] = Menu->buttons[i]->locked;
 			j["menu"]["buttons"][i]["focused"] = Menu->buttons[i]->focused;
 			j["menu"]["buttons"][i]["pressed"] = Menu->buttons[i]->pressed;
 			
-			j["menu"]["buttons"][i]["text"] = Menu->buttons[i]->text;
-			j["menu"]["buttons"][i]["font_name"] = Menu->buttons[i]->font_name;
+			j["menu"]["buttons"][i]["text_part"] = Menu->buttons[i]->text_part;
 		}else{
 			j["menu"]["buttons"][i]["exist"] = false;
 		}
@@ -118,10 +133,7 @@ void designer::save_menu(std::string name,std::string folder)
 		{
 			j["menu"]["texts"][i]["exist"] = true;
 			
-			j["menu"]["texts"][i]["text"] = Menu->texts[i]->text;
-			j["menu"]["texts"][i]["font_name"] = Menu->texts[i]->font_name;
-			
-			j["menu"]["texts"][i]["text_box"] = Menu->texts[i]->text_box;
+			j["menu"]["texts"][i] = *Menu->texts[i];
 		}else{
 			j["menu"]["texts"][i]["exist"] = false;
 		}
@@ -166,15 +178,13 @@ bool designer::load_menu(std::string name,std::string folder) //if success, retu
 		{
 			Menu->buttons[i] = new button;
 			
-			Menu->buttons[i]->button_box = j["menu"]["buttons"][i]["button_box"].get<box>();
-			
 			Menu->buttons[i]->locked = j["menu"]["buttons"][i]["locked"].get<bool>();
 			Menu->buttons[i]->focused = j["menu"]["buttons"][i]["focused"].get<bool>();
 			Menu->buttons[i]->pressed = j["menu"]["buttons"][i]["pressed"].get<bool>();
 			
-			Menu->buttons[i]->text = j["menu"]["buttons"][i]["text"].get<std::string>();
-			Menu->buttons[i]->font_name = j["menu"]["buttons"][i]["font_name"].get<std::string>();
-			Menu->buttons[i]->font = this->normal_fonts.GetByName(Menu->buttons[i]->font_name);
+			Menu->buttons[i]->text_part = j["menu"]["buttons"][i]["text_part"].get<text>();
+			
+			Menu->buttons[i]->text_part.font = this->normal_fonts.GetByName(Menu->buttons[i]->text_part.font_name);
 		}else{
 			Menu->buttons[i] = 0;
 		}
@@ -189,9 +199,8 @@ bool designer::load_menu(std::string name,std::string folder) //if success, retu
 		if(j["menu"]["texts"][i]["exist"])
 		{
 			Menu->texts[i] = new text;
-			Menu->texts[i]->text_box = j["menu"]["texts"][i]["text_box"].get<box>();
-			Menu->texts[i]->text = j["menu"]["texts"][i]["text"].get<std::string>();
-			Menu->texts[i]->font_name = j["menu"]["texts"][i]["font_name"].get<std::string>();
+			
+			*Menu->texts[i] = j["menu"]["texts"][i].get<text>();
 			//
 			Menu->texts[i]->font = this->normal_fonts.GetByName(Menu->texts[i]->font_name);
 			//

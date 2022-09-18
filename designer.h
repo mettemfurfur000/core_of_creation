@@ -13,11 +13,16 @@
 
 using json = nlohmann::json;
 
-struct editable_object
+struct editable_position
 {
 	SDL_Point old_cursor;
 	
 	bool moving = false;
+};
+
+struct editable_text
+{
+	bool editing = false;
 };
 
 struct box
@@ -29,7 +34,7 @@ struct box
 	SDL_Color color;
 	SDL_Color border_color;
 	//
-	editable_object edt;
+	editable_position ed_pos;
 };
 
 struct text
@@ -40,20 +45,17 @@ struct text
 	std::string font_name;
 	
 	TTF_Font * font = NULL;
+	//
+	editable_text ed_txt;
 };
 
 struct button
 {
-	box button_box;
-	
 	bool locked;
 	bool focused;
 	bool pressed;
 	
-	std::string text;
-	std::string font_name;
-	
-	TTF_Font * font = NULL;
+	text text_part;
 };
 
 class menu
@@ -110,8 +112,6 @@ public:
 	void new_menu(std::string name);
 	int delete_menu(char * name); //will return -1 if not exist
 	
-	void text_create(std::string menuname,int x,int y,int h,int w,std::string _text,std::string font);
-	void button_create(std::string menuname,std::string str,std::string font_name,SDL_Rect shape,SDL_Color color);
 	void button_update(button &b,SDL_Rect &real_pos);
 	
 	menu * get_menu(std::string name);
