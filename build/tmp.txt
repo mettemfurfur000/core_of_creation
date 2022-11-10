@@ -1,4 +1,2 @@
-default.fon
-DOSBIG.ttf
-DOSMINI.ttf
-LICENSE.txt
+boulder.bmp
+stone.bmp

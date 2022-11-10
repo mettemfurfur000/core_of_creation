@@ -4,15 +4,15 @@
 CPP      = g++.exe -D__DEBUG__
 CC       = gcc.exe -D__DEBUG__
 WINDRES  = windres.exe
-OBJ      = o_files/core.o o_files/painter.o o_files/librarian.o o_files/tex_lib.o o_files/creator.o o_files/designer.o o_files/fonts_lib.o o_files/designer_json.o
-LINKOBJ  = o_files/core.o o_files/painter.o o_files/librarian.o o_files/tex_lib.o o_files/creator.o o_files/designer.o o_files/fonts_lib.o o_files/designer_json.o
-LIBS     = -L"C:/Dev-Cpp/TDM-GCC-64/lib" -L"C:/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/lib" -L"C:/sdl2/SDL2-2.0.22/x86_64-w64-mingw32/lib" -L"C:/sdl2/SDL2_ttf-2.20.0/x86_64-w64-mingw32/lib" -L"C:/sdl2/SDL2_image-2.6.0/x86_64-w64-mingw32/lib" -static-libgcc -lmingw32  -lSDL2main  -lSDL2 -lSDL2_ttf -lSDL2_image -g3
-INCS     = -I"C:/Dev-Cpp/TDM-GCC-64/include" -I"C:/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include" -I"C:/sdl2/SDL2-2.0.22/x86_64-w64-mingw32/include/SDL2" -I"C:/sdl2/SDL2_ttf-2.20.0/x86_64-w64-mingw32/include/SDL2" -I"C:/sdl2/SDL2_image-2.6.0/x86_64-w64-mingw32/include/SDL2" -I"C:/json"
-CXXINCS  = -I"C:/Dev-Cpp/TDM-GCC-64/include" -I"C:/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include" -I"C:/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include/c++" -I"C:/sdl2/SDL2-2.0.22/x86_64-w64-mingw32/include/SDL2" -I"C:/sdl2/SDL2_ttf-2.20.0/x86_64-w64-mingw32/include/SDL2" -I"C:/sdl2/SDL2_image-2.6.0/x86_64-w64-mingw32/include/SDL2" -I"C:/json"
+OBJ      = o_files/core.o o_files/librarian.o o_files/creator.o o_files/lua_worker.o o_files/renderer.o o_files/libraries.o o_files/ui_struct.o o_files/event_handler.o
+LINKOBJ  = o_files/core.o o_files/librarian.o o_files/creator.o o_files/lua_worker.o o_files/renderer.o o_files/libraries.o o_files/ui_struct.o o_files/event_handler.o
+LIBS     = -L"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib" -L"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/lib" -L"C:/sdl2/SDL2_image-2.6.0/x86_64-w64-mingw32/lib" -L"C:/sdl2/SDL2_ttf-2.20.0/x86_64-w64-mingw32/lib" -L"C:/sdl2/SDL2-2.0.22/x86_64-w64-mingw32/lib" -static-libgcc -lmingw32  -lSDL2main  -lSDL2 -lSDL2_ttf -lSDL2_image C:/lua_bin/lua54.dll -g3
+INCS     = -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include" -I"C:/sdl2/SDL2_image-2.6.0/x86_64-w64-mingw32/include/SDL2" -I"C:/sdl2/SDL2_ttf-2.20.0/x86_64-w64-mingw32/include/SDL2" -I"C:/sdl2/SDL2-2.0.22/x86_64-w64-mingw32/include/SDL2" -I"C:/LuaBridge-2.8/Source" -I"C:/lua_bin/include" -I"C:/json"
+CXXINCS  = -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include/c++" -I"C:/sdl2/SDL2_image-2.6.0/x86_64-w64-mingw32/include/SDL2" -I"C:/sdl2/SDL2_ttf-2.20.0/x86_64-w64-mingw32/include/SDL2" -I"C:/sdl2/SDL2-2.0.22/x86_64-w64-mingw32/include/SDL2" -I"C:/LuaBridge-2.8/Source" -I"C:/lua_bin/include" -I"C:/json"
 BIN      = build/core_of_creation.exe
 CXXFLAGS = $(CXXINCS) -g3
 CFLAGS   = $(INCS) -g3
-DEL      = C:\Dev-Cpp\devcpp.exe INTERNAL_DEL
+DEL      = C:\Program Files (x86)\Embarcadero\Dev-Cpp\devcpp.exe INTERNAL_DEL
 
 .PHONY: all all-before all-after clean clean-custom
 
@@ -27,23 +27,23 @@ $(BIN): $(OBJ)
 o_files/core.o: core.cpp
 	$(CPP) -c core.cpp -o o_files/core.o $(CXXFLAGS)
 
-o_files/painter.o: painter.cpp
-	$(CPP) -c painter.cpp -o o_files/painter.o $(CXXFLAGS)
-
 o_files/librarian.o: librarian.cpp
 	$(CPP) -c librarian.cpp -o o_files/librarian.o $(CXXFLAGS)
-
-o_files/tex_lib.o: tex_lib.cpp
-	$(CPP) -c tex_lib.cpp -o o_files/tex_lib.o $(CXXFLAGS)
 
 o_files/creator.o: creator.cpp
 	$(CPP) -c creator.cpp -o o_files/creator.o $(CXXFLAGS)
 
-o_files/designer.o: designer.cpp
-	$(CPP) -c designer.cpp -o o_files/designer.o $(CXXFLAGS)
+o_files/lua_worker.o: lua_worker.cpp
+	$(CPP) -c lua_worker.cpp -o o_files/lua_worker.o $(CXXFLAGS)
 
-o_files/fonts_lib.o: fonts_lib.cpp
-	$(CPP) -c fonts_lib.cpp -o o_files/fonts_lib.o $(CXXFLAGS)
+o_files/renderer.o: renderer.cpp
+	$(CPP) -c renderer.cpp -o o_files/renderer.o $(CXXFLAGS)
 
-o_files/designer_json.o: designer_json.cpp
-	$(CPP) -c designer_json.cpp -o o_files/designer_json.o $(CXXFLAGS)
+o_files/libraries.o: libraries.cpp
+	$(CPP) -c libraries.cpp -o o_files/libraries.o $(CXXFLAGS)
+
+o_files/ui_struct.o: ui_struct.cpp
+	$(CPP) -c ui_struct.cpp -o o_files/ui_struct.o $(CXXFLAGS)
+
+o_files/event_handler.o: event_handler.cpp
+	$(CPP) -c event_handler.cpp -o o_files/event_handler.o $(CXXFLAGS)

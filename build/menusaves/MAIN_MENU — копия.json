@@ -1,0 +1,142 @@
+{
+    "menu": {
+        "buttons": [
+            {
+                "focused": false,
+                "locked": false,
+                "pressed": false,
+                "text_part": {
+					"font_size": 12,
+					"centered": true,
+                    "font_name": "DOSMINI.ttf",
+                    "text": "Create New World",
+                    "text_box": {
+                        "border_color": {
+                            "a": 255,
+                            "b": 10,
+                            "g": 90,
+                            "r": 50
+                        },
+                        "border_th": 2,
+                        "main_color": {
+                            "a": 15,
+                            "b": 10,
+                            "g": 15,
+                            "r": 0
+                        },
+                        "shape": {
+                            "h": 40,
+                            "w": 140,
+                            "x": 40,
+                            "y": 90
+                        }
+                    }
+                }
+            }
+        ],
+        "buttons_size": 1,
+        "drag_zone": {
+            "border_color": {
+                "a": 255,
+                "b": 64,
+                "g": 255,
+                "r": 0
+            },
+            "border_th": 2,
+            "main_color": {
+                "a": 255,
+                "b": 64,
+                "g": 64,
+                "r": 1
+            },
+            "shape": {
+                "h": 20,
+                "w": 20,
+                "x": 5,
+                "y": 5
+            }
+        },
+        "menu_box": {
+            "border_color": {
+                "a": 255,
+                "b": 64,
+                "g": 255,
+                "r": 0
+            },
+            "border_th": 2,
+            "main_color": {
+                "a": 255,
+                "b": 64,
+                "g": 64,
+                "r": 1
+            },
+            "shape": {
+                "h": 240,
+                "w": 320,
+                "x": 50,
+                "y": 50
+            }
+        },
+        "movable": true,
+        "name": "MAIN_MENU",
+        "resizable": false,
+        "shown": true,
+        "texts": [
+            {
+				"font_size": 12,
+				"centered": true,
+                "font_name": "FreeSans.ttf",
+                "text": "Core of Creation",
+                "text_box": {
+                    "border_color": {
+                        "a": 30,
+                        "b": 20,
+                        "g": 20,
+                        "r": 20
+                    },
+                    "border_th": 2,
+                    "main_color": {
+                        "a": 0,
+                        "b": 100,
+                        "g": 100,
+                        "r": 100
+                    },
+                    "shape": {
+                        "h": 50,
+                        "w": 200,
+                        "x": 40,
+                        "y": 40
+                    }
+                }
+            },
+            {
+				"font_size": 12,
+				"centered": true,
+                "font_name": "FreeSans.ttf",
+                "text": "V\n0.W.0",
+                "text_box": {
+                    "border_color": {
+                        "a": 60,
+                        "b": 200,
+                        "g": 160,
+                        "r": 200
+                    },
+                    "border_th": 1,
+                    "main_color": {
+                        "a": 100,
+                        "b": 100,
+                        "g": 100,
+                        "r": 100
+                    },
+                    "shape": {
+                        "h": 30,
+                        "w": 50,
+                        "x": 263,
+                        "y": 11
+                    }
+                }
+            }
+        ],
+        "texts_size": 2
+    }
+}
