@@ -66,6 +66,27 @@ renderer::~renderer()
 	printf("[PAINTER] - Succesfully Quit!\n");
 }
 
+void renderer::move_box_relative_to_other_box(box *b,SDL_Rect rel)
+{
+	//position calc part
+	if(b->pos.fixed_pos)
+	{
+		//if fixed, just put it where he should be
+		b->pos.shape += rel;
+		b->pos.shape.x -= b->pos.center.x;
+		b->pos.shape.y -= b->pos.center.y;
+	}else{
+		if(b->pos.delta_mode)
+		{
+			b->pos.shape.x = rel.x + (rel.w + b->pos.d_x)%rel.w - b->pos.center.x;
+			b->pos.shape.y = rel.y + (rel.h + b->pos.d_y)%rel.h - b->pos.center.y;
+		}else{
+			b->pos.shape.x = rel.x + (int)(rel.w * b->pos.perc_w) - b->pos.center.x;
+			b->pos.shape.y = rel.y + (int)(rel.h * b->pos.perc_h) - b->pos.center.y;
+		}
+	}
+}
+
 void renderer::render(window* w)
 {
 	int size = w->menus.size();
@@ -78,28 +99,42 @@ void renderer::render(window* w)
 void renderer::render(menu* m)
 {
 	int tsize;
+	if(m->copy_window_rect)
+	{
+		m->menu_box.pos.shape = this->windowrect;
+	}
 	
 	render(&m->menu_box);
-	render(&m->drag_zone,m->menu_box.shape);
+	render(&m->drag_zone,m->menu_box.pos.shape);
 	
 	tsize = m->texts.size();
 	
 	for(int i=0;i<tsize;i++)
 	{
-		render(&m->texts[i],true,m->menu_box.shape);
+		render(&m->texts[i],true,m->menu_box.pos.shape);
 	}
 	
 	tsize = m->buttons.size();
 	
 	for(int i=0;i<tsize;i++)
 	{
-		render(&m->buttons[i],m->menu_box.shape);
+		render(&m->buttons[i],m->menu_box.pos.shape);
 	}
 }
 
 void renderer::render(box* b)
 {
-	SDL_Rect t = b->shape;
+	if(b->shown == false) return;
+	SDL_Rect t = b->pos.shape;
+	
+	if(b->pos.auto_center)
+	{
+		b->pos.center.x = b->pos.shape.w/2;
+		b->pos.center.y = b->pos.shape.h/2;
+	}
+	
+	t.x -= b->pos.center.x;
+	t.y -= b->pos.center.y;
 	
 	SDL_SetRenderDrawColor(
 		this->base_renderer,
@@ -129,9 +164,20 @@ void renderer::render(box* b)
 
 void renderer::render(box* b, SDL_Rect rel_rect)
 {
-	SDL_Rect t = b->shape;
-	t += rel_rect;
+	if(b->shown == false) return;
+	if(b->pos.auto_center)
+	{
+		b->pos.center.x = b->pos.shape.w/2;
+		b->pos.center.y = b->pos.shape.h/2;
+	}
 	
+	box tbox = *b;
+	
+	move_box_relative_to_other_box(&tbox,rel_rect);
+	
+	SDL_Rect t = tbox.pos.shape;
+	
+	//rendering part
 	SDL_SetRenderDrawColor(
 		this->base_renderer,
 		b->border_color.r,
@@ -139,14 +185,14 @@ void renderer::render(box* b, SDL_Rect rel_rect)
 		b->border_color.b,
 		b->border_color.a
 	);
-	
+		
 	SDL_RenderFillRect(this->base_renderer,&t);
-
+	
 	t.h -= b->border_th*2;
 	t.w -= b->border_th*2;
 	t.x += b->border_th;
 	t.y += b->border_th;
-	
+		
 	SDL_SetRenderDrawColor(
 		this->base_renderer,
 		b->color.r,
@@ -160,8 +206,17 @@ void renderer::render(box* b, SDL_Rect rel_rect)
 
 void renderer::render(box* b, int color_shift, SDL_Rect rel_rect)
 {
-	SDL_Rect t = b->shape;
-	t += rel_rect;
+	if(b->shown == false) return;
+	if(b->pos.auto_center)
+	{
+		b->pos.center.x = b->pos.shape.w/2;
+		b->pos.center.y = b->pos.shape.h/2;
+	}
+	box tbox = *b;
+	
+	move_box_relative_to_other_box(&tbox,rel_rect);
+	
+	SDL_Rect t = tbox.pos.shape;
 	
 	SDL_Color t_color = b->border_color;
 	
@@ -200,6 +255,8 @@ void renderer::render(box* b, int color_shift, SDL_Rect rel_rect)
 
 void renderer::render(button* b, SDL_Rect rel_rect)
 {
+	if(b->text_part.text_box.shown == false) return;
+	
 	render(&b->text_part.text_box, b->locked * (b->focused*70 - b->pressed*40),rel_rect);
 	
 	render(&b->text_part,false,rel_rect);
@@ -207,6 +264,8 @@ void renderer::render(button* b, SDL_Rect rel_rect)
 
 void renderer::render(text* t,bool do_render_box, SDL_Rect rel_rect)
 {
+	if(t->text_box.shown == false) return;
+	
 	const SDL_Color defcolor = {255,255,255,255};
 	
 	SDL_Rect strrect,tshape;
@@ -225,7 +284,7 @@ void renderer::render(text* t,bool do_render_box, SDL_Rect rel_rect)
 			t->font,
 			t->text.c_str(),
 			defcolor,
-			t->text_box.shape.w
+			t->text_box.pos.shape.w
 		);
 		
 		t->lazy_texture = SDL_CreateTextureFromSurface(this->base_renderer, tmp);
@@ -233,25 +292,20 @@ void renderer::render(text* t,bool do_render_box, SDL_Rect rel_rect)
 		SDL_FreeSurface(tmp);
 	}
 	
-	tshape = t->text_box.shape;
+	box tbox = t->text_box;
 	
-	tshape += rel_rect;
-	
-	//take texture width and height
-	SDL_QueryTexture(t->lazy_texture, NULL, NULL, &strrect.w, &strrect.h);
-	
+	SDL_QueryTexture(t->lazy_texture, NULL, NULL, &tbox.pos.shape.w, &tbox.pos.shape.h);
+
 	//calcing position
-	
-	strrect.x = tshape.x;
-	strrect.y = tshape.y;
+	move_box_relative_to_other_box(&tbox,rel_rect);
 	
 	if(t->centered)
 	{
-		strrect.x += (tshape.w - strrect.w) / 2;
-		strrect.y += (tshape.h - strrect.h) / 2;
+		tbox.pos.shape.x += (t->text_box.pos.shape.w - tbox.pos.shape.w) / 2;
+		tbox.pos.shape.y += (t->text_box.pos.shape.h - tbox.pos.shape.h) / 2;
 	}
 	
-	SDL_RenderCopy(this->base_renderer,t->lazy_texture,0,&strrect);
+	SDL_RenderCopy(this->base_renderer,t->lazy_texture,0,&tbox.pos.shape);
 }
 
 void renderer::clear()

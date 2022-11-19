@@ -45,10 +45,11 @@ void texture_lib::load_folder(std::string path)
 	
 	if(file_list.is_open())
 	{
-		while(!file_list.eof())
+		while(1)
 		{
 			file_list >> filename; //get filename
-			if(filename.size() < 2) break; //end of file check
+			
+			if(file_list.eof()) break; //end of file check
 			
 			full_filename = path + filename; //create full filename
 			load_file(full_filename); //load
@@ -94,9 +95,13 @@ TTF_Font* font_lib::load_font(std::string path, std::string fontname, int fontsi
 		printf("[font_lib] - Success font loading(size - %d): %s )\n",fontsize,full_path.c_str());
 		
 		return tempFontPtr;
+	}else{
+		printf("[font_lib][E] - Font loading error(size - %d): %s ), loading default font\n",fontsize,full_path.c_str());
+		return this->guarantee_font("default.fon",fontsize);
 	}
 	
-	printf("[font_lib][E] - Font loading error(size - %d): %s )\n",fontsize,full_path.c_str());
+	printf("[font_lib][E] - WHERE FUCKING DEFAULT FONT!? GO FUCK YOURSELF!\n");
+	exit(1505);
 	return 0;
 }
 
@@ -116,10 +121,10 @@ void font_lib::load_folder(std::string path,int fontsize)
 	
 	if(file_list.is_open())
 	{
-		while(!file_list.eof())
+		while(1)
 		{
 			file_list >> filename; //get filename
-			if(filename.size() < 2) break; //end of file check
+			if(file_list.eof()) break; //end of file check
 			
 			full_filename = path + filename; //create full filename
 			this->load_font(full_filename,filename,fontsize); //load font
@@ -140,15 +145,6 @@ TTF_Font* font_lib::getByNameAndSize(std::string name,int fontsize)
 		if(fonts[i].name == name && fonts[i].size == fontsize) return fonts[i].ptr;
 	}
 	return 0;
-}
-
-TTF_Font* font_lib::load_font_from_default_folder(std::string fontname, int fontsize)
-{
-//	TTF_Font* tmp = getByNameAndSize(fontname,fontsize);
-//	
-//	if(tmp) return tmp;
-//	
-	return load_font("fonts\\",fontname,fontsize);
 }
 
 TTF_Font* font_lib::guarantee_font(std::string fontname, int fontsize)

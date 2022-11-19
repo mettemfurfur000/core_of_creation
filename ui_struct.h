@@ -12,20 +12,46 @@
 
 SDL_Rect& operator+=(SDL_Rect &destination, SDL_Rect source);
 
-//TODO
-struct image
+struct position
 {
+	//positioning
+	bool updated = false;
+	bool fixed_pos = true;
+	bool delta_mode = true; //if false, used percentage of width and height
+	bool auto_center = true;
 	
+	SDL_Rect shape;
+	SDL_Point center;
+	
+	float perc_h = 0.0;
+	float perc_w = 0.0;
+	int d_x = 0;
+	int d_y = 0;
+	//lazy positioning
+	SDL_Rect real_shape;
 };
 
 struct box
 {
-	SDL_Rect shape;
+	position pos;
+	
+	//rendering
+	bool shown = true;
 	
 	SDL_Color color;
 	SDL_Color border_color;
-	
 	int border_th;
+	
+	//interactive editing
+	bool moving = false;
+};
+
+//TODO
+struct image
+{
+	position img_pos;
+	std::string img_name;
+	SDL_Texture* texture;
 };
 
 struct text
@@ -68,6 +94,7 @@ public:
 	bool resizable = false;
 	bool movable = false;
 	bool shown = true;
+	bool copy_window_rect = false;
 	
 	std::vector<button> buttons;
 	

@@ -6,11 +6,31 @@
                 "locked": false,
                 "pressed": false,
                 "text_part": {
-					"font_size": 12,
-					"centered": true,
+                    "centered": true,
                     "font_name": "DOSMINI.ttf",
-                    "text": "Create New World",
+                    "font_size": 12,
+                    "text": "Cringe now",
                     "text_box": {
+						"pos" : {
+							"updated" : false,
+							"auto_center": true,
+							"center": {
+								"x": 70,
+								"y": 20
+							},
+							"d_x": 0,
+							"d_y": 0,
+							"delta_mode": false,
+							"fixed_pos": false,
+							"perc_h": 0.5,
+							"perc_w": 0.5,
+							"shape": {
+								"h": 40,
+								"w": 140,
+								"x": 40,
+								"y": 90
+							}
+						},
                         "border_color": {
                             "a": 255,
                             "b": 10,
@@ -24,58 +44,87 @@
                             "g": 15,
                             "r": 0
                         },
-                        "shape": {
-                            "h": 40,
-                            "w": 140,
-                            "x": 40,
-                            "y": 90
-                        }
+                        "moving": false,
+                        "shown": true
                     }
                 }
             }
         ],
         "buttons_size": 1,
+        "copy_window_rect": true,
         "drag_zone": {
-            "border_color": {
-                "a": 255,
-                "b": 64,
-                "g": 255,
-                "r": 0
-            },
-            "border_th": 2,
-            "main_color": {
-                "a": 255,
-                "b": 64,
-                "g": 64,
-                "r": 1
-            },
-            "shape": {
-                "h": 20,
-                "w": 20,
-                "x": 5,
-                "y": 5
-            }
+			"pos" : {
+							"updated" : false,
+							"auto_center": true,
+							"center": {
+								"x": 70,
+								"y": 20
+							},
+							"d_x": 40,
+							"d_y": -40,
+							"delta_mode": true,
+							"fixed_pos": false,
+							"perc_h": 0.5,
+							"perc_w": 0.5,
+							"shape": {
+								"h": 30,
+								"w": 30,
+								"x": 40,
+								"y": 90
+							}
+						},
+                        "border_color": {
+                            "a": 255,
+                            "b": 10,
+                            "g": 90,
+                            "r": 50
+                        },
+                        "border_th": 2,
+                        "main_color": {
+                            "a": 15,
+                            "b": 10,
+                            "g": 15,
+                            "r": 0
+                        },
+                        "moving": false,
+                        "shown": true
         },
         "menu_box": {
-            "border_color": {
-                "a": 255,
-                "b": 64,
-                "g": 255,
-                "r": 0
-            },
-            "border_th": 2,
-            "main_color": {
-                "a": 255,
-                "b": 64,
-                "g": 64,
-                "r": 1
-            },
-            "shape": {
-                "h": 240,
-                "w": 320,
-                "x": 50,
-                "y": 50
-            }
+            "pos" : {
+				"updated" : false,
+				"auto_center": true,
+				"center": {
+					"x": 70,
+					"y": 20
+				},
+				"d_x": 0,
+				"d_y": 0,
+				"delta_mode": false,
+				"fixed_pos": false,
+				"perc_h": 0.5,
+				"perc_w": 0.5,
+				"shape": {
+					"h": 40,
+					"w": 140,
+					"x": 40,
+					"y": 90
+				}
+			},
+                     "border_color": {
+                         "a": 255,
+                         "b": 10,
+                         "g": 90,
+                         "r": 50
+                     },
+                     "border_th": 2,
+                     "main_color": {
+                         "a": 15,
+                         "b": 10,
+                         "g": 15,
+                         "r": 0
+                     },
+                     "moving": false,
+                     "shown": true
         },
         "movable": true,
         "name": "MAIN_MENU",
@@ -83,11 +132,32 @@
         "shown": true,
         "texts": [
             {
-				"font_size": 12,
-				"centered": true,
-                "font_name": "FreeSans.ttf",
+                "centered": true,
+                "font_name": "DOSMINI.ttf",
+                "font_size": 18,
                 "text": "Core of Creation",
                 "text_box": {
+					"pos" : {
+						"updated" : false,
+						"auto_center": true,
+						"center": {
+                        "x": 75,
+                        "y": 20
+                    },
+					"d_x": 0,
+                    "d_y": 0,
+                    "delta_mode": false,
+                    "fixed_pos": false,
+					"perc_h": 0.20000000298023224,
+                    "perc_w": 0.5,
+					"shape": {
+                        "h": 40,
+                        "w": 150,
+                        "x": 40,
+                        "y": 40
+                    }
+					},
+                    
                     "border_color": {
                         "a": 30,
                         "b": 20,
@@ -95,48 +165,112 @@
                         "r": 20
                     },
                     "border_th": 2,
+                    
+                    
                     "main_color": {
                         "a": 0,
                         "b": 100,
                         "g": 100,
                         "r": 100
                     },
-                    "shape": {
-                        "h": 50,
-                        "w": 200,
-                        "x": 40,
-                        "y": 40
-                    }
+                    "moving": false,
+                    
+                    
+                    "shown": true
                 }
             },
             {
-				"font_size": 12,
-				"centered": true,
+                "centered": true,
                 "font_name": "FreeSans.ttf",
-                "text": "V\n0.W.0",
+                "font_size": 12,
+                "text": "Version\n0.W.0",
                 "text_box": {
+					"pos" : {
+						"updated" : false,
+						"auto_center": true,
+						"center": {
+                        "x": 25,
+                        "y": 20
+                    },
+                    "d_x": -40,
+                    "d_y": 40,
+                    "delta_mode": true,
+                    "fixed_pos": false,
+					"perc_h": 0.0,
+                    "perc_w": 0.0,
+                    "shape": {
+                        "h": 40,
+                        "w": 50,
+                        "x": 253,
+                        "y": 11
+                    }
+					},
+                    
                     "border_color": {
                         "a": 60,
                         "b": 200,
                         "g": 160,
                         "r": 200
                     },
-                    "border_th": 1,
+                    "border_th": 2,
+                    
                     "main_color": {
                         "a": 100,
                         "b": 100,
                         "g": 100,
                         "r": 100
                     },
+                    "moving": false,
+                    
+                    "shown": true
+                }
+            },
+            {
+                "centered": true,
+                "font_name": "DOSMINI.ttf",
+                "font_size": 24,
+                "text": "OWO",
+                "text_box": {
+					"pos":{
+						"auto_center": true,
+						"center": {
+                        "x": 30,
+                        "y": 30
+                    },
+                    "d_x": -40,
+                    "d_y": 40,
+                    "delta_mode": false,
+                    "fixed_pos": false,
+					"perc_h": 0.800000011920929,
+                    "perc_w": 0.20000000298023224,
                     "shape": {
-                        "h": 30,
-                        "w": 50,
-                        "x": 263,
+                        "h": 60,
+                        "w": 60,
+                        "x": 253,
                         "y": 11
                     }
+					},
+                    
+                    "border_color": {
+                        "a": 120,
+                        "b": 80,
+                        "g": 10,
+                        "r": 50
+                    },
+                    "border_th": 2,
+                    
+                    "main_color": {
+                        "a": 90,
+                        "b": 255,
+                        "g": 6,
+                        "r": 181
+                    },
+                    "moving": false,
+                    
+                    "shown": true
                 }
             }
         ],
-        "texts_size": 2
+        "texts_size": 3
     }
 }

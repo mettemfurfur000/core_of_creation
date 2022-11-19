@@ -7,6 +7,8 @@ private:
 	texture_lib T;
 	font_lib F;
 	bool sdl_init();
+	void move_box_relative_to_other_box(box *b,SDL_Rect rel);
+	
 public:
 	SDL_Rect windowrect = {
 		0,

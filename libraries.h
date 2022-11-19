@@ -42,9 +42,7 @@ public:
 	void closeAll();
 	
 	TTF_Font* guarantee_font(std::string fontname, int fontsize);
-	
-	TTF_Font* load_font_from_default_folder(std::string fontname, int fontsize);
-	
+
 	TTF_Font* load_font(std::string path, std::string fontname, int fontsize);
 	void load_folder(std::string path,int fontsize);
 	

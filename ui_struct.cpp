@@ -9,6 +9,21 @@ SDL_Rect& operator+=(SDL_Rect &destination, SDL_Rect source)
 
 using json = nlohmann::json;
 
+void to_json(json& j, const SDL_Point& p) 
+{
+	j = json
+	{
+		{"x",p.x},
+		{"y",p.y}
+	};
+}
+
+void from_json(const json& j, SDL_Point& p) 
+{
+	j.at("x").get_to(p.x);
+	j.at("y").get_to(p.y);
+}
+
 void to_json(json& j, const SDL_Rect& p) 
 {
 	j = json
@@ -47,23 +62,64 @@ void from_json(const json& j, SDL_Color& p)
 	j.at("a").get_to(p.a);
 }
 
+void to_json(json& j, const position& p) 
+{
+	j = json
+	{
+		{"updated",p.updated},
+		
+		{"shape",p.shape},
+		{"fixed_pos",p.fixed_pos},
+		{"delta_mode",p.delta_mode},
+		{"auto_center",p.auto_center},
+		{"center",p.center},
+		{"perc_h",p.perc_h},
+		{"perc_w",p.perc_w},
+		{"d_x",p.d_x},
+		{"d_y",p.d_y}
+	};
+}
+
+void from_json(const json& j, position& p) 
+{
+	j.at("updated").get_to(p.updated);
+	
+	j.at("shape").get_to(p.shape);
+	j.at("fixed_pos").get_to(p.fixed_pos);
+	j.at("delta_mode").get_to(p.delta_mode);
+	j.at("auto_center").get_to(p.auto_center);
+	j.at("center").get_to(p.center);
+	j.at("perc_h").get_to(p.perc_h);
+	j.at("perc_w").get_to(p.perc_w);
+	j.at("d_x").get_to(p.d_x);
+	j.at("d_y").get_to(p.d_y);
+}
+
 void to_json(json& j, const box& p) 
 {
 	j = json
 	{
-		{"shape",p.shape},
-		{"border_color",p.border_color},
+		{"pos",p.pos},
+		
+		{"shown",p.shown},
 		{"main_color",p.color},
-		{"border_th",p.border_th}
+		{"border_color",p.border_color},
+		{"border_th",p.border_th},
+		
+		{"moving",p.moving}
 	};
 }
 
 void from_json(const json& j, box& p) 
 {
-	j.at("shape").get_to(p.shape);
+	j.at("pos").get_to(p.pos);
+	
+	j.at("shown").get_to(p.shown);
 	j.at("main_color").get_to(p.color);
 	j.at("border_color").get_to(p.border_color);
 	j.at("border_th").get_to(p.border_th);
+	
+	j.at("moving").get_to(p.moving);
 }
 
 void to_json(json& j, const text& p) 
@@ -113,6 +169,7 @@ void menu::save(std::string folder,std::string filename)
 	j["menu"]["resizable"] = resizable;
 	j["menu"]["movable"] = movable;
 	j["menu"]["shown"] = shown;
+	j["menu"]["copy_window_rect"] = copy_window_rect;
 	
 	j["menu"]["buttons_size"] = buttons.size();
 	
@@ -159,6 +216,7 @@ bool menu::load(std::string folder,std::string filename) //if success, return tr
 	resizable = j["menu"]["resizable"].get<bool>();
 	movable = j["menu"]["movable"].get<bool>();
 	shown = j["menu"]["shown"].get<bool>();
+	copy_window_rect = j["menu"]["copy_window_rect"].get<bool>();
 	
 	int buttons_size = j["menu"]["buttons_size"].get<int>();
 	
@@ -170,7 +228,6 @@ bool menu::load(std::string folder,std::string filename) //if success, return tr
 		buttons[i].pressed = j["menu"]["buttons"][i]["pressed"].get<bool>();
 		
 		buttons[i].text_part = j["menu"]["buttons"][i]["text_part"].get<text>();
-		//buttons[i].text_part.font = this-> .GetByName(buttons[i]->text_part.font_name);
 	}
 	
 	int texts_size = j["menu"]["texts_size"].get<int>();
@@ -180,7 +237,6 @@ bool menu::load(std::string folder,std::string filename) //if success, return tr
 	for(int i=0;i<texts_size;i++)
 	{
 		texts[i] = j["menu"]["texts"][i].get<text>();
-		//texts[i].font = this->normal_fonts.GetByName(texts[i]->font_name);
 	}
 	
 	return true;
