@@ -2,3 +2,4 @@
 *.o
 *.layout
 *.un~
+using_libraries/
