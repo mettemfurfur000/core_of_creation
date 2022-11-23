@@ -160,11 +160,16 @@ void renderer::render(box* b)
 	);
 	
 	SDL_RenderFillRect(this->base_renderer,&t);
+	
+	b->pos.real_rect = t;
 }
 
 void renderer::render(box* b, SDL_Rect rel_rect)
 {
 	if(b->shown == false) return;
+	
+	b->pos.relative_rect = rel_rect;
+	
 	if(b->pos.auto_center)
 	{
 		b->pos.center.x = b->pos.shape.w/2;
@@ -202,11 +207,16 @@ void renderer::render(box* b, SDL_Rect rel_rect)
 	);
 	
 	SDL_RenderFillRect(this->base_renderer,&t);
+	
+	b->pos.real_rect = t;
 }
 
 void renderer::render(box* b, int color_shift, SDL_Rect rel_rect)
 {
 	if(b->shown == false) return;
+	
+	b->pos.relative_rect = rel_rect;
+	
 	if(b->pos.auto_center)
 	{
 		b->pos.center.x = b->pos.shape.w/2;
@@ -251,13 +261,17 @@ void renderer::render(box* b, int color_shift, SDL_Rect rel_rect)
 	);
 	
 	SDL_RenderFillRect(this->base_renderer,&t);
+	
+	b->pos.real_rect = t;
 }
 
 void renderer::render(button* b, SDL_Rect rel_rect)
 {
 	if(b->text_part.text_box.shown == false) return;
 	
-	render(&b->text_part.text_box, b->locked * (b->focused*70 - b->pressed*40),rel_rect);
+	b->text_part.text_box.pos.relative_rect = rel_rect;
+	
+	render(&b->text_part.text_box, b->locked ? -20 : b->focused ? b->pressed ? 40 : 70 : 0 ,rel_rect);
 	
 	render(&b->text_part,false,rel_rect);
 }
@@ -265,6 +279,8 @@ void renderer::render(button* b, SDL_Rect rel_rect)
 void renderer::render(text* t,bool do_render_box, SDL_Rect rel_rect)
 {
 	if(t->text_box.shown == false) return;
+	
+	t->text_box.pos.relative_rect = rel_rect;
 	
 	const SDL_Color defcolor = {255,255,255,255};
 	

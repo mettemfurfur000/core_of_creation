@@ -27,8 +27,9 @@ struct position
 	float perc_w = 0.0;
 	int d_x = 0;
 	int d_y = 0;
-	//lazy positioning
-	SDL_Rect real_shape;
+	//
+	SDL_Rect real_rect;
+	SDL_Rect relative_rect;
 };
 
 struct box
@@ -49,8 +50,8 @@ struct box
 //TODO
 struct image
 {
-	position img_pos;
-	std::string img_name;
+	position pos;
+	std::string name;
 	SDL_Texture* texture;
 };
 

@@ -12,24 +12,26 @@ private:
 
 	bool mouse_pressed = false;
 	
-	bool edit_mode = false;
+	bool edit_mode = true;
 	
 	SDL_Point drag_point;
 	
 	SDL_MouseMotionEvent mouse_motion;
+	SDL_MouseMotionEvent last_motion;
+	
     SDL_MouseButtonEvent mouse_click;
     SDL_MouseWheelEvent mouse_wheel;
     SDL_KeyboardEvent key;
     
-    void update_ui_state();
+    void update_button(SDL_Point last_mouse_pos,button* b);
     
-    void update_button(button* b);
-    
-    void move_evement(box* b);
+    void edit_box(SDL_Point mouse_pos, SDL_Point last_mouse_pos,box* b);
 public:
 	~main_looper();
 	
 	void init();
+	
+	void update_ui();
 	
 	void handle_events();
 	
