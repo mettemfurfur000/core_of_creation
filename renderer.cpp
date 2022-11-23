@@ -14,6 +14,12 @@ bool renderer::sdl_init()
 		printf("[RENDERER][E] - SDL2_TTF Initialization Fail: %s\n",SDL_GetError());
 		return false;
 	}
+		
+	if(IMG_Init(63) == 0) //because
+	{
+		printf("[RENDERER][E] - IMG_Init Error: %s", SDL_GetError());
+		return false;
+	}
 	
 	this->base_window = SDL_CreateWindow( "CALAMITY dev0", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->windowrect.w, this->windowrect.h, flags );
 	if( this->base_window == NULL )
@@ -28,6 +34,7 @@ bool renderer::sdl_init()
 		printf("[RENDERER][E] - SDL_CreateRenderer Error: %s", SDL_GetError() );
 		return false;
 	}
+
 	
 	SDL_StartTextInput();
 	
@@ -53,7 +60,9 @@ renderer::renderer()
 
 renderer::~renderer()
 {
-	F.closeAll();
+	F.closeAll();//free resources
+	T.destroyAll();
+	
 	SDL_DestroyRenderer(base_renderer);
 	base_renderer = NULL;
 
@@ -63,6 +72,7 @@ renderer::~renderer()
 	SDL_StopTextInput();
 	SDL_Quit();
 	TTF_Quit();
+	IMG_Quit();
 	printf("[PAINTER] - Succesfully Quit!\n");
 }
 
@@ -81,8 +91,8 @@ void renderer::move_box_relative_to_other_box(box *b,SDL_Rect rel)
 			b->pos.shape.x = rel.x + (rel.w + b->pos.d_x)%rel.w - b->pos.center.x;
 			b->pos.shape.y = rel.y + (rel.h + b->pos.d_y)%rel.h - b->pos.center.y;
 		}else{
-			b->pos.shape.x = rel.x + (int)(rel.w * b->pos.perc_w) - b->pos.center.x;
-			b->pos.shape.y = rel.y + (int)(rel.h * b->pos.perc_h) - b->pos.center.y;
+			b->pos.shape.x = rel.x + (int)(rel.w * b->pos.rel_perc_w) - b->pos.center.x;
+			b->pos.shape.y = rel.y + (int)(rel.h * b->pos.rel_perc_h) - b->pos.center.y;
 		}
 	}
 }

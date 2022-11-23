@@ -9,24 +9,57 @@ texture_lib::texture_lib()
 {
 }
 
-texture_lib::~texture_lib()
+void texture_lib::destroyAll()
 {
-	for(int i=0;i<textures.size();i++)
+	int size = this->textures.size();
+	for(int i=0;i<size;i++)
 	{
-		SDL_DestroyTexture(textures[i]);
+		SDL_DestroyTexture(textures[i].ptr);
 	}
 }
 
-void texture_lib::load_file(std::string full_filename)
+//return extension of file without dot(.) character
+std::string get_extension(std::string from)
 {
-	SDL_Surface * temporary_surface = SDL_LoadBMP_RW(SDL_RWFromFile(full_filename.c_str(), "rb"), 1); 
-	//get bmp on surface from full path to file
+	std::size_t pos = from.find_last_of(".") + 1;	
 	
-	textures.push_back( SDL_CreateTextureFromSurface(this->base_renderer, temporary_surface)); 
-	//load surface in graphic card memory and save pointer where it is
-	
-	SDL_FreeSurface(temporary_surface);
-	//delete surface
+	if(pos == std::string::npos)
+		return "void";
+		
+	return from.substr(pos);
+}
+
+void delete_extension(std::string& str)
+{
+	std::size_t pos = str.find_last_of(".") - 1;
+	str.erase(str.begin()+pos, str.end());
+}
+
+SDL_Texture* texture_lib::load_file(std::string path, std::string filename)
+{
+	std::string full_filename = path + filename;
+	texture t;
+
+//setting cool values fot t:
+	delete_extension(filename);
+	t.file_name = filename;
+
+//load texture in graphic card memory and save pointer where it is
+	t.ptr = IMG_LoadTexture(this->base_renderer, full_filename.c_str());
+
+//loaded?
+	if(t.ptr == 0)
+	{
+		printf("[tex_lib] - Texture loading error: %s\n",full_filename.c_str());
+		return 0;
+	}
+
+//get width and height
+	SDL_QueryTexture(t.ptr,NULL,NULL,&t.w,&t.h);
+
+//push texture in library
+	textures.push_back(t);
+	return t.ptr;
 }
 
 void texture_lib::load_folder(std::string path)
@@ -51,8 +84,7 @@ void texture_lib::load_folder(std::string path)
 			
 			if(file_list.eof()) break; //end of file check
 			
-			full_filename = path + filename; //create full filename
-			load_file(full_filename); //load
+			load_file(path,filename); //load
 			counter++;
 		}
 	}
@@ -64,7 +96,25 @@ void texture_lib::load_folder(std::string path)
 
 SDL_Texture* texture_lib::getTexture(int index)
 {
-	return this->textures[index];
+	return this->textures[index].ptr;
+}
+
+SDL_Texture* texture_lib::getByName(std::string name)
+{
+	int size = this->textures.size();
+	for(int i=0;i<size;i++)
+	{
+		if(textures[i].file_name == name ) return this->textures[i].ptr;
+	}
+	return 0;
+}
+
+
+SDL_Texture* texture_lib::guarantee_texture(std::string name)
+{
+	SDL_Texture* tmp = getByName(name);
+	
+	return (tmp ? tmp : load_file("textures\\",name));
 }
 
 //0---0

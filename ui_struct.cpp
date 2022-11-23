@@ -73,8 +73,8 @@ void to_json(json& j, const position& p)
 		{"delta_mode",p.delta_mode},
 		{"auto_center",p.auto_center},
 		{"center",p.center},
-		{"perc_h",p.perc_h},
-		{"perc_w",p.perc_w},
+		{"rel_perc_h",p.rel_perc_h},
+		{"rel_perc_w",p.rel_perc_w},
 		{"d_x",p.d_x},
 		{"d_y",p.d_y}
 	};
@@ -89,8 +89,8 @@ void from_json(const json& j, position& p)
 	j.at("delta_mode").get_to(p.delta_mode);
 	j.at("auto_center").get_to(p.auto_center);
 	j.at("center").get_to(p.center);
-	j.at("perc_h").get_to(p.perc_h);
-	j.at("perc_w").get_to(p.perc_w);
+	j.at("rel_perc_h").get_to(p.rel_perc_h);
+	j.at("rel_perc_w").get_to(p.rel_perc_w);
 	j.at("d_x").get_to(p.d_x);
 	j.at("d_y").get_to(p.d_y);
 }

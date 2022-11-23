@@ -23,8 +23,8 @@ struct position
 	SDL_Rect shape;
 	SDL_Point center;
 	
-	float perc_h = 0.0;
-	float perc_w = 0.0;
+	float rel_perc_h = 0.0;
+	float rel_perc_w = 0.0;
 	int d_x = 0;
 	int d_y = 0;
 	//
@@ -101,6 +101,8 @@ public:
 	std::vector<button> buttons;
 	
 	std::vector<text> texts;
+	
+	std::vector<image> images;
 
 	void save(std::string folder,std::string filename);
 	bool load(std::string folder,std::string filename);

@@ -97,7 +97,7 @@ void main_looper::update_button(SDL_Point last_mouse_pos, button* b)
 
 void main_looper::move_box_edit_mode(SDL_Point mouse_pos, SDL_Point delta)
 {
-	if(!edit_box->pos.drag) return;
+	if(!edit_box->pos.drag || !edit_box) return;
 
 	if(delta.x == 0 && delta.y == 0) return; //nothing to update
 	
@@ -111,8 +111,8 @@ void main_looper::move_box_edit_mode(SDL_Point mouse_pos, SDL_Point delta)
 			edit_box->pos.d_x += delta.x;
 			edit_box->pos.d_y += delta.y;
 		}else{
-			edit_box->pos.perc_w += (float)delta.x / (edit_box->pos.relative_rect.w);
-			edit_box->pos.perc_h += (float)delta.y / (edit_box->pos.relative_rect.h);
+			edit_box->pos.rel_perc_w += (float)delta.x / (edit_box->pos.relative_rect.w);
+			edit_box->pos.rel_perc_h += (float)delta.y / (edit_box->pos.relative_rect.h);
 		}
 	}
 }
@@ -151,7 +151,7 @@ void main_looper::handle_events()
 			case SDL_MOUSEBUTTONUP:
 				this->mouse_click = event.button;
 				this->mouse_pressed = false;
-				edit_box->pos.drag = false;
+				edit_box = 0;
 				break;
 				
 			case SDL_KEYDOWN:
