@@ -9,19 +9,55 @@ main_looper::~main_looper()
 	}
 }
 
+void main_looper::catch_box_to_edit()
+{
+	int tsize;
+	int bsize;
+	
+	SDL_Point mouse;
+	mouse.x = this->mouse_motion.x;
+	mouse.y = this->mouse_motion.y;
+
+	tsize = this->W.menus.size();
+	for(int i=0;i<tsize;i++)
+	{
+		bsize = W.menus[i].buttons.size();
+		for(int j=0;j<bsize;j++)
+		{
+			if(SDL_PointInRect(&mouse,&W.menus[i].buttons[j].text_part.text_box.pos.real_rect))
+			{
+				this->edit_box = &W.menus[i].buttons[j].text_part.text_box;
+				edit_box->pos.drag = true;
+				return;
+			}
+		}
+		bsize = W.menus[i].texts.size();
+		for(int j=0;j<bsize;j++)
+		{
+			if(SDL_PointInRect(&mouse,&W.menus[i].texts[j].text_box.pos.real_rect))
+			{
+				this->edit_box = &W.menus[i].texts[j].text_box;
+				edit_box->pos.drag = true;
+				return;
+			}
+		}
+	}
+	edit_box = 0;
+}
+
 void main_looper::update_ui()
 {
 	SDL_Point mouse_pos;
-	SDL_Point last_mouse_pos;
+	SDL_Point delta;
 	
 	int tsize;
 	int bsize;
 	//
 	mouse_pos.x = mouse_motion.x;
 	mouse_pos.y = mouse_motion.y;
-	
-	last_mouse_pos.x = last_motion.x;
-	last_mouse_pos.y = last_motion.y;
+
+	delta.x = mouse_motion.x - last_motion.x;
+	delta.y = mouse_motion.y - last_motion.y;
 	
 	tsize = this->W.menus.size();
 	for(int i=0;i<tsize;i++)
@@ -33,28 +69,15 @@ void main_looper::update_ui()
 		}
 	}
 	
-	if(edit_mode && mouse_pressed)
+	if(edit_mode && this->edit_box)
 	{
-		tsize = this->W.menus.size();
-		for(int i=0;i<tsize;i++)
-		{
-			bsize = W.menus[i].buttons.size();
-			for(int j=0;j<bsize;j++)
-			{
-				edit_box(mouse_pos,last_mouse_pos,&W.menus[i].buttons[j].text_part.text_box);
-			}
-			
-			bsize = W.menus[i].texts.size();
-			for(int j=0;j<bsize;j++)
-			{
-				edit_box(mouse_pos,last_mouse_pos,&W.menus[i].texts[j].text_box);
-			}
-		}
+		move_box_edit_mode(mouse_pos,delta);
 	}
+	
 	this->last_motion = this->mouse_motion;
 }
 
-void main_looper::update_button(SDL_Point last_mouse_pos,button* b)
+void main_looper::update_button(SDL_Point last_mouse_pos, button* b)
 {
 	if(b->locked) return;
 	
@@ -72,30 +95,24 @@ void main_looper::update_button(SDL_Point last_mouse_pos,button* b)
 	b->focused = false;
 }
 
-void main_looper::edit_box(SDL_Point mouse_pos, SDL_Point last_mouse_pos,box* b)
+void main_looper::move_box_edit_mode(SDL_Point mouse_pos, SDL_Point delta)
 {
-	if(!SDL_PointInRect(&mouse_pos,&b->pos.real_rect)) return;
+	if(!edit_box->pos.drag) return;
+
+	if(delta.x == 0 && delta.y == 0) return; //nothing to update
 	
-	int dx = mouse_pos.x - last_mouse_pos.x;
-	int dy = mouse_pos.y - last_mouse_pos.y;
-	
-	if(dx == 0 && dy == 0) return; //nothing to update
-	
-	if(b->pos.fixed_pos)
+	if(edit_box->pos.fixed_pos)
 	{
-		b->pos.shape.x += dx;
-		b->pos.shape.y += dy;
-		printf("new pos:%d %d\n",b->pos.shape.x,b->pos.shape.y);
+		edit_box->pos.shape.x += delta.x;
+		edit_box->pos.shape.y += delta.y;
 	}else{
-		if(b->pos.delta_mode)
+		if(edit_box->pos.delta_mode)
 		{
-			b->pos.d_x += dx;
-			b->pos.d_y += dy;
-			printf("new delta:%d %d\n",b->pos.d_x,b->pos.d_y);
+			edit_box->pos.d_x += delta.x;
+			edit_box->pos.d_y += delta.y;
 		}else{
-			b->pos.perc_w += (float)dx / (b->pos.relative_rect.w);
-			b->pos.perc_h += (float)dy / (b->pos.relative_rect.h);
-			printf("new percent:%f %f\n",b->pos.perc_w,b->pos.perc_h);
+			edit_box->pos.perc_w += (float)delta.x / (edit_box->pos.relative_rect.w);
+			edit_box->pos.perc_h += (float)delta.y / (edit_box->pos.relative_rect.h);
 		}
 	}
 }
@@ -128,11 +145,13 @@ void main_looper::handle_events()
 				this->mouse_click = event.button;
 				/* if pressed */ 
 				this->mouse_pressed = true;
+				catch_box_to_edit();
 				break;
 				
 			case SDL_MOUSEBUTTONUP:
 				this->mouse_click = event.button;
 				this->mouse_pressed = false;
+				edit_box->pos.drag = false;
 				break;
 				
 			case SDL_KEYDOWN:

@@ -30,6 +30,7 @@ struct position
 	//
 	SDL_Rect real_rect;
 	SDL_Rect relative_rect;
+	bool drag = false;
 };
 
 struct box

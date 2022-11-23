@@ -14,8 +14,6 @@ private:
 	
 	bool edit_mode = true;
 	
-	SDL_Point drag_point;
-	
 	SDL_MouseMotionEvent mouse_motion;
 	SDL_MouseMotionEvent last_motion;
 	
@@ -23,9 +21,13 @@ private:
     SDL_MouseWheelEvent mouse_wheel;
     SDL_KeyboardEvent key;
     
-    void update_button(SDL_Point last_mouse_pos,button* b);
+    box* edit_box = 0;
     
-    void edit_box(SDL_Point mouse_pos, SDL_Point last_mouse_pos,box* b);
+    void catch_box_to_edit();
+    
+    void update_button(SDL_Point last_mouse_pos, button* b);
+    
+    void move_box_edit_mode(SDL_Point mouse_pos, SDL_Point delta);
 public:
 	~main_looper();
 	
