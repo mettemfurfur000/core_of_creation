@@ -180,6 +180,8 @@ void menu::save(std::string folder,std::string filename)
 		j["menu"]["buttons"][i]["locked"] = buttons[i].locked;
 		j["menu"]["buttons"][i]["focused"] = buttons[i].focused;
 		j["menu"]["buttons"][i]["pressed"] = buttons[i].pressed;
+		
+		j["menu"]["buttons"][i]["scriptname"] = buttons[i].scriptname;
 	}
 	
 	j["menu"]["texts_size"] = texts.size();
@@ -228,6 +230,8 @@ bool menu::load(std::string folder,std::string filename) //if success, return tr
 		buttons[i].pressed = j["menu"]["buttons"][i]["pressed"].get<bool>();
 		
 		buttons[i].text_part = j["menu"]["buttons"][i]["text_part"].get<text>();
+		
+		buttons[i].scriptname = j["menu"]["buttons"][i]["scriptname"].get<std::string>();
 	}
 	
 	int texts_size = j["menu"]["texts_size"].get<int>();

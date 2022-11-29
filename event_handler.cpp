@@ -47,11 +47,11 @@ void main_looper::catch_box_to_edit()
 
 void main_looper::update_ui()
 {
-	SDL_Point mouse_pos;
-	SDL_Point delta;
+	static SDL_Point mouse_pos;
+	static SDL_Point delta;
 	
-	int tsize;
-	int bsize;
+	static int tsize;
+	static int bsize;
 	//
 	mouse_pos.x = mouse_motion.x;
 	mouse_pos.y = mouse_motion.y;
@@ -59,7 +59,7 @@ void main_looper::update_ui()
 	delta.x = mouse_motion.x - last_motion.x;
 	delta.y = mouse_motion.y - last_motion.y;
 	
-	tsize = this->W.menus.size();
+	tsize = W.menus.size();
 	for(int i=0;i<tsize;i++)
 	{
 		bsize = W.menus[i].buttons.size();
@@ -69,12 +69,12 @@ void main_looper::update_ui()
 		}
 	}
 	
-	if(edit_mode && this->edit_box)
+	if(edit_mode && edit_box) //if edit mode is ON and edit_box pointer not null (exist!)
 	{
 		move_box_edit_mode(mouse_pos,delta);
 	}
 	
-	this->last_motion = this->mouse_motion;
+	last_motion = mouse_motion;
 }
 
 void main_looper::update_button(SDL_Point last_mouse_pos, button* b)
@@ -86,7 +86,20 @@ void main_looper::update_button(SDL_Point last_mouse_pos, button* b)
 		b->focused = true;
 		if(this->mouse_pressed)
 		{
+			b->click = !b->pressed;
+			
 			b->pressed = true;
+			
+			if(b->click)
+			{
+				printf("single click on - %s\n",b->text_part.text.c_str());
+				L.dofile(b->scriptname.c_str());
+			
+				luabridge::push(L.LuaState,b);
+				lua_setglobal(L.LuaState, "button");
+				L.call("button_click");
+			} 
+			
 			return;
 		}
 		b->pressed = false;
@@ -143,7 +156,6 @@ void main_looper::handle_events()
 				
 			case SDL_MOUSEBUTTONDOWN:
 				this->mouse_click = event.button;
-				/* if pressed */ 
 				this->mouse_pressed = true;
 				catch_box_to_edit();
 				break;

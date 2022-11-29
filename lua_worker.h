@@ -5,19 +5,22 @@ extern "C" {
 }
 
 #include <LuaBridge/LuaBridge.h>
-#include <iostream>
-#include <string>
+
+#include "ui_struct.h"
+#include "renderer.h"
 
 int lua_test();
 
 class lua_worker
 {
-private:
-	lua_State* LuaState;
 public:
+	lua_State* LuaState;
+
 	lua_worker();
 	
-	void lua_func_register(std::string name, lua_CFunction f);
+	void func_register(char * name, lua_CFunction f);
 	
-	void dofile(std::string filename);
+	void dofile(const char * filename);
+	
+	void call(char * function);
 };

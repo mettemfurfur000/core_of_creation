@@ -232,6 +232,7 @@ void renderer::render(box* b, int color_shift, SDL_Rect rel_rect)
 		b->pos.center.x = b->pos.shape.w/2;
 		b->pos.center.y = b->pos.shape.h/2;
 	}
+	
 	box tbox = *b;
 	
 	move_box_relative_to_other_box(&tbox,rel_rect);

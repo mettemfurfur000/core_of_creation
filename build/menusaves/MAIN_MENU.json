@@ -5,6 +5,7 @@
                 "focused": false,
                 "locked": false,
                 "pressed": false,
+                "scriptname": "b.lua",
                 "text_part": {
                     "centered": true,
                     "font_name": "DOSMINI.ttf",
@@ -19,10 +20,10 @@
                         },
                         "border_th": 2,
                         "main_color": {
-                            "a": 15,
-                            "b": 10,
-                            "g": 15,
-                            "r": 0
+                            "a": 255,
+                            "b": 3,
+                            "g": 181,
+                            "r": 83
                         },
                         "moving": false,
                         "pos": {
@@ -35,12 +36,12 @@
                             "d_y": 0,
                             "delta_mode": false,
                             "fixed_pos": false,
-                            "rel_perc_h": 0.40920937061309814,
-                            "rel_perc_w": 0.16137196123600006,
+                            "rel_perc_h": 0.4667091369628906,
+                            "rel_perc_w": 0.48303866386413574,
                             "shape": {
                                 "h": 40,
                                 "w": 140,
-                                "x": 40,
+                                "x": 20,
                                 "y": 90
                             },
                             "updated": false
@@ -117,8 +118,8 @@
                 "rel_perc_h": 0.0,
                 "rel_perc_w": 0.0,
                 "shape": {
-                    "h": 370,
-                    "w": 799,
+                    "h": 400,
+                    "w": 600,
                     "x": 0,
                     "y": 0
                 },
@@ -161,8 +162,8 @@
                         "d_y": 0,
                         "delta_mode": false,
                         "fixed_pos": false,
-                        "rel_perc_h": 0.1266346126794815,
-                        "rel_perc_w": 0.14933030307292938,
+                        "rel_perc_h": 0.12163461744785309,
+                        "rel_perc_w": 0.44266360998153687,
                         "shape": {
                             "h": 40,
                             "w": 150,
@@ -200,8 +201,8 @@
                             "x": 25,
                             "y": 20
                         },
-                        "d_x": -43,
-                        "d_y": 40,
+                        "d_x": -40,
+                        "d_y": 41,
                         "delta_mode": true,
                         "fixed_pos": false,
                         "rel_perc_h": 0.0,
@@ -247,8 +248,8 @@
                         "d_y": 40,
                         "delta_mode": false,
                         "fixed_pos": false,
-                        "rel_perc_h": 0.1764148622751236,
-                        "rel_perc_w": 0.3357318937778473,
+                        "rel_perc_h": 0.5639147758483887,
+                        "rel_perc_w": 0.9023981690406799,
                         "shape": {
                             "h": 60,
                             "w": 60,

@@ -48,7 +48,7 @@ struct box
 	bool moving = false;
 };
 
-//TODO
+/* TODO (#1#): create image loading and rendering */
 struct image
 {
 	position pos;
@@ -80,9 +80,12 @@ struct button
 {
 	text text_part;
 	
+	std::string scriptname;
+	
 	bool pressed;
 	bool focused;
 	bool locked;
+	bool click;
 };
 
 class menu
