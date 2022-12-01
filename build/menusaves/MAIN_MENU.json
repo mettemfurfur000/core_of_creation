@@ -10,7 +10,7 @@
                     "centered": true,
                     "font_name": "DOSMINI.ttf",
                     "font_size": 12,
-                    "text": "Kill PUTIN",
+                    "text": "Test Button",
                     "text_box": {
                         "border_color": {
                             "a": 255,
@@ -21,28 +21,28 @@
                         "border_th": 2,
                         "main_color": {
                             "a": 255,
-                            "b": 3,
-                            "g": 181,
-                            "r": 83
+                            "b": 88,
+                            "g": 45,
+                            "r": 88
                         },
                         "moving": false,
                         "pos": {
                             "auto_center": true,
                             "center": {
-                                "x": 70,
+                                "x": 64,
                                 "y": 20
                             },
                             "d_x": 0,
                             "d_y": 0,
                             "delta_mode": false,
                             "fixed_pos": false,
-                            "rel_perc_h": 0.4667091369628906,
-                            "rel_perc_w": 0.48303866386413574,
+                            "rel_perc_h": 0.504209041595459,
+                            "rel_perc_w": 0.46470534801483154,
                             "shape": {
                                 "h": 40,
-                                "w": 140,
-                                "x": 20,
-                                "y": 90
+                                "w": 129,
+                                "x": 278,
+                                "y": 203
                             },
                             "updated": false
                         },
@@ -118,8 +118,8 @@
                 "rel_perc_h": 0.0,
                 "rel_perc_w": 0.0,
                 "shape": {
-                    "h": 400,
-                    "w": 600,
+                    "h": 424,
+                    "w": 744,
                     "x": 0,
                     "y": 0
                 },
@@ -248,8 +248,8 @@
                         "d_y": 40,
                         "delta_mode": false,
                         "fixed_pos": false,
-                        "rel_perc_h": 0.5639147758483887,
-                        "rel_perc_w": 0.9023981690406799,
+                        "rel_perc_h": 0.8331456184387207,
+                        "rel_perc_w": 0.9158081412315369,
                         "shape": {
                             "h": 60,
                             "w": 60,

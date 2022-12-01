@@ -1,4 +1,4 @@
-#include "lua_worker.h"
+#include "renderer.h"
 
 class main_looper
 {
@@ -6,7 +6,6 @@ private:
 	SDL_Event event;
 	window W;
 	renderer R;
-	lua_worker L;
 	
 	bool doloop = true;
 

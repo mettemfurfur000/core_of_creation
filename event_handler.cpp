@@ -77,6 +77,13 @@ void main_looper::update_ui()
 	last_motion = mouse_motion;
 }
 
+template<typename T>
+void lua_push_single_variable(lua_State* L,T* object,char* name)
+{
+	luabridge::push(L,object);
+	lua_setglobal(L, name);
+}
+
 void main_looper::update_button(SDL_Point last_mouse_pos, button* b)
 {
 	if(b->locked) return;
@@ -92,12 +99,9 @@ void main_looper::update_button(SDL_Point last_mouse_pos, button* b)
 			
 			if(b->click)
 			{
-				printf("single click on - %s\n",b->text_part.text.c_str());
-				L.dofile(b->scriptname.c_str());
-			
-				luabridge::push(L.LuaState,b);
-				lua_setglobal(L.LuaState, "button");
-				L.call("button_click");
+				luabridge::LuaRef f = luabridge::getGlobal(b->LuaState, "button_click");
+				
+				*b = f(b);
 			} 
 			
 			return;

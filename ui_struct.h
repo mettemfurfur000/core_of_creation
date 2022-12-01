@@ -8,6 +8,8 @@
 #include <iostream>
 #include <fstream>
 
+#include "lua_worker.h"
+
 #pragma once
 
 SDL_Rect& operator+=(SDL_Rect &destination, SDL_Rect source);
@@ -54,6 +56,7 @@ struct image
 	position pos;
 	std::string name;
 	SDL_Texture* texture;
+	std::string filename;
 };
 
 struct text
@@ -76,8 +79,10 @@ struct text
 	SDL_Texture * lazy_texture = NULL;
 };
 
-struct button
+class button
 {
+public:
+	lua_State* LuaState;
 	text text_part;
 	
 	std::string scriptname;
@@ -86,6 +91,10 @@ struct button
 	bool focused;
 	bool locked;
 	bool click;
+	
+	button();
+	
+	void load_lua_script();
 };
 
 class menu
