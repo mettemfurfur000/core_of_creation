@@ -7,7 +7,6 @@ SDL_Rect& operator+=(SDL_Rect &destination, SDL_Rect source)
 	return destination;
 }
 
-
 void window::loadMainMenu()
 {
 	menu main_menu;
