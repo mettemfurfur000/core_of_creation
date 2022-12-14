@@ -19,7 +19,7 @@ private:
     SDL_MouseWheelEvent mouse_wheel;
     SDL_KeyboardEvent key;
     
-    box* edit_box = 0;
+    position* edit_pos = NULL;
     
     void catch_box_to_edit();
     

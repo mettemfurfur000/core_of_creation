@@ -52,13 +52,14 @@ struct box
 	bool moving = false;
 };
 
-/* TODO (#1#): create image loading and rendering */
 struct image
 {
+	bool shown = true;
+	
 	position pos;
-	std::string name;
-	SDL_Texture* texture;
 	std::string filename;
+	
+	SDL_Texture* texture = NULL;
 };
 
 struct text

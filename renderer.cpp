@@ -2,7 +2,7 @@
 
 bool renderer::sdl_init()
 {
-	Uint32 flags = SDL_WINDOW_RESIZABLE;
+	Uint32 flags = 0;//SDL_WINDOW_RESIZABLE;
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
 	{
 		printf( "[RENDERER][E] - SDL_INIT_VIDEO Error: %s\n", SDL_GetError() );
@@ -97,6 +97,27 @@ void renderer::move_box_relative_to_other_box(box *b,SDL_Rect rel)
 	}
 }
 
+void renderer::move_pos_relative_2_rect(position *p,SDL_Rect rel)
+{
+	//position calc part
+	if(p->fixed_pos)
+	{
+		//if fixed, just put it where he should be
+		p->shape += rel;
+		p->shape.x -= p->center.x;
+		p->shape.y -= p->center.y;
+	}else{
+		if(p->delta_mode)
+		{
+			p->shape.x = rel.x + (rel.w + p->d_x)%rel.w - p->center.x;
+			p->shape.y = rel.y + (rel.h + p->d_y)%rel.h - p->center.y;
+		}else{
+			p->shape.x = rel.x + (int)(rel.w * p->rel_perc_w) - p->center.x;
+			p->shape.y = rel.y + (int)(rel.h * p->rel_perc_h) - p->center.y;
+		}
+	}
+}
+
 void renderer::render(window* w)
 {
 	int size = w->menus.size();
@@ -128,6 +149,13 @@ void renderer::render(menu* m)
 	for(int i=0;i<tsize;i++)
 	{
 		render(&m->buttons[i],m->menu_box.pos.shape);
+	}
+	
+	tsize = m->images.size();
+	
+	for(int i=0;i<tsize;i++)
+	{
+		render(&m->images[i],m->menu_box.pos.shape);
 	}
 }
 
@@ -171,6 +199,28 @@ void renderer::render(box* b)
 	SDL_RenderFillRect(this->base_renderer,&t);
 	
 	b->pos.real_rect = t;
+}
+
+void renderer::render(image* i, SDL_Rect rel_rect)
+{
+	if(i->shown == false) return;
+	
+	i->pos.relative_rect = rel_rect;
+
+	if(!i->texture) //where fucking pointer?
+	{
+		i->texture = this->T.guarantee_texture(i->filename);
+	}
+	
+	position tpos = i->pos;
+	
+	SDL_QueryTexture(i->texture, NULL, NULL, &tpos.shape.w, &tpos.shape.h);
+
+	move_pos_relative_2_rect(&tpos,rel_rect);
+	
+	SDL_RenderCopy(this->base_renderer,i->texture,0,&tpos.shape);
+	
+	i->pos.real_rect = tpos.shape;
 }
 
 void renderer::render(box* b, SDL_Rect rel_rect)

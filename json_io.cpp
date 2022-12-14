@@ -140,18 +140,17 @@ void to_json(json& j, const image& p)
 {
 	j = json
 	{
+		{"shown",p.shown},
 		{"position",p.pos},
-		{"name",p.name},
 		{"filename",p.filename}
 	};
 }
 
 void from_json(const json& j, image& p) 
 {
+	j.at("shown").get_to(p.shown);
 	j.at("position").get_to(p.pos);
-	j.at("name").get_to(p.name);
 	j.at("filename").get_to(p.filename);
-
 }
 
 void saveMenu(menu* t,std::string folder,std::string filename)
@@ -180,11 +179,9 @@ void saveMenu(menu* t,std::string folder,std::string filename)
 	j["menu"]["movable"] = t->movable;
 	j["menu"]["shown"] = t->shown;
 	j["menu"]["copy_window_rect"] = t->copy_window_rect;
-	
+////////////////////////////////////////////////////////////////////////////////////////////////
 	int bsize = t->buttons.size();
-	
 	j["menu"]["buttons_size"] = bsize;
-	
 	for(int i=0;i<bsize;i++)
 	{
 		j["menu"]["buttons"][i]["text_part"] = t->buttons[i].text_part;
@@ -195,14 +192,19 @@ void saveMenu(menu* t,std::string folder,std::string filename)
 		
 		j["menu"]["buttons"][i]["scriptname"] = t->buttons[i].scriptname;
 	}
-	
+////////////////////////////////////////////////////////////////////////////////////////////////
 	int tsize = t->texts.size();
-	
 	j["menu"]["texts_size"] = tsize;
-	
 	for(int i=0;i<tsize;i++)
 	{
 		j["menu"]["texts"][i] = t->texts[i];
+	}
+////////////////////////////////////////////////////////////////////////////////////////////////
+	int isize = t->images.size();
+	j["menu"]["images_size"] = isize;
+	for(int i=0;i<isize;i++)
+	{
+		j["menu"]["images"][i] = t->images[i];
 	}
 	
 	f << std::setw(4) << j << std::endl;
@@ -232,9 +234,8 @@ void loadMenu(window* w,menu* t,std::string folder,std::string filename)
 	t->movable = j["menu"]["movable"].get<bool>();
 	t->shown = j["menu"]["shown"].get<bool>();
 	t->copy_window_rect = j["menu"]["copy_window_rect"].get<bool>();
-	
+////////////////////////////////////////////////
 	int buttons_size = j["menu"]["buttons_size"].get<int>();
-	
 	t->buttons.resize(buttons_size);
 	for(int i=0;i<buttons_size;i++)
 	{
@@ -248,14 +249,19 @@ void loadMenu(window* w,menu* t,std::string folder,std::string filename)
 		
 		w->LW.loadfile_aschunk(t->buttons[i].scriptname);
 	}
-	
+////////////////////////////////////////////////
 	int texts_size = j["menu"]["texts_size"].get<int>();
-	
 	t->texts.resize(texts_size);
-	
 	for(int i=0;i<texts_size;i++)
 	{
 		t->texts[i] = j["menu"]["texts"][i].get<text>();
+	}
+////////////////////////////////////////////////
+	int images_size = j["menu"]["images_size"].get<int>();
+	t->images.resize(images_size);
+	for(int i=0;i<images_size;i++)
+	{
+		t->images[i] = j["menu"]["images"][i].get<image>();
 	}
 	
 	return;

@@ -29,18 +29,18 @@
                         "pos": {
                             "auto_center": true,
                             "center": {
-                                "x": 69,
-                                "y": 50
+                                "x": 54,
+                                "y": 30
                             },
                             "d_x": 0,
                             "d_y": 0,
                             "delta_mode": false,
                             "fixed_pos": false,
-                            "rel_perc_h": 0.37920916080474854,
-                            "rel_perc_w": 0.1513720005750656,
+                            "rel_perc_h": 0.3442091941833496,
+                            "rel_perc_w": 0.47303861379623413,
                             "shape": {
-                                "h": 100,
-                                "w": 139,
+                                "h": 60,
+                                "w": 109,
                                 "x": 278,
                                 "y": 203
                             },
@@ -85,8 +85,8 @@
                             "d_y": 0,
                             "delta_mode": false,
                             "fixed_pos": false,
-                            "rel_perc_h": 0.615000307559967,
-                            "rel_perc_w": 0.5299999713897705,
+                            "rel_perc_h": 0.7523778676986694,
+                            "rel_perc_w": 0.46102941036224365,
                             "shape": {
                                 "h": 30,
                                 "w": 160,
@@ -102,6 +102,33 @@
         ],
         "buttons_size": 2,
         "copy_window_rect": true,
+        "images": [
+            {
+                "filename": "408197.png",
+                "position": {
+                    "auto_center": true,
+                    "center": {
+                        "x": 69,
+                        "y": 50
+                    },
+                    "d_x": 463,
+                    "d_y": 206,
+                    "delta_mode": true,
+                    "fixed_pos": false,
+                    "rel_perc_h": 0.8242092132568359,
+                    "rel_perc_w": 0.38303864002227783,
+                    "shape": {
+                        "h": 50,
+                        "w": 50,
+                        "x": 60,
+                        "y": 60
+                    },
+                    "updated": false
+                },
+                "shown": true
+            }
+        ],
+        "images_size": 1,
         "menu_box": {
             "border_color": {
                 "a": 255,
@@ -174,8 +201,8 @@
                         "d_y": 0,
                         "delta_mode": false,
                         "fixed_pos": false,
-                        "rel_perc_h": 0.12163461744785309,
-                        "rel_perc_w": 0.44266360998153687,
+                        "rel_perc_h": 0.14913462102413177,
+                        "rel_perc_w": 0.47933024168014526,
                         "shape": {
                             "h": 40,
                             "w": 150,
@@ -213,8 +240,8 @@
                             "x": 25,
                             "y": 20
                         },
-                        "d_x": -40,
-                        "d_y": 41,
+                        "d_x": -44,
+                        "d_y": 38,
                         "delta_mode": true,
                         "fixed_pos": false,
                         "rel_perc_h": 0.0,
@@ -260,8 +287,8 @@
                         "d_y": 40,
                         "delta_mode": false,
                         "fixed_pos": false,
-                        "rel_perc_h": 0.8181456327438354,
-                        "rel_perc_w": 0.9074748158454895,
+                        "rel_perc_h": 0.8206456303596497,
+                        "rel_perc_w": 0.9024748206138611,
                         "shape": {
                             "h": 60,
                             "w": 60,

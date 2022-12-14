@@ -26,8 +26,8 @@ void event_handler::catch_box_to_edit()
 		{
 			if(SDL_PointInRect(&mouse,&R.W.menus[i].buttons[j].text_part.text_box.pos.real_rect))
 			{
-				this->edit_box = &R.W.menus[i].buttons[j].text_part.text_box;
-				edit_box->pos.drag = true;
+				this->edit_pos = &R.W.menus[i].buttons[j].text_part.text_box.pos;
+				edit_pos->drag = true;
 				return;
 			}
 		}
@@ -36,13 +36,23 @@ void event_handler::catch_box_to_edit()
 		{
 			if(SDL_PointInRect(&mouse,&R.W.menus[i].texts[j].text_box.pos.real_rect))
 			{
-				this->edit_box = &R.W.menus[i].texts[j].text_box;
-				edit_box->pos.drag = true;
+				this->edit_pos = &R.W.menus[i].texts[j].text_box.pos;
+				edit_pos->drag = true;
+				return;
+			}
+		}
+		bsize = R.W.menus[i].images.size();
+		for(int j=0;j<bsize;j++)
+		{
+			if(SDL_PointInRect(&mouse,&R.W.menus[i].images[j].pos.real_rect))
+			{
+				this->edit_pos = &R.W.menus[i].images[j].pos;
+				edit_pos->drag = true;
 				return;
 			}
 		}
 	}
-	edit_box = 0;
+	edit_pos = NULL;
 }
 
 void event_handler::update_ui()
@@ -69,7 +79,7 @@ void event_handler::update_ui()
 		}
 	}
 	
-	if(edit_mode && edit_box) //if edit mode is ON and edit_box pointer not null (exist!)
+	if(edit_mode && edit_pos) //if edit mode is ON and edit_pos pointer not null (exist!)
 	{
 		move_box_edit_mode(mouse_pos,delta);
 	}
@@ -111,22 +121,23 @@ void event_handler::update_button(SDL_Point last_mouse_pos, button* b)
 
 void event_handler::move_box_edit_mode(SDL_Point mouse_pos, SDL_Point delta)
 {
-	if(!edit_box->pos.drag || !edit_box) return;
+	if(!edit_pos) return;
+	if(!edit_pos->drag) return;
 
 	if(delta.x == 0 && delta.y == 0) return; //nothing to update
 	
-	if(edit_box->pos.fixed_pos)
+	if(edit_pos->fixed_pos)
 	{
-		edit_box->pos.shape.x += delta.x;
-		edit_box->pos.shape.y += delta.y;
+		edit_pos->shape.x += delta.x;
+		edit_pos->shape.y += delta.y;
 	}else{
-		if(edit_box->pos.delta_mode)
+		if(edit_pos->delta_mode)
 		{
-			edit_box->pos.d_x += delta.x;
-			edit_box->pos.d_y += delta.y;
+			edit_pos->d_x += delta.x;
+			edit_pos->d_y += delta.y;
 		}else{
-			edit_box->pos.rel_perc_w += (float)delta.x / (edit_box->pos.relative_rect.w);
-			edit_box->pos.rel_perc_h += (float)delta.y / (edit_box->pos.relative_rect.h);
+			edit_pos->rel_perc_w += (float)delta.x / (edit_pos->relative_rect.w);
+			edit_pos->rel_perc_h += (float)delta.y / (edit_pos->relative_rect.h);
 		}
 	}
 }
@@ -164,7 +175,7 @@ void event_handler::handle_events()
 			case SDL_MOUSEBUTTONUP:
 				this->mouse_click = event.button;
 				this->mouse_pressed = false;
-				edit_box = 0;
+				edit_pos = 0;
 				break;
 				
 			case SDL_KEYDOWN:
