@@ -1,15 +1,15 @@
 #include "event_handler.h"
 
-main_looper::~main_looper()
+event_handler::~event_handler()
 {
-	int size = W.menus.size();
+	int size = R.W.menus.size();
 	for(int i=0;i<size;i++)
 	{
-		W.menus[i].save("menusaves",W.menus[i].name);
+		saveMenu(&R.W.menus[i],"menusaves",R.W.menus[i].name);
 	}
 }
 
-void main_looper::catch_box_to_edit()
+void event_handler::catch_box_to_edit()
 {
 	int tsize;
 	int bsize;
@@ -18,25 +18,25 @@ void main_looper::catch_box_to_edit()
 	mouse.x = this->mouse_motion.x;
 	mouse.y = this->mouse_motion.y;
 
-	tsize = this->W.menus.size();
+	tsize = this->R.W.menus.size();
 	for(int i=0;i<tsize;i++)
 	{
-		bsize = W.menus[i].buttons.size();
+		bsize = R.W.menus[i].buttons.size();
 		for(int j=0;j<bsize;j++)
 		{
-			if(SDL_PointInRect(&mouse,&W.menus[i].buttons[j].text_part.text_box.pos.real_rect))
+			if(SDL_PointInRect(&mouse,&R.W.menus[i].buttons[j].text_part.text_box.pos.real_rect))
 			{
-				this->edit_box = &W.menus[i].buttons[j].text_part.text_box;
+				this->edit_box = &R.W.menus[i].buttons[j].text_part.text_box;
 				edit_box->pos.drag = true;
 				return;
 			}
 		}
-		bsize = W.menus[i].texts.size();
+		bsize = R.W.menus[i].texts.size();
 		for(int j=0;j<bsize;j++)
 		{
-			if(SDL_PointInRect(&mouse,&W.menus[i].texts[j].text_box.pos.real_rect))
+			if(SDL_PointInRect(&mouse,&R.W.menus[i].texts[j].text_box.pos.real_rect))
 			{
-				this->edit_box = &W.menus[i].texts[j].text_box;
+				this->edit_box = &R.W.menus[i].texts[j].text_box;
 				edit_box->pos.drag = true;
 				return;
 			}
@@ -45,7 +45,7 @@ void main_looper::catch_box_to_edit()
 	edit_box = 0;
 }
 
-void main_looper::update_ui()
+void event_handler::update_ui()
 {
 	static SDL_Point mouse_pos;
 	static SDL_Point delta;
@@ -59,13 +59,13 @@ void main_looper::update_ui()
 	delta.x = mouse_motion.x - last_motion.x;
 	delta.y = mouse_motion.y - last_motion.y;
 	
-	tsize = W.menus.size();
+	tsize = R.W.menus.size();
 	for(int i=0;i<tsize;i++)
 	{
-		bsize = W.menus[i].buttons.size();
+		bsize = R.W.menus[i].buttons.size();
 		for(int j=0;j<bsize;j++)
 		{
-			update_button(mouse_pos,&W.menus[i].buttons[j]);
+			update_button(mouse_pos,&R.W.menus[i].buttons[j]);
 		}
 	}
 	
@@ -77,14 +77,7 @@ void main_looper::update_ui()
 	last_motion = mouse_motion;
 }
 
-template<typename T>
-void lua_push_single_variable(lua_State* L,T* object,char* name)
-{
-	luabridge::push(L,object);
-	lua_setglobal(L, name);
-}
-
-void main_looper::update_button(SDL_Point last_mouse_pos, button* b)
+void event_handler::update_button(SDL_Point last_mouse_pos, button* b)
 {
 	if(b->locked) return;
 	
@@ -99,9 +92,13 @@ void main_looper::update_button(SDL_Point last_mouse_pos, button* b)
 			
 			if(b->click)
 			{
-				luabridge::LuaRef f = luabridge::getGlobal(b->LuaState, "button_click");
+				int t = b->scriptname.size();
+				std::string sub = b->scriptname.substr(0,t-4);
+				std::string funcname = sub + "_bclk";
 				
-				*b = f(b);
+				luabridge::LuaRef f = this->R.W.LW.getGlobal(funcname.c_str());
+				
+				*b = f(last_mouse_pos.x,last_mouse_pos.y,b);
 			} 
 			
 			return;
@@ -112,7 +109,7 @@ void main_looper::update_button(SDL_Point last_mouse_pos, button* b)
 	b->focused = false;
 }
 
-void main_looper::move_box_edit_mode(SDL_Point mouse_pos, SDL_Point delta)
+void event_handler::move_box_edit_mode(SDL_Point mouse_pos, SDL_Point delta)
 {
 	if(!edit_box->pos.drag || !edit_box) return;
 
@@ -134,7 +131,7 @@ void main_looper::move_box_edit_mode(SDL_Point mouse_pos, SDL_Point delta)
 	}
 }
 
-void main_looper::handle_events()
+void event_handler::handle_events()
 {
 	const Uint8 *state;
 	while(SDL_PollEvent(&event)) //this loop handle all possible events!
@@ -149,7 +146,7 @@ void main_looper::handle_events()
         		switch (event.window.event)
         		{
         			case SDL_WINDOWEVENT_SIZE_CHANGED:
-        				SDL_GetWindowSize(R.base_window,&R.windowrect.w,&R.windowrect.h);
+        				SDL_GetWindowSize(R.base_window,&R.W.windowrect.w,&R.W.windowrect.h);
         				break;
 				}
 				break;
@@ -187,12 +184,15 @@ void main_looper::handle_events()
 	}
 }
 
-void main_looper::init()
+void event_handler::init()
 {
-	W.loadMainMenu();
+	register_things(this->R.W.LW.L);
+	menu main_menu;
+	loadMenu(&R.W,&main_menu,"menusaves","MAIN_MENU");
+	R.W.menus.push_back(main_menu);
 }
 
-void main_looper::loop()
+void event_handler::loop()
 {
 	while(doloop)
 	{
@@ -202,17 +202,10 @@ void main_looper::loop()
         
         R.clear();
         
-        R.render(&W);
+        R.render(&R.W);
         
         R.screen_update();
         		
 		SDL_Delay(16);
     }
 }
-
-
-
-
-
-
-

@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;1;0;1;0;0;0;0;0;0;0
-UnitCount=17
+UnitCount=18
 
 [VersionInfo]
 Major=1
@@ -141,9 +141,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit18]
-FileName=main_creature.cpp
+FileName=json_io.h
 CompileCpp=1
-Folder=cpp_s
+Folder=headers
 Compile=1
 Link=1
 Priority=1000
@@ -311,7 +311,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit17]
-FileName=ui_struct_json.cpp
+FileName=json_io.cpp
 CompileCpp=1
 Folder=cpp files
 Compile=1

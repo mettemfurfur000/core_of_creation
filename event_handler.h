@@ -1,10 +1,9 @@
 #include "renderer.h"
 
-class main_looper
+class event_handler
 {
 private:
 	SDL_Event event;
-	window W;
 	renderer R;
 	
 	bool doloop = true;
@@ -28,7 +27,7 @@ private:
     
     void move_box_edit_mode(SDL_Point mouse_pos, SDL_Point delta);
 public:
-	~main_looper();
+	~event_handler();
 	
 	void init();
 	

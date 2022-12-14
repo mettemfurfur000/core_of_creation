@@ -1,21 +1,15 @@
 #include "libraries.h"
-#include "ui_struct.h"
+#include "json_io.h"
 
 class renderer
 {
 private:
-	texture_lib T;
-	font_lib F;
 	bool sdl_init();
 	void move_box_relative_to_other_box(box *b,SDL_Rect rel);
-	
 public:
-	SDL_Rect windowrect = {
-		0,
-		0,
-		600,
-		400
-	};
+	window W;
+	texture_lib T;
+	font_lib F;
 	
 	SDL_Window * base_window = NULL;
 	SDL_Renderer * base_renderer = NULL;

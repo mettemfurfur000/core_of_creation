@@ -7,54 +7,8 @@ SDL_Rect& operator+=(SDL_Rect &destination, SDL_Rect source)
 	return destination;
 }
 
-void window::loadMainMenu()
-{
-	menu main_menu;
-	main_menu.load("menusaves","MAIN_MENU");
-	this->menus.push_back(main_menu);
-}
-
-menu* window::getMenuByName(std::string _name)
-{
-	int size = this->menus.size();
-	for(int i = 0;i<size;i++)
-	{
-		if(menus[i].name == _name) return &menus[i];
-	}
-	return 0;
-}
-
-button::button()
-{
-	LuaState = luaL_newstate();
-	luaL_openlibs(LuaState);
-}
-
-static int lua_get_mouse_x(lua_State* L)
-{
-	int t;
-	lua_Number x;
-	SDL_GetMouseState(&t,NULL);
-	x = t;
-	lua_pushnumber(L, x);
-	return 1;
-}
-
-static int lua_get_mouse_y(lua_State* L)
-{
-	int t;
-	lua_Number y;
-	SDL_GetMouseState(NULL,&t);
-	y = t;
-	lua_pushnumber(L, y);
-	return 1;
-}
-
 void register_things(lua_State* L)
 {
-	lua_register(L,"get_x",lua_get_mouse_x);
-	lua_register(L,"get_y",lua_get_mouse_y);
-	
 	luabridge::getGlobalNamespace(L)
 		.beginClass<SDL_Color>("SDL_Color")
 			.addProperty("r", &SDL_Color::r)
@@ -109,15 +63,4 @@ void register_things(lua_State* L)
 			.addProperty("locked", &button::locked)
 			.addProperty("click", &button::click)
 		.endClass();
-}
-
-void button::load_lua_script()
-{
-	int ret = luaL_dofile(LuaState,this->scriptname.c_str());
-	register_things(LuaState);
-	
-	if(ret != 0)
-	{
-		printf("Error: %s\n", lua_tostring(LuaState,ret));
-	}
 }

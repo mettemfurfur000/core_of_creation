@@ -21,7 +21,7 @@ bool renderer::sdl_init()
 		return false;
 	}
 	
-	this->base_window = SDL_CreateWindow( "CALAMITY dev0", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->windowrect.w, this->windowrect.h, flags );
+	this->base_window = SDL_CreateWindow( "CALAMITY dev0", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->W.windowrect.w, this->W.windowrect.h, flags );
 	if( this->base_window == NULL )
 	{
 		printf( "[RENDERER][E] - SDL_CreateWindow Error: %s\n", SDL_GetError() );
@@ -111,11 +111,10 @@ void renderer::render(menu* m)
 	int tsize;
 	if(m->copy_window_rect)
 	{
-		m->menu_box.pos.shape = this->windowrect;
+		m->menu_box.pos.shape = this->W.windowrect;
 	}
 	
 	render(&m->menu_box);
-	render(&m->drag_zone,m->menu_box.pos.shape);
 	
 	tsize = m->texts.size();
 	
@@ -317,6 +316,7 @@ void renderer::render(text* t,bool do_render_box, SDL_Rect rel_rect)
 		t->lazy_texture = SDL_CreateTextureFromSurface(this->base_renderer, tmp);
 		
 		SDL_FreeSurface(tmp);
+		t->updated = false;
 	}
 	
 	box tbox = t->text_box;
@@ -338,7 +338,7 @@ void renderer::render(text* t,bool do_render_box, SDL_Rect rel_rect)
 void renderer::clear()
 {
 	SDL_SetRenderDrawColor(this->base_renderer,0,0,0,255);
-	SDL_RenderFillRect(this->base_renderer,&this->windowrect);
+	SDL_RenderFillRect(this->base_renderer,&this->W.windowrect);
 	
 	SDL_RenderClear(this->base_renderer);
 }

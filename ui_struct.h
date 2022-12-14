@@ -1,3 +1,5 @@
+#pragma once
+
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <string>
@@ -10,9 +12,9 @@
 
 #include "lua_worker.h"
 
-#pragma once
-
 SDL_Rect& operator+=(SDL_Rect &destination, SDL_Rect source);
+
+void register_things(lua_State* L);
 
 struct position
 {
@@ -64,25 +66,19 @@ struct text
 	box text_box;
 	
 	std::string text;
-	
 	std::string font_name;
-	
-	TTF_Font * font = NULL;
 	
 	int font_size = 12;
 	
 	bool centered = false;
-	
-	//for renderer
 	bool updated = false;
 	
+	TTF_Font * font = NULL;
 	SDL_Texture * lazy_texture = NULL;
 };
 
-class button
+struct button
 {
-public:
-	lua_State* LuaState;
 	text text_part;
 	
 	std::string scriptname;
@@ -91,19 +87,13 @@ public:
 	bool focused;
 	bool locked;
 	bool click;
-	
-	button();
-	
-	void load_lua_script();
 };
 
-class menu
+struct menu
 {
-public:
 	std::string name;
 	
 	box menu_box;
-	box drag_zone;
 
 	bool resizable = false;
 	bool movable = false;
@@ -115,16 +105,18 @@ public:
 	std::vector<text> texts;
 	
 	std::vector<image> images;
-
-	void save(std::string folder,std::string filename);
-	bool load(std::string folder,std::string filename);
 };
 
-class window
+struct window
 {
-public:
-	std::vector<menu> menus;
+	SDL_Rect windowrect = {
+		0,
+		0,
+		600,
+		400
+	};
 	
-	void loadMainMenu();
-	menu* getMenuByName(std::string _name);
+	lua_worker LW;
+		
+	std::vector<menu> menus;
 };

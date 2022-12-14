@@ -30,16 +30,16 @@
                             "auto_center": true,
                             "center": {
                                 "x": 69,
-                                "y": 20
+                                "y": 50
                             },
                             "d_x": 0,
                             "d_y": 0,
                             "delta_mode": false,
                             "fixed_pos": false,
-                            "rel_perc_h": 0.4792090654373169,
-                            "rel_perc_w": 0.498038649559021,
+                            "rel_perc_h": 0.37920916080474854,
+                            "rel_perc_w": 0.1513720005750656,
                             "shape": {
-                                "h": 40,
+                                "h": 100,
                                 "w": 139,
                                 "x": 278,
                                 "y": 203
@@ -49,47 +49,59 @@
                         "shown": true
                     }
                 }
+            },
+            {
+                "focused": false,
+                "locked": false,
+                "pressed": false,
+                "scriptname": "love.lua",
+                "text_part": {
+                    "centered": true,
+                    "font_name": "DOSMINI.ttf",
+                    "font_size": 12,
+                    "text": "love love love i love",
+                    "text_box": {
+                        "border_color": {
+                            "a": 255,
+                            "b": 10,
+                            "g": 90,
+                            "r": 50
+                        },
+                        "border_th": 2,
+                        "main_color": {
+                            "a": 255,
+                            "b": 88,
+                            "g": 45,
+                            "r": 88
+                        },
+                        "moving": false,
+                        "pos": {
+                            "auto_center": true,
+                            "center": {
+                                "x": 80,
+                                "y": 15
+                            },
+                            "d_x": 0,
+                            "d_y": 0,
+                            "delta_mode": false,
+                            "fixed_pos": false,
+                            "rel_perc_h": 0.615000307559967,
+                            "rel_perc_w": 0.5299999713897705,
+                            "shape": {
+                                "h": 30,
+                                "w": 160,
+                                "x": 20,
+                                "y": 20
+                            },
+                            "updated": false
+                        },
+                        "shown": true
+                    }
+                }
             }
         ],
-        "buttons_size": 1,
+        "buttons_size": 2,
         "copy_window_rect": true,
-        "drag_zone": {
-            "border_color": {
-                "a": 255,
-                "b": 10,
-                "g": 90,
-                "r": 50
-            },
-            "border_th": 2,
-            "main_color": {
-                "a": 15,
-                "b": 10,
-                "g": 15,
-                "r": 0
-            },
-            "moving": false,
-            "pos": {
-                "auto_center": true,
-                "center": {
-                    "x": 15,
-                    "y": 15
-                },
-                "d_x": 40,
-                "d_y": -40,
-                "delta_mode": true,
-                "fixed_pos": false,
-                "rel_perc_h": 0.5,
-                "rel_perc_w": 0.5,
-                "shape": {
-                    "h": 30,
-                    "w": 30,
-                    "x": 40,
-                    "y": 90
-                },
-                "updated": false
-            },
-            "shown": false
-        },
         "menu_box": {
             "border_color": {
                 "a": 255,
@@ -248,8 +260,8 @@
                         "d_y": 40,
                         "delta_mode": false,
                         "fixed_pos": false,
-                        "rel_perc_h": 0.8331456184387207,
-                        "rel_perc_w": 0.9158081412315369,
+                        "rel_perc_h": 0.8181456327438354,
+                        "rel_perc_w": 0.9074748158454895,
                         "shape": {
                             "h": 60,
                             "w": 60,
