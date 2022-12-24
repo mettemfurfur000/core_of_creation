@@ -21,18 +21,18 @@ void texture_lib::destroyAll()
 //return extension of file without dot(.) character
 std::string get_extension(std::string from)
 {
-	std::size_t pos = from.find_last_of(".") + 1;	
+	std::size_t position = from.find_last_of(".") + 1;	
 	
-	if(pos == std::string::npos)
+	if(position == std::string::npos)
 		return "void";
 		
-	return from.substr(pos);
+	return from.substr(position);
 }
 
 void delete_extension(std::string& str)
 {
-	std::size_t pos = str.find_last_of(".") - 1;
-	str.erase(str.begin()+pos, str.end());
+	std::size_t position = str.find_last_of(".") - 1;
+	str.erase(str.begin()+position, str.end());
 }
 
 SDL_Texture* texture_lib::load_file(std::string path, std::string filename)

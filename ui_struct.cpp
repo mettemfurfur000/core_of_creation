@@ -7,6 +7,34 @@ SDL_Rect& operator+=(SDL_Rect &destination, SDL_Rect source)
 	return destination;
 }
 
+int window::l_getMenu(lua_State* L)
+{
+	const char* c_name = luaL_checkstring(L, 1);
+	
+	if(!c_name)
+	{
+		lua_pushnil(L);
+		return 1;
+	}
+	
+	std::string menu_name = c_name;
+	
+	int size = menus.size();
+	
+	for(int i=0; i<size; i++)
+	{
+		if(menus[i].name == menu_name)
+		{
+			luabridge::push(L,menus[i]);
+			return 1; 
+		}
+	}
+	
+	lua_pushnil(L);
+	
+	return 1;
+}
+
 void register_things(lua_State* L)
 {
 	luabridge::getGlobalNamespace(L)
@@ -16,7 +44,7 @@ void register_things(lua_State* L)
 			.addProperty("b", &SDL_Color::b)
 			.addProperty("a", &SDL_Color::a)
 		.endClass()
-			.beginClass<SDL_Point>("SDL_Point")
+		.beginClass<SDL_Point>("SDL_Point")
 			.addProperty("x", &SDL_Point::x)
 			.addProperty("y", &SDL_Point::y)
 		.endClass()
@@ -26,7 +54,7 @@ void register_things(lua_State* L)
 			.addProperty("h", &SDL_Rect::h)
 			.addProperty("w", &SDL_Rect::w)
 		.endClass()
-		.beginClass<position>("position")
+		.beginClass<position>("pos")
 			.addProperty ("updated", &position::updated)
 			.addProperty ("fixed_pos", &position::fixed_pos)
 			.addProperty ("delta_mode", &position::delta_mode)
@@ -41,12 +69,17 @@ void register_things(lua_State* L)
 			.addProperty ("d_y", &position::d_y)
 		.endClass()
 		.beginClass<box>("box")
-			.addProperty("position", &box::pos)
+			.addProperty("pos", &box::pos)
 			.addProperty("moving",&box::moving)
 			.addProperty("shown",&box::shown)
 			.addProperty("color", &box::color)
 			.addProperty("border_color",&box::border_color)
 			.addProperty("border_th",&box::border_th)
+		.endClass()
+		.beginClass<image>("image")
+			.addProperty("shown", &image::shown)
+			.addProperty("position",&image::pos)
+			.addProperty("filename",&image::filename)
 		.endClass()
 		.beginClass<text>("text")
 			.addProperty("text_string", &text::text)
@@ -62,5 +95,21 @@ void register_things(lua_State* L)
 			.addProperty("focused", &button::focused)
 			.addProperty("locked", &button::locked)
 			.addProperty("click", &button::click)
+		.endClass()
+		.beginClass<menu>("menu")
+			.addProperty("name", &menu::name)
+			.addProperty("menu_box", &menu::menu_box)
+			.addProperty("resizable", &menu::resizable)
+			.addProperty("movable", &menu::movable)
+			.addProperty("shown", &menu::shown)
+			.addProperty("copy_window_rect", &menu::copy_window_rect)
+			.addProperty("buttons", &menu::buttons)
+			.addProperty("texts", &menu::texts)
+			.addProperty("images", &menu::images)
+		.endClass()
+		.beginClass<window>("window")
+			.addProperty("windowrect", &window::windowrect)
+			.addProperty("menus",&window::menus)
+			.addFunction("getMenu",&window::l_getMenu)
 		.endClass();
 }

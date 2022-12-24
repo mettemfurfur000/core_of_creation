@@ -8,8 +8,8 @@
                 "scriptname": "b.lua",
                 "text_part": {
                     "centered": true,
-                    "font_name": "DOSMINI.ttf",
-                    "font_size": 12,
+                    "font_name": "Manrope-VariableFont_wght.ttf",
+                    "font_size": 22,
                     "text": "Test Button",
                     "text_box": {
                         "border_color": {
@@ -29,18 +29,18 @@
                         "pos": {
                             "auto_center": true,
                             "center": {
-                                "x": 54,
-                                "y": 30
+                                "x": 74,
+                                "y": 25
                             },
                             "d_x": 0,
                             "d_y": 0,
                             "delta_mode": false,
                             "fixed_pos": false,
-                            "rel_perc_h": 0.3442091941833496,
-                            "rel_perc_w": 0.47303861379623413,
+                            "rel_perc_h": 0.44170936942100525,
+                            "rel_perc_w": 0.4880385994911194,
                             "shape": {
-                                "h": 60,
-                                "w": 109,
+                                "h": 50,
+                                "w": 149,
                                 "x": 278,
                                 "y": 203
                             },
@@ -59,7 +59,7 @@
                     "centered": true,
                     "font_name": "DOSMINI.ttf",
                     "font_size": 12,
-                    "text": "love love love i love",
+                    "text": "<3 love love <3",
                     "text_box": {
                         "border_color": {
                             "a": 255,
@@ -85,8 +85,8 @@
                             "d_y": 0,
                             "delta_mode": false,
                             "fixed_pos": false,
-                            "rel_perc_h": 0.7523778676986694,
-                            "rel_perc_w": 0.46102941036224365,
+                            "rel_perc_h": 0.3248780071735382,
+                            "rel_perc_w": 0.18936263024806976,
                             "shape": {
                                 "h": 30,
                                 "w": 160,
@@ -105,14 +105,14 @@
         "images": [
             {
                 "filename": "408197.png",
-                "position": {
+                "pos": {
                     "auto_center": true,
                     "center": {
                         "x": 69,
                         "y": 50
                     },
-                    "d_x": 463,
-                    "d_y": 206,
+                    "d_x": 518,
+                    "d_y": 191,
                     "delta_mode": true,
                     "fixed_pos": false,
                     "rel_perc_h": 0.8242092132568359,
@@ -126,22 +126,46 @@
                     "updated": false
                 },
                 "shown": true
+            },
+            {
+                "filename": "image 87.png",
+                "pos": {
+                    "auto_center": true,
+                    "center": {
+                        "x": 69,
+                        "y": 50
+                    },
+                    "d_x": 0,
+                    "d_y": 0,
+                    "delta_mode": false,
+                    "fixed_pos": true,
+                    "rel_perc_h": 0.8242092132568359,
+                    "rel_perc_w": 0.38303864002227783,
+                    "shape": {
+                        "h": 45,
+                        "w": 90,
+                        "x": 89,
+                        "y": 69
+                    },
+                    "updated": false
+                },
+                "shown": true
             }
         ],
-        "images_size": 1,
+        "images_size": 2,
         "menu_box": {
             "border_color": {
-                "a": 255,
+                "a": 0,
                 "b": 10,
                 "g": 90,
                 "r": 50
             },
             "border_th": 2,
             "main_color": {
-                "a": 125,
-                "b": 150,
-                "g": 12,
-                "r": 66
+                "a": 255,
+                "b": 39,
+                "g": 32,
+                "r": 30
             },
             "moving": false,
             "pos": {
@@ -175,7 +199,7 @@
                 "centered": true,
                 "font_name": "DOSMINI.ttf",
                 "font_size": 18,
-                "text": "Core of Creation",
+                "text": "Reneisanse Project!",
                 "text_box": {
                     "border_color": {
                         "a": 30,
@@ -201,8 +225,8 @@
                         "d_y": 0,
                         "delta_mode": false,
                         "fixed_pos": false,
-                        "rel_perc_h": 0.14913462102413177,
-                        "rel_perc_w": 0.47933024168014526,
+                        "rel_perc_h": 0.18913458287715912,
+                        "rel_perc_w": 0.5409968495368958,
                         "shape": {
                             "h": 40,
                             "w": 150,
@@ -218,7 +242,7 @@
                 "centered": true,
                 "font_name": "FreeSans.ttf",
                 "font_size": 12,
-                "text": "Version\n0.W.0",
+                "text": "V 0.5",
                 "text_box": {
                     "border_color": {
                         "a": 60,
@@ -240,8 +264,8 @@
                             "x": 25,
                             "y": 20
                         },
-                        "d_x": -44,
-                        "d_y": 38,
+                        "d_x": -412,
+                        "d_y": 39,
                         "delta_mode": true,
                         "fixed_pos": false,
                         "rel_perc_h": 0.0,
@@ -261,7 +285,7 @@
                 "centered": true,
                 "font_name": "DOSMINI.ttf",
                 "font_size": 24,
-                "text": "OWO",
+                "text": "W",
                 "text_box": {
                     "border_color": {
                         "a": 120,
@@ -287,8 +311,8 @@
                         "d_y": 40,
                         "delta_mode": false,
                         "fixed_pos": false,
-                        "rel_perc_h": 0.8206456303596497,
-                        "rel_perc_w": 0.9024748206138611,
+                        "rel_perc_h": 0.5781456828117371,
+                        "rel_perc_w": 0.11914169043302536,
                         "shape": {
                             "h": 60,
                             "w": 60,

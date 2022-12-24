@@ -34,7 +34,6 @@ struct position
 	//
 	SDL_Rect real_rect;
 	SDL_Rect relative_rect;
-	bool drag = false;
 };
 
 struct box
@@ -108,8 +107,9 @@ struct menu
 	std::vector<image> images;
 };
 
-struct window
+class window
 {
+public:
 	SDL_Rect windowrect = {
 		0,
 		0,
@@ -120,4 +120,6 @@ struct window
 	lua_worker LW;
 		
 	std::vector<menu> menus;
+	
+	int l_getMenu(lua_State* L);
 };

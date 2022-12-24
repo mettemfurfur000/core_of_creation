@@ -1,6 +1,9 @@
-function b_bclk ( mx, my, button )
-	local shape = button.text_part.text_box.position.shape
-	local real_rect = button.text_part.text_box.position.real_rect
+function b_bclk ( last_mouse_pos, button, window )
+	local shape = button.text_part.text_box.pos.shape
+	local real_rect = button.text_part.text_box.pos.real_rect
+	
+	local mx = last_mouse_pos.x
+	local my = last_mouse_pos.y
 	
 	local range = 20
 	

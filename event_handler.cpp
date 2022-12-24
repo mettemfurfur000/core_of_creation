@@ -27,7 +27,7 @@ void event_handler::catch_box_to_edit()
 			if(SDL_PointInRect(&mouse,&R.W.menus[i].buttons[j].text_part.text_box.pos.real_rect))
 			{
 				this->edit_pos = &R.W.menus[i].buttons[j].text_part.text_box.pos;
-				edit_pos->drag = true;
+				
 				return;
 			}
 		}
@@ -37,7 +37,16 @@ void event_handler::catch_box_to_edit()
 			if(SDL_PointInRect(&mouse,&R.W.menus[i].texts[j].text_box.pos.real_rect))
 			{
 				this->edit_pos = &R.W.menus[i].texts[j].text_box.pos;
-				edit_pos->drag = true;
+								
+				if(this->mouse_click.button == SDL_BUTTON_LEFT)
+				{
+					edit_text_source = &R.W.menus[i].texts[j];
+					
+					printf("new text for edit: %s\n",edit_text_source->text.c_str());
+					
+					SDL_StartTextInput();
+				}
+				
 				return;
 			}
 		}
@@ -47,12 +56,21 @@ void event_handler::catch_box_to_edit()
 			if(SDL_PointInRect(&mouse,&R.W.menus[i].images[j].pos.real_rect))
 			{
 				this->edit_pos = &R.W.menus[i].images[j].pos;
-				edit_pos->drag = true;
+				
 				return;
 			}
 		}
 	}
-	edit_pos = NULL;
+	
+	if(edit_text_source)
+	{
+		printf("unbound from %s\n",edit_text_source->text.c_str());
+		edit_text_source = NULL;
+	}
+	
+	if(edit_pos) edit_pos = NULL;
+	
+	if(SDL_IsTextInputActive) SDL_StopTextInput();
 }
 
 void event_handler::update_ui()
@@ -91,38 +109,43 @@ void event_handler::update_button(SDL_Point last_mouse_pos, button* b)
 {
 	if(b->locked) return;
 	
-	if(SDL_PointInRect(&last_mouse_pos,&b->text_part.text_box.pos.real_rect))
+	if(!SDL_PointInRect(&last_mouse_pos,&b->text_part.text_box.pos.real_rect))
 	{
-		b->focused = true;
-		if(this->mouse_pressed)
-		{
-			b->click = !b->pressed;
-			
-			b->pressed = true;
-			
-			if(b->click)
-			{
-				int t = b->scriptname.size();
-				std::string sub = b->scriptname.substr(0,t-4);
-				std::string funcname = sub + "_bclk";
-				
-				luabridge::LuaRef f = this->R.W.LW.getGlobal(funcname.c_str());
-				
-				*b = f(last_mouse_pos.x,last_mouse_pos.y,b);
-			} 
-			
-			return;
-		}
+		b->focused = false;
+		return;
+	}
+	b->focused = true;
+	//for single click registrating, not the button holding
+	if(!mouse_pressed)
+	{
 		b->pressed = false;
 		return;
 	}
-	b->focused = false;
+	
+	b->click = !b->pressed;
+	
+	b->pressed = true;
+	
+	if(!b->click)
+	{
+		return;
+	}
+	//
+	int t = b->scriptname.size();
+	
+	if(t < 5) return;
+	
+	std::string sub = b->scriptname.substr(0,t-4);
+	std::string funcname = sub + "_bclk";
+	
+	luabridge::LuaRef f = R.W.LW.getGlobal(funcname.c_str());
+	
+	*b = f(last_mouse_pos,b,&R.W);
 }
 
 void event_handler::move_box_edit_mode(SDL_Point mouse_pos, SDL_Point delta)
 {
 	if(!edit_pos) return;
-	if(!edit_pos->drag) return;
 
 	if(delta.x == 0 && delta.y == 0) return; //nothing to update
 	
@@ -181,16 +204,43 @@ void event_handler::handle_events()
 			case SDL_KEYDOWN:
 				this->key = event.key;
 				state = SDL_GetKeyboardState(NULL);
-				if(state[SDL_SCANCODE_X]) 
+				
+				if(!edit_text_source) break;
+				
+				if(state[SDL_SCANCODE_BACKSPACE])
 				{
-				    printf("X Key Pressed.\n");
-				    doloop = false;
+					if(edit_text_source->text.size() == 0) break;
+					
+					edit_text_source->text.pop_back();
+					
+					edit_text_source->updated = true;
 				}
+				
+				if( state[SDL_SCANCODE_C] && SDL_GetModState() & KMOD_CTRL )
+                {
+                	SDL_SetClipboardText( edit_text_source->text.c_str() );
+                }
+                
+                if( state[SDL_SCANCODE_V] && SDL_GetModState() & KMOD_CTRL )
+                {
+                	edit_text_source->text = SDL_GetClipboardText();
+                	
+                    edit_text_source->updated = true;
+                }
+				
 				break;
 				
 			case SDL_KEYUP:
 				this->key = event.key;
 				break;
+				
+			case SDL_TEXTINPUT:
+                if(!edit_text_source) break;
+
+                edit_text_source->text += event.text.text;
+                
+                edit_text_source->updated = true;
+                break;
 		}
 	}
 }

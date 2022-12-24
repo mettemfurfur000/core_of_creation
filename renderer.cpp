@@ -2,7 +2,7 @@
 
 bool renderer::sdl_init()
 {
-	Uint32 flags = 0;//SDL_WINDOW_RESIZABLE;
+	Uint32 flags = SDL_WINDOW_RESIZABLE;
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
 	{
 		printf( "[RENDERER][E] - SDL_INIT_VIDEO Error: %s\n", SDL_GetError() );
@@ -35,9 +35,6 @@ bool renderer::sdl_init()
 		return false;
 	}
 
-	
-	SDL_StartTextInput();
-	
 	return true;
 }
 
@@ -207,14 +204,14 @@ void renderer::render(image* i, SDL_Rect rel_rect)
 	
 	i->pos.relative_rect = rel_rect;
 
-	if(!i->texture) //where fucking pointer?
+	if(!i->texture) //where pointer?
 	{
 		i->texture = this->T.guarantee_texture(i->filename);
 	}
 	
 	position tpos = i->pos;
 	
-	SDL_QueryTexture(i->texture, NULL, NULL, &tpos.shape.w, &tpos.shape.h);
+	//SDL_QueryTexture(i->texture, NULL, NULL, &tpos.shape.w, &tpos.shape.h);
 
 	move_pos_relative_2_rect(&tpos,rel_rect);
 	
@@ -352,8 +349,17 @@ void renderer::render(text* t,bool do_render_box, SDL_Rect rel_rect)
 	}
 	
 	if(do_render_box) render(&t->text_box,rel_rect); //render box (if asked)
-
-	if(!t->lazy_texture || t->updated)
+		
+	if(t->updated)
+	{
+		SDL_DestroyTexture(t->lazy_texture);
+		
+		t->lazy_texture = 0;
+		
+		t->updated = false;
+	}
+	
+	if(!t->lazy_texture)
 	{
 		//text rendering
 		SDL_Surface * tmp = TTF_RenderText_Blended_Wrapped(
@@ -366,9 +372,8 @@ void renderer::render(text* t,bool do_render_box, SDL_Rect rel_rect)
 		t->lazy_texture = SDL_CreateTextureFromSurface(this->base_renderer, tmp);
 		
 		SDL_FreeSurface(tmp);
-		t->updated = false;
 	}
-	
+
 	box tbox = t->text_box;
 	
 	SDL_QueryTexture(t->lazy_texture, NULL, NULL, &tbox.pos.shape.w, &tbox.pos.shape.h);

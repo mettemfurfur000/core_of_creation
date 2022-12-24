@@ -141,7 +141,7 @@ void to_json(json& j, const image& p)
 	j = json
 	{
 		{"shown",p.shown},
-		{"position",p.pos},
+		{"pos",p.pos},
 		{"filename",p.filename}
 	};
 }
@@ -149,7 +149,7 @@ void to_json(json& j, const image& p)
 void from_json(const json& j, image& p) 
 {
 	j.at("shown").get_to(p.shown);
-	j.at("position").get_to(p.pos);
+	j.at("pos").get_to(p.pos);
 	j.at("filename").get_to(p.filename);
 }
 

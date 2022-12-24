@@ -5,6 +5,7 @@ extern "C" {
 }
 
 #include <LuaBridge/LuaBridge.h>
+#include <LuaBridge/Vector.h>
 
 template<typename T>
 void lua_push_single_variable(lua_State* L,T* object,char* name)

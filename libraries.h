@@ -1,12 +1,13 @@
-#pragma once
 #include <vector>
 #include <string>
 #include <map>
 #include <fstream>
 
-#include <SDL_image.h>
 #include <SDL.h>
+#include <SDL_image.h>
 #include <SDL_ttf.h>
+
+#pragma once
 
 struct texture
 {

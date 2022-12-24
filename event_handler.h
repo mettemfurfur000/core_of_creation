@@ -21,6 +21,8 @@ private:
     
     position* edit_pos = NULL;
     
+    text* edit_text_source;
+    
     void catch_box_to_edit();
     
     void update_button(SDL_Point last_mouse_pos, button* b);
