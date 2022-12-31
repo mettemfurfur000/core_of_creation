@@ -4,13 +4,14 @@
             {
                 "focused": false,
                 "locked": false,
-                "pressed": false,
+                "pressed": true,
                 "scriptname": "b.lua",
                 "text_part": {
                     "centered": true,
+                    "editable": true,
                     "font_name": "Manrope-VariableFont_wght.ttf",
                     "font_size": 22,
-                    "text": "Test Button",
+                    "text": "hi hello",
                     "text_box": {
                         "border_color": {
                             "a": 255,
@@ -29,18 +30,24 @@
                         "pos": {
                             "auto_center": true,
                             "center": {
-                                "x": 74,
-                                "y": 25
+                                "x": 124,
+                                "y": 30
                             },
+                            "d_h": 0,
+                            "d_w": 0,
                             "d_x": 0,
                             "d_y": 0,
                             "delta_mode": false,
+                            "delta_size": true,
                             "fixed_pos": false,
-                            "rel_perc_h": 0.44170936942100525,
-                            "rel_perc_w": 0.4880385994911194,
+                            "fixed_size": true,
+                            "rel_perc_h": 0.7234499454498291,
+                            "rel_perc_w": 0.49714395403862,
+                            "rel_size_perc_h": 1.0,
+                            "rel_size_perc_w": 1.0,
                             "shape": {
-                                "h": 50,
-                                "w": 149,
+                                "h": 60,
+                                "w": 249,
                                 "x": 278,
                                 "y": 203
                             },
@@ -49,74 +56,31 @@
                         "shown": true
                     }
                 }
-            },
-            {
-                "focused": false,
-                "locked": false,
-                "pressed": false,
-                "scriptname": "love.lua",
-                "text_part": {
-                    "centered": true,
-                    "font_name": "DOSMINI.ttf",
-                    "font_size": 12,
-                    "text": "<3 love love <3",
-                    "text_box": {
-                        "border_color": {
-                            "a": 255,
-                            "b": 10,
-                            "g": 90,
-                            "r": 50
-                        },
-                        "border_th": 2,
-                        "main_color": {
-                            "a": 255,
-                            "b": 88,
-                            "g": 45,
-                            "r": 88
-                        },
-                        "moving": false,
-                        "pos": {
-                            "auto_center": true,
-                            "center": {
-                                "x": 80,
-                                "y": 15
-                            },
-                            "d_x": 0,
-                            "d_y": 0,
-                            "delta_mode": false,
-                            "fixed_pos": false,
-                            "rel_perc_h": 0.3248780071735382,
-                            "rel_perc_w": 0.18936263024806976,
-                            "shape": {
-                                "h": 30,
-                                "w": 160,
-                                "x": 20,
-                                "y": 20
-                            },
-                            "updated": false
-                        },
-                        "shown": true
-                    }
-                }
             }
         ],
-        "buttons_size": 2,
+        "buttons_size": 1,
         "copy_window_rect": true,
         "images": [
             {
-                "filename": "408197.png",
+                "filename": "tem.png",
                 "pos": {
                     "auto_center": true,
                     "center": {
                         "x": 69,
                         "y": 50
                     },
-                    "d_x": 518,
-                    "d_y": 191,
-                    "delta_mode": true,
+                    "d_h": -50,
+                    "d_w": -50,
+                    "d_x": 4,
+                    "d_y": 64,
+                    "delta_mode": false,
+                    "delta_size": true,
                     "fixed_pos": false,
-                    "rel_perc_h": 0.8242092132568359,
-                    "rel_perc_w": 0.38303864002227783,
+                    "fixed_size": false,
+                    "rel_perc_h": 0.1667090803384781,
+                    "rel_perc_w": 0.14803867042064667,
+                    "rel_size_perc_h": 0.5,
+                    "rel_size_perc_w": 0.5,
                     "shape": {
                         "h": 50,
                         "w": 50,
@@ -126,33 +90,9 @@
                     "updated": false
                 },
                 "shown": true
-            },
-            {
-                "filename": "image 87.png",
-                "pos": {
-                    "auto_center": true,
-                    "center": {
-                        "x": 69,
-                        "y": 50
-                    },
-                    "d_x": 0,
-                    "d_y": 0,
-                    "delta_mode": false,
-                    "fixed_pos": true,
-                    "rel_perc_h": 0.8242092132568359,
-                    "rel_perc_w": 0.38303864002227783,
-                    "shape": {
-                        "h": 45,
-                        "w": 90,
-                        "x": 89,
-                        "y": 69
-                    },
-                    "updated": false
-                },
-                "shown": true
             }
         ],
-        "images_size": 2,
+        "images_size": 1,
         "menu_box": {
             "border_color": {
                 "a": 0,
@@ -174,12 +114,18 @@
                     "x": 0,
                     "y": 0
                 },
+                "d_h": 0,
+                "d_w": 0,
                 "d_x": 0,
                 "d_y": 0,
                 "delta_mode": false,
+                "delta_size": true,
                 "fixed_pos": true,
+                "fixed_size": true,
                 "rel_perc_h": 0.0,
                 "rel_perc_w": 0.0,
+                "rel_size_perc_h": 1.0,
+                "rel_size_perc_w": 1.0,
                 "shape": {
                     "h": 400,
                     "w": 600,
@@ -197,9 +143,10 @@
         "texts": [
             {
                 "centered": true,
+                "editable": true,
                 "font_name": "DOSMINI.ttf",
                 "font_size": 18,
-                "text": "Reneisanse Project!",
+                "text": "Input Box",
                 "text_box": {
                     "border_color": {
                         "a": 30,
@@ -221,12 +168,18 @@
                             "x": 75,
                             "y": 20
                         },
+                        "d_h": 0,
+                        "d_w": 0,
                         "d_x": 0,
                         "d_y": 0,
                         "delta_mode": false,
+                        "delta_size": true,
                         "fixed_pos": false,
-                        "rel_perc_h": 0.18913458287715912,
-                        "rel_perc_w": 0.5409968495368958,
+                        "fixed_size": true,
+                        "rel_perc_h": 0.19608798623085022,
+                        "rel_perc_w": 0.18792255222797394,
+                        "rel_size_perc_h": 1.0,
+                        "rel_size_perc_w": 1.0,
                         "shape": {
                             "h": 40,
                             "w": 150,
@@ -237,94 +190,8 @@
                     },
                     "shown": true
                 }
-            },
-            {
-                "centered": true,
-                "font_name": "FreeSans.ttf",
-                "font_size": 12,
-                "text": "V 0.5",
-                "text_box": {
-                    "border_color": {
-                        "a": 60,
-                        "b": 200,
-                        "g": 160,
-                        "r": 200
-                    },
-                    "border_th": 2,
-                    "main_color": {
-                        "a": 100,
-                        "b": 100,
-                        "g": 100,
-                        "r": 100
-                    },
-                    "moving": false,
-                    "pos": {
-                        "auto_center": true,
-                        "center": {
-                            "x": 25,
-                            "y": 20
-                        },
-                        "d_x": -412,
-                        "d_y": 39,
-                        "delta_mode": true,
-                        "fixed_pos": false,
-                        "rel_perc_h": 0.0,
-                        "rel_perc_w": 0.0,
-                        "shape": {
-                            "h": 40,
-                            "w": 50,
-                            "x": 253,
-                            "y": 11
-                        },
-                        "updated": false
-                    },
-                    "shown": true
-                }
-            },
-            {
-                "centered": true,
-                "font_name": "DOSMINI.ttf",
-                "font_size": 24,
-                "text": "W",
-                "text_box": {
-                    "border_color": {
-                        "a": 120,
-                        "b": 80,
-                        "g": 10,
-                        "r": 50
-                    },
-                    "border_th": 2,
-                    "main_color": {
-                        "a": 90,
-                        "b": 255,
-                        "g": 6,
-                        "r": 181
-                    },
-                    "moving": false,
-                    "pos": {
-                        "auto_center": true,
-                        "center": {
-                            "x": 30,
-                            "y": 30
-                        },
-                        "d_x": -40,
-                        "d_y": 40,
-                        "delta_mode": false,
-                        "fixed_pos": false,
-                        "rel_perc_h": 0.5781456828117371,
-                        "rel_perc_w": 0.11914169043302536,
-                        "shape": {
-                            "h": 60,
-                            "w": 60,
-                            "x": 253,
-                            "y": 11
-                        },
-                        "updated": false
-                    },
-                    "shown": true
-                }
             }
         ],
-        "texts_size": 3
+        "texts_size": 1
     }
 }

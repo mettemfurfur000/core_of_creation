@@ -6,7 +6,7 @@ Ver=2
 ObjFiles=
 Includes=
 Libs=
-PrivateResource=
+PrivateResource=core_of_creation_private.rc
 ResourceIncludes=
 MakeIncludes=
 Compiler=
@@ -142,16 +142,6 @@ BuildCmd=
 
 [Unit18]
 FileName=json_io.h
-CompileCpp=1
-Folder=headers
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit19]
-FileName=main_creature.h
 CompileCpp=1
 Folder=headers
 Compile=1

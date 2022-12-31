@@ -5,7 +5,6 @@ class renderer
 {
 private:
 	bool sdl_init();
-	void move_box_relative_to_other_box(box *b,SDL_Rect rel);
 	void move_pos_relative_2_rect(position *p,SDL_Rect rel);
 public:
 	window W;

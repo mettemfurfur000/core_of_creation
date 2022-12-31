@@ -20,17 +20,25 @@ struct position
 {
 	//positioning
 	bool updated = false;
-	bool fixed_pos = true;
-	bool delta_mode = true; //if false, used percentage of width and height
-	bool auto_center = true;
+	bool fixed_pos;
+	bool delta_mode; //if false, used percentage of width and height
+	bool auto_center;
+	
+	bool fixed_size;
+	bool delta_size;
+	
+	float rel_size_perc_h;
+	float rel_size_perc_w;
+	int d_h;
+	int d_w;
+	
+	float rel_perc_h;
+	float rel_perc_w;
+	int d_x;
+	int d_y;
 	
 	SDL_Rect shape;
 	SDL_Point center;
-	
-	float rel_perc_h = 0.0;
-	float rel_perc_w = 0.0;
-	int d_x = 0;
-	int d_y = 0;
 	//
 	SDL_Rect real_rect;
 	SDL_Rect relative_rect;
@@ -72,6 +80,7 @@ struct text
 	
 	bool centered = false;
 	bool updated = false;
+	bool editable = false;
 	
 	TTF_Font * font = NULL;
 	SDL_Texture * lazy_texture = NULL;

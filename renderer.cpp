@@ -73,27 +73,6 @@ renderer::~renderer()
 	printf("[PAINTER] - Succesfully Quit!\n");
 }
 
-void renderer::move_box_relative_to_other_box(box *b,SDL_Rect rel)
-{
-	//position calc part
-	if(b->pos.fixed_pos)
-	{
-		//if fixed, just put it where he should be
-		b->pos.shape += rel;
-		b->pos.shape.x -= b->pos.center.x;
-		b->pos.shape.y -= b->pos.center.y;
-	}else{
-		if(b->pos.delta_mode)
-		{
-			b->pos.shape.x = rel.x + (rel.w + b->pos.d_x)%rel.w - b->pos.center.x;
-			b->pos.shape.y = rel.y + (rel.h + b->pos.d_y)%rel.h - b->pos.center.y;
-		}else{
-			b->pos.shape.x = rel.x + (int)(rel.w * b->pos.rel_perc_w) - b->pos.center.x;
-			b->pos.shape.y = rel.y + (int)(rel.h * b->pos.rel_perc_h) - b->pos.center.y;
-		}
-	}
-}
-
 void renderer::move_pos_relative_2_rect(position *p,SDL_Rect rel)
 {
 	//position calc part
@@ -111,6 +90,18 @@ void renderer::move_pos_relative_2_rect(position *p,SDL_Rect rel)
 		}else{
 			p->shape.x = rel.x + (int)(rel.w * p->rel_perc_w) - p->center.x;
 			p->shape.y = rel.y + (int)(rel.h * p->rel_perc_h) - p->center.y;
+		}
+	}
+	//height&width calc part
+	if(!p->fixed_size)
+	{
+		if(p->delta_size)
+		{
+			p->shape.h = (rel.h + p->d_h)%rel.h;
+			p->shape.w = (rel.w + p->d_w)%rel.w;
+		}else{
+			p->shape.h = (int)(rel.h * p->rel_size_perc_h);
+			p->shape.w = (int)(rel.w * p->rel_size_perc_w);
 		}
 	}
 }
@@ -232,11 +223,11 @@ void renderer::render(box* b, SDL_Rect rel_rect)
 		b->pos.center.y = b->pos.shape.h/2;
 	}
 	
-	box tbox = *b;
+	position tpos = b->pos;
 	
-	move_box_relative_to_other_box(&tbox,rel_rect);
+	move_pos_relative_2_rect(&tpos,rel_rect);
 	
-	SDL_Rect t = tbox.pos.shape;
+	SDL_Rect t = tpos.shape;
 	
 	//rendering part
 	SDL_SetRenderDrawColor(
@@ -279,11 +270,11 @@ void renderer::render(box* b, int color_shift, SDL_Rect rel_rect)
 		b->pos.center.y = b->pos.shape.h/2;
 	}
 	
-	box tbox = *b;
+	position tpos = b->pos;
 	
-	move_box_relative_to_other_box(&tbox,rel_rect);
+	move_pos_relative_2_rect(&tpos,rel_rect);
 	
-	SDL_Rect t = tbox.pos.shape;
+	SDL_Rect t = tpos.shape;
 	
 	SDL_Color t_color = b->border_color;
 	
@@ -373,21 +364,20 @@ void renderer::render(text* t,bool do_render_box, SDL_Rect rel_rect)
 		
 		SDL_FreeSurface(tmp);
 	}
-
-	box tbox = t->text_box;
 	
-	SDL_QueryTexture(t->lazy_texture, NULL, NULL, &tbox.pos.shape.w, &tbox.pos.shape.h);
-
-	//calcing position
-	move_box_relative_to_other_box(&tbox,rel_rect);
+	position tpos = t->text_box.pos;
+	
+	SDL_QueryTexture(t->lazy_texture, NULL, NULL, &tpos.shape.w, &tpos.shape.h);
+	
+	move_pos_relative_2_rect(&tpos,rel_rect);
 	
 	if(t->centered)
 	{
-		tbox.pos.shape.x += (t->text_box.pos.shape.w - tbox.pos.shape.w) / 2;
-		tbox.pos.shape.y += (t->text_box.pos.shape.h - tbox.pos.shape.h) / 2;
+		tpos.shape.x += (t->text_box.pos.shape.w - tpos.shape.w) / 2;
+		tpos.shape.y += (t->text_box.pos.shape.h - tpos.shape.h) / 2;
 	}
 	
-	SDL_RenderCopy(this->base_renderer,t->lazy_texture,0,&tbox.pos.shape);
+	SDL_RenderCopy(this->base_renderer,t->lazy_texture,0,&tpos.shape);
 }
 
 void renderer::clear()

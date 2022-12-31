@@ -1,5 +1,5 @@
 #include "renderer.h"
-
+//
 class event_handler
 {
 private:
@@ -10,7 +10,7 @@ private:
 
 	bool mouse_pressed = false;
 	
-	bool edit_mode = true;
+	bool edit_mode = false;
 	
 	SDL_MouseMotionEvent mouse_motion;
 	SDL_MouseMotionEvent last_motion;
@@ -21,9 +21,9 @@ private:
     
     position* edit_pos = NULL;
     
-    text* edit_text_source;
+    text* edit_text_source = NULL;
     
-    void catch_box_to_edit();
+    void catch_box();
     
     void update_button(SDL_Point last_mouse_pos, button* b);
     

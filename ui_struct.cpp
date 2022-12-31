@@ -1,5 +1,42 @@
 #include "ui_struct.h"
 
+position d_make_position()
+{
+	position p;
+	p.auto_center = true;
+	p.delta_mode = false;
+	p.delta_size = false;
+	p.fixed_pos = true;
+	p.fixed_size = true;
+	
+	p.d_h = 0;
+	p.d_w = 0;
+	p.d_x = 0;
+	p.d_y = 0;
+	
+	p.rel_perc_h = 0.0;
+	p.rel_perc_w = 0.0;
+	
+	p.rel_size_perc_h = 0.0;
+	p.rel_size_perc_w = 0.0;
+	
+	p.shape.h = 20 + rand()%50;
+	p.shape.w = 20 + rand()%50;
+	p.shape.x = 10 + rand()%80;
+	p.shape.y = 10 + rand()%80;
+	p.updated = false;
+	return p;
+}
+
+image make_default_image()
+{
+	image i;
+	i.pos = d_make_position();
+	i.shown = true;
+	i.filename = "default.png";
+	return i;
+}
+
 SDL_Rect& operator+=(SDL_Rect &destination, SDL_Rect source)
 {
 	destination.x += source.x;

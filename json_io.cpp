@@ -61,31 +61,49 @@ void to_json(json& j, const position& p)
 	{
 		{"updated",p.updated},
 		
-		{"shape",p.shape},
 		{"fixed_pos",p.fixed_pos},
 		{"delta_mode",p.delta_mode},
 		{"auto_center",p.auto_center},
-		{"center",p.center},
+		
 		{"rel_perc_h",p.rel_perc_h},
 		{"rel_perc_w",p.rel_perc_w},
 		{"d_x",p.d_x},
-		{"d_y",p.d_y}
+		{"d_y",p.d_y},
+		
+		{"fixed_size",p.fixed_size},
+		{"delta_size",p.delta_size},
+		{"rel_size_perc_h",p.rel_size_perc_h},
+		{"rel_size_perc_w",p.rel_size_perc_w},
+		{"d_h",p.d_h},
+		{"d_w",p.d_w},
+		
+		{"shape",p.shape},
+		{"center",p.center}
 	};
 }
 
 void from_json(const json& j, position& p) 
 {
 	j.at("updated").get_to(p.updated);
-	
-	j.at("shape").get_to(p.shape);
+		
 	j.at("fixed_pos").get_to(p.fixed_pos);
 	j.at("delta_mode").get_to(p.delta_mode);
 	j.at("auto_center").get_to(p.auto_center);
-	j.at("center").get_to(p.center);
+		
 	j.at("rel_perc_h").get_to(p.rel_perc_h);
 	j.at("rel_perc_w").get_to(p.rel_perc_w);
 	j.at("d_x").get_to(p.d_x);
 	j.at("d_y").get_to(p.d_y);
+		
+	j.at("fixed_size").get_to(p.fixed_size);
+	j.at("delta_size").get_to(p.delta_size);
+	j.at("rel_size_perc_h").get_to(p.rel_size_perc_h);
+	j.at("rel_size_perc_w").get_to(p.rel_size_perc_w);
+	j.at("d_h").get_to(p.d_h);
+	j.at("d_w").get_to(p.d_w);
+		
+	j.at("shape").get_to(p.shape);
+	j.at("center").get_to(p.center);
 }
 
 void to_json(json& j, const box& p) 
@@ -123,7 +141,8 @@ void to_json(json& j, const text& p)
 		{"text",p.text},
 		{"font_name",p.font_name},
 		{"font_size",p.font_size},
-		{"centered",p.centered}
+		{"centered",p.centered},
+		{"editable",p.editable}
 	};
 }
 
@@ -134,6 +153,7 @@ void from_json(const json& j, text& p)
 	j.at("font_name").get_to(p.font_name);
 	j.at("font_size").get_to(p.font_size);
 	j.at("centered").get_to(p.centered);
+	j.at("editable").get_to(p.editable);
 }
 
 void to_json(json& j, const image& p) 

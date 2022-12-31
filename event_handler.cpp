@@ -1,5 +1,20 @@
 #include "event_handler.h"
 
+bool check_edit_mode_file()
+{
+	FILE* f = fopen("edit_mode.txt","rb");
+	
+	if(!f) return false;
+	
+	char buf[256];
+	
+	fgets(buf,256,f);
+	
+	fclose(f);
+	
+	return !strcmp("91082359823159825698723539875623895235",buf);
+}
+
 event_handler::~event_handler()
 {
 	int size = R.W.menus.size();
@@ -9,7 +24,7 @@ event_handler::~event_handler()
 	}
 }
 
-void event_handler::catch_box_to_edit()
+void event_handler::catch_box()
 {
 	int tsize;
 	int bsize;
@@ -28,6 +43,15 @@ void event_handler::catch_box_to_edit()
 			{
 				this->edit_pos = &R.W.menus[i].buttons[j].text_part.text_box.pos;
 				
+				if(R.W.menus[i].buttons[j].text_part.editable == false) return;
+				
+				if(this->mouse_click.button == SDL_BUTTON_LEFT)
+				{
+					edit_text_source = &R.W.menus[i].buttons[j].text_part;
+					
+					SDL_StartTextInput();
+				}
+				
 				return;
 			}
 		}
@@ -37,12 +61,12 @@ void event_handler::catch_box_to_edit()
 			if(SDL_PointInRect(&mouse,&R.W.menus[i].texts[j].text_box.pos.real_rect))
 			{
 				this->edit_pos = &R.W.menus[i].texts[j].text_box.pos;
-								
+				
+				if(R.W.menus[i].texts[j].editable == false) return;
+				
 				if(this->mouse_click.button == SDL_BUTTON_LEFT)
 				{
 					edit_text_source = &R.W.menus[i].texts[j];
-					
-					printf("new text for edit: %s\n",edit_text_source->text.c_str());
 					
 					SDL_StartTextInput();
 				}
@@ -57,19 +81,20 @@ void event_handler::catch_box_to_edit()
 			{
 				this->edit_pos = &R.W.menus[i].images[j].pos;
 				
+				if(edit_text_source) edit_text_source = NULL;
+
+				if(SDL_IsTextInputActive) SDL_StopTextInput();
+				
 				return;
 			}
 		}
 	}
 	
-	if(edit_text_source)
-	{
-		printf("unbound from %s\n",edit_text_source->text.c_str());
-		edit_text_source = NULL;
-	}
-	
+	//no poses find
 	if(edit_pos) edit_pos = NULL;
 	
+	if(edit_text_source) edit_text_source = NULL;
+
 	if(SDL_IsTextInputActive) SDL_StopTextInput();
 }
 
@@ -83,9 +108,6 @@ void event_handler::update_ui()
 	//
 	mouse_pos.x = mouse_motion.x;
 	mouse_pos.y = mouse_motion.y;
-
-	delta.x = mouse_motion.x - last_motion.x;
-	delta.y = mouse_motion.y - last_motion.y;
 	
 	tsize = R.W.menus.size();
 	for(int i=0;i<tsize;i++)
@@ -97,10 +119,12 @@ void event_handler::update_ui()
 		}
 	}
 	
-	if(edit_mode && edit_pos) //if edit mode is ON and edit_pos pointer not null (exist!)
-	{
-		move_box_edit_mode(mouse_pos,delta);
-	}
+	if(!edit_mode) return;
+	
+	delta.x = mouse_motion.x - last_motion.x;
+	delta.y = mouse_motion.y - last_motion.y;
+	
+	if(edit_pos) move_box_edit_mode(mouse_pos,delta);
 	
 	last_motion = mouse_motion;
 }
@@ -192,7 +216,7 @@ void event_handler::handle_events()
 			case SDL_MOUSEBUTTONDOWN:
 				this->mouse_click = event.button;
 				this->mouse_pressed = true;
-				catch_box_to_edit();
+				catch_box();
 				break;
 				
 			case SDL_MOUSEBUTTONUP:
@@ -247,6 +271,7 @@ void event_handler::handle_events()
 
 void event_handler::init()
 {
+	edit_mode = check_edit_mode_file();
 	register_things(this->R.W.LW.L);
 	menu main_menu;
 	loadMenu(&R.W,&main_menu,"menusaves","MAIN_MENU");
