@@ -20,14 +20,16 @@ private:
     SDL_KeyboardEvent key;
     
     position* edit_pos = NULL;
-    
     text* edit_text_source = NULL;
+    box* edit_box_source = NULL;
+    image* edit_image_source = NULL;
     
     void catch_box();
     
     void update_button(SDL_Point last_mouse_pos, button* b);
     
     void move_box_edit_mode(SDL_Point mouse_pos, SDL_Point delta);
+    void resize_box_edit_mode(SDL_Point mouse_pos, SDL_Point delta);
 public:
 	~event_handler();
 	

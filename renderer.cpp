@@ -123,27 +123,28 @@ void renderer::render(menu* m)
 		m->menu_box.pos.shape = this->W.windowrect;
 	}
 	
+//first, render menu
 	render(&m->menu_box);
-	
+//images	
+	tsize = m->images.size();
+
+	for(int i=0;i<tsize;i++)
+	{
+		render(&m->images[i],m->menu_box.pos.shape);
+	}
+//texts
 	tsize = m->texts.size();
 	
 	for(int i=0;i<tsize;i++)
 	{
 		render(&m->texts[i],true,m->menu_box.pos.shape);
 	}
-	
+//buttons
 	tsize = m->buttons.size();
 	
 	for(int i=0;i<tsize;i++)
 	{
 		render(&m->buttons[i],m->menu_box.pos.shape);
-	}
-	
-	tsize = m->images.size();
-	
-	for(int i=0;i<tsize;i++)
-	{
-		render(&m->images[i],m->menu_box.pos.shape);
 	}
 }
 
@@ -351,9 +352,9 @@ void renderer::render(text* t,bool do_render_box, SDL_Rect rel_rect)
 	}
 	
 	if(!t->lazy_texture)
-	{
+	{ 
 		//text rendering
-		SDL_Surface * tmp = TTF_RenderText_Blended_Wrapped(
+		SDL_Surface * tmp = TTF_RenderUTF8_Blended_Wrapped(
 			t->font,
 			t->text.c_str(),
 			defcolor,
