@@ -11,7 +11,7 @@
                     "editable": true,
                     "font_name": "Manrope-VariableFont_wght.ttf",
                     "font_size": 22,
-                    "text": "hi helko",
+                    "text": "hii my name is Hiisi i love pineappls!!!",
                     "text_box": {
                         "border_color": {
                             "a": 255,
@@ -30,8 +30,8 @@
                         "pos": {
                             "auto_center": true,
                             "center": {
-                                "x": 73,
-                                "y": 30
+                                "x": 223,
+                                "y": 39
                             },
                             "d_h": 0,
                             "d_w": 0,
@@ -41,13 +41,13 @@
                             "delta_size": true,
                             "fixed_pos": false,
                             "fixed_size": true,
-                            "rel_perc_h": 0.8841455578804016,
-                            "rel_perc_w": 0.10811304301023483,
+                            "rel_perc_h": 0.8466458320617676,
+                            "rel_perc_w": 0.46477967500686646,
                             "rel_size_perc_h": 1.0,
                             "rel_size_perc_w": 1.0,
                             "shape": {
-                                "h": 60,
-                                "w": 147,
+                                "h": 79,
+                                "w": 446,
                                 "x": 278,
                                 "y": 203
                             },
@@ -69,16 +69,16 @@
                         "x": 69,
                         "y": 50
                     },
-                    "d_h": -133,
-                    "d_w": -482,
+                    "d_h": -119,
+                    "d_w": -226,
                     "d_x": 4,
                     "d_y": 64,
                     "delta_mode": false,
                     "delta_size": true,
                     "fixed_pos": false,
                     "fixed_size": false,
-                    "rel_perc_h": 0.3248794376850128,
-                    "rel_perc_w": 0.5649515986442566,
+                    "rel_perc_h": 0.13987964391708374,
+                    "rel_perc_w": 0.4382849931716919,
                     "rel_size_perc_h": 0.5,
                     "rel_size_perc_w": 0.5,
                     "shape": {
@@ -127,8 +127,8 @@
                 "rel_size_perc_h": 1.0,
                 "rel_size_perc_w": 1.0,
                 "shape": {
-                    "h": 388,
-                    "w": 722,
+                    "h": 400,
+                    "w": 600,
                     "x": 0,
                     "y": 0
                 },
@@ -165,8 +165,8 @@
                     "pos": {
                         "auto_center": true,
                         "center": {
-                            "x": 71,
-                            "y": 18
+                            "x": 67,
+                            "y": 22
                         },
                         "d_h": 0,
                         "d_w": 0,
@@ -176,13 +176,13 @@
                         "delta_size": true,
                         "fixed_pos": false,
                         "fixed_size": true,
-                        "rel_perc_h": 0.05858829617500305,
-                        "rel_perc_w": 0.12958911061286926,
+                        "rel_perc_h": 0.09776999801397324,
+                        "rel_perc_w": 0.6395889520645142,
                         "rel_size_perc_h": 1.0,
                         "rel_size_perc_w": 1.0,
                         "shape": {
-                            "h": 36,
-                            "w": 142,
+                            "h": 45,
+                            "w": 134,
                             "x": 40,
                             "y": 40
                         },

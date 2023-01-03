@@ -162,6 +162,8 @@ void renderer::render(box* b)
 	t.x -= b->pos.center.x;
 	t.y -= b->pos.center.y;
 	
+	b->pos.real_rect = t;
+	
 	SDL_SetRenderDrawColor(
 		this->base_renderer,
 		b->border_color.r,
@@ -186,8 +188,6 @@ void renderer::render(box* b)
 	);
 	
 	SDL_RenderFillRect(this->base_renderer,&t);
-	
-	b->pos.real_rect = t;
 }
 
 void renderer::render(image* i, SDL_Rect rel_rect)
@@ -230,6 +230,8 @@ void renderer::render(box* b, SDL_Rect rel_rect)
 	
 	SDL_Rect t = tpos.shape;
 	
+	b->pos.real_rect = t;
+	
 	//rendering part
 	SDL_SetRenderDrawColor(
 		this->base_renderer,
@@ -255,8 +257,6 @@ void renderer::render(box* b, SDL_Rect rel_rect)
 	);
 	
 	SDL_RenderFillRect(this->base_renderer,&t);
-	
-	b->pos.real_rect = t;
 }
 
 void renderer::render(box* b, int color_shift, SDL_Rect rel_rect)
@@ -276,6 +276,8 @@ void renderer::render(box* b, int color_shift, SDL_Rect rel_rect)
 	move_pos_relative_2_rect(&tpos,rel_rect);
 	
 	SDL_Rect t = tpos.shape;
+	
+	b->pos.real_rect = t;
 	
 	SDL_Color t_color = b->border_color;
 	
@@ -310,8 +312,6 @@ void renderer::render(box* b, int color_shift, SDL_Rect rel_rect)
 	);
 	
 	SDL_RenderFillRect(this->base_renderer,&t);
-	
-	b->pos.real_rect = t;
 }
 
 void renderer::render(button* b, SDL_Rect rel_rect)

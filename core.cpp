@@ -16,8 +16,6 @@
 
 int main(int argc, char* argv[])
 {
-	std::cout << "im alive!\n" << std::endl;
-	
 	event_handler H;
 	
 	H.init();

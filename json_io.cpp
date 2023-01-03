@@ -286,3 +286,33 @@ void loadMenu(window* w,menu* t,std::string folder,std::string filename)
 	
 	return;
 }
+
+menu* window::w_getMenu(std::string menu_name)
+{
+	if(menu_name.empty())
+	{
+		return NULL;
+	}
+	
+	int size = menus.size();
+	
+	for(int i=0; i<size; i++)
+	{
+		if(menus[i].name == menu_name)
+		{
+			return &menus[i]; 
+		}
+	}
+	
+	return NULL;
+}
+
+bool window::w_loadMenu(std::string name)
+{
+	if(name.empty()) return false;
+	if(w_getMenu(name)) return false;
+	menu temp;
+	loadMenu(this,&temp,"menusaves",name);
+	this->menus.push_back(temp);
+	return true;
+}

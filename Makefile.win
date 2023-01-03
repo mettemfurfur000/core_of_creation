@@ -4,8 +4,8 @@
 CPP      = g++.exe -D__DEBUG__
 CC       = gcc.exe -D__DEBUG__
 WINDRES  = windres.exe
-OBJ      = o_files/core.o o_files/librarian.o o_files/creator.o o_files/lua_worker.o o_files/renderer.o o_files/libraries.o o_files/ui_struct.o o_files/event_handler.o o_files/json_io.o
-LINKOBJ  = o_files/core.o o_files/librarian.o o_files/creator.o o_files/lua_worker.o o_files/renderer.o o_files/libraries.o o_files/ui_struct.o o_files/event_handler.o o_files/json_io.o
+OBJ      = o_files/core.o o_files/librarian.o o_files/creator.o o_files/lua_worker.o o_files/renderer.o o_files/libraries.o o_files/ui_struct.o o_files/event_handler.o o_files/json_io.o o_files/edit_features.o
+LINKOBJ  = o_files/core.o o_files/librarian.o o_files/creator.o o_files/lua_worker.o o_files/renderer.o o_files/libraries.o o_files/ui_struct.o o_files/event_handler.o o_files/json_io.o o_files/edit_features.o
 LIBS     = -L"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib" -L"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/lib" -L"C:/sdl2/SDL2-2.0.22/x86_64-w64-mingw32/lib" -L"C:/sdl2/SDL2_ttf-2.20.0/x86_64-w64-mingw32/lib" -L"C:/sdl2/SDL2_image-2.6.0/x86_64-w64-mingw32/lib" -lmingw32  -lSDL2main  -lSDL2 -lSDL2_ttf -lSDL2_image C:/lua_bin/lua54.dll -pg -g3
 INCS     = -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include" -I"C:/sdl2/SDL2_image-2.6.0/x86_64-w64-mingw32/include/SDL2" -I"C:/sdl2/SDL2_ttf-2.20.0/x86_64-w64-mingw32/include/SDL2" -I"C:/sdl2/SDL2-2.0.22/x86_64-w64-mingw32/include/SDL2" -I"C:/LuaBridge-2.8/Source" -I"C:/lua_bin/include"
 CXXINCS  = -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include/c++" -I"C:/sdl2/SDL2_image-2.6.0/x86_64-w64-mingw32/include/SDL2" -I"C:/sdl2/SDL2_ttf-2.20.0/x86_64-w64-mingw32/include/SDL2" -I"C:/sdl2/SDL2-2.0.22/x86_64-w64-mingw32/include/SDL2" -I"C:/LuaBridge-2.8/Source" -I"C:/lua_bin/include" -I"C:/json"
@@ -50,3 +50,6 @@ o_files/event_handler.o: event_handler.cpp
 
 o_files/json_io.o: json_io.cpp
 	$(CPP) -c json_io.cpp -o o_files/json_io.o $(CXXFLAGS)
+
+o_files/edit_features.o: edit_features.cpp
+	$(CPP) -c edit_features.cpp -o o_files/edit_features.o $(CXXFLAGS)

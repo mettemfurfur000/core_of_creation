@@ -1,4 +1,5 @@
 #include "renderer.h"
+#include "edit_features.h"
 //
 class event_handler
 {

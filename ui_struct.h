@@ -130,5 +130,6 @@ public:
 		
 	std::vector<menu> menus;
 	
-	int l_getMenu(lua_State* L);
+	menu* w_getMenu(std::string menu_name);
+	bool w_loadMenu(std::string name);
 };

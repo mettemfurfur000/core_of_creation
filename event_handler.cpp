@@ -278,52 +278,61 @@ void event_handler::handle_events()
 				this->key = event.key;
 				state = SDL_GetKeyboardState(NULL);
 				
-				if(!edit_text_source) return;
-				
-				if( state[SDL_SCANCODE_BACKSPACE] )
+				if(edit_text_source) //manual text editing
 				{
-					if(edit_text_source->text.empty()) break;
-					pop_back_utf8(edit_text_source->text);
-					edit_text_source->updated = true;
-				}
-				
-				if( state[SDL_SCANCODE_C] && SDL_GetModState() & KMOD_CTRL )
-				{
-					SDL_SetClipboardText( edit_text_source->text.c_str() );
-				}
-				
-				if( state[SDL_SCANCODE_V] && SDL_GetModState() & KMOD_CTRL )
-				{
-					edit_text_source->text = SDL_GetClipboardText();
-					edit_text_source->updated = true;
-				}
-				
-				if(!edit_mode) return;
-				if(!edit_box_source) return;
-				if(!(SDL_GetModState() & KMOD_ALT)) return;
-				
-				if( state[SDL_SCANCODE_C] )
-				{
-					SDL_Color c;
-					int t;
-					printf("changing colors\n");
-					printf("1 - main, 2 - border\n");
-					scanf("%d",&t);
-					switch(t)
+					if( state[SDL_SCANCODE_BACKSPACE] ) //erasing text
 					{
-						case 1:
-							printf("main color:\n");
-							scanf("%x %x %x %x", &c.r,&c.g,&c.b,&c.a);
-							this->edit_box_source->color = c;
-							break;
-						case 2:
-							printf("border color:\n");
-							scanf("%x %x %x %x", &c.r,&c.g,&c.b,&c.a);
-							this->edit_box_source->border_color = c;
-							break;
+						if(edit_text_source->text.empty()) break;
+						pop_back_utf8(edit_text_source->text);
+						edit_text_source->updated = true;
+					}
+					
+					if( state[SDL_SCANCODE_C] && SDL_GetModState() & KMOD_CTRL ) //ctrl+c
+					{
+						SDL_SetClipboardText( edit_text_source->text.c_str() );
+					}
+					
+					if( state[SDL_SCANCODE_V] && SDL_GetModState() & KMOD_CTRL ) //ctrl+v
+					{
+						edit_text_source->text = SDL_GetClipboardText();
+						edit_text_source->updated = true;
 					}
 				}
 				
+				if(edit_mode)//special edit mode commands
+				{
+					if(!(SDL_GetModState() & KMOD_ALT)) return; //works only with alt button
+					
+					if( state[SDL_SCANCODE_M] )//creating new menu
+					{
+						char menuname[256];
+						printf("creating new menu\nname:");
+						scanf("%s",menuname);
+						this->R.W.menus.push_back(d_make_menu(menuname));
+					}
+					
+					if( state[SDL_SCANCODE_C] && edit_box_source)//editing colors of box
+					{
+						SDL_Color c;
+						int t;
+						printf("changing colors in box\n");
+						printf("1 - main, 2 - border\n");
+						scanf("%d",&t);
+						switch(t)
+						{
+							case 1:
+								printf("main color:\n");
+								scanf("%x %x %x %x", &c.r,&c.g,&c.b,&c.a);
+								this->edit_box_source->color = c;
+								break;
+							case 2:
+								printf("border color:\n");
+								scanf("%x %x %x %x", &c.r,&c.g,&c.b,&c.a);
+								this->edit_box_source->border_color = c;
+								break;
+						}
+					}
+				}
 				break;
 
 			case SDL_KEYUP:

@@ -6,7 +6,7 @@ Ver=2
 ObjFiles=
 Includes=
 Libs=
-PrivateResource=core_of_creation_private.rc
+PrivateResource=
 ResourceIncludes=
 MakeIncludes=
 Compiler=
@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerSettings=0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;1;0;1;0;0;0;0;0;0;0
-UnitCount=18
+UnitCount=20
 
 [VersionInfo]
 Major=1
@@ -151,8 +151,8 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit20]
-FileName=renderer.cpp
-Folder=refactoring_headers
+FileName=edit_features.cpp
+Folder=cpp files
 Compile=1
 Link=1
 Priority=1000
@@ -304,6 +304,16 @@ BuildCmd=
 FileName=json_io.cpp
 CompileCpp=1
 Folder=cpp files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit19]
+FileName=edit_features.h
+CompileCpp=1
+Folder=headers
 Compile=1
 Link=1
 Priority=1000
