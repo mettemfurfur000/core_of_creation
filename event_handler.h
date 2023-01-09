@@ -25,7 +25,10 @@ private:
     box* edit_box_source = NULL;
     image* edit_image_source = NULL;
     
+    void lua_init();
+    void lua_tick();
     void catch_box();
+    bool edit_mode_for_elements();
     
     void update_button(SDL_Point last_mouse_pos, button* b);
     

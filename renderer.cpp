@@ -340,7 +340,7 @@ void renderer::render(text* t,bool do_render_box, SDL_Rect rel_rect)
 		t->font = F.guarantee_font(t->font_name,t->font_size);
 	}
 	
-	if(do_render_box) render(&t->text_box,rel_rect); //render box (if asked)
+	if(do_render_box) render(&t->text_box,t->selected ? 90 : 0, rel_rect); //render box (if asked)
 		
 	if(t->updated)
 	{

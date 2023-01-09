@@ -11,7 +11,7 @@
                     "editable": true,
                     "font_name": "Manrope-VariableFont_wght.ttf",
                     "font_size": 22,
-                    "text": "hii my name is Hiisi i love pineappls!!!",
+                    "text": "Settings",
                     "text_box": {
                         "border_color": {
                             "a": 255,
@@ -30,8 +30,8 @@
                         "pos": {
                             "auto_center": true,
                             "center": {
-                                "x": 223,
-                                "y": 39
+                                "x": 46,
+                                "y": 20
                             },
                             "d_h": 0,
                             "d_w": 0,
@@ -41,17 +41,17 @@
                             "delta_size": true,
                             "fixed_pos": false,
                             "fixed_size": true,
-                            "rel_perc_h": 0.8466458320617676,
-                            "rel_perc_w": 0.46477967500686646,
+                            "rel_perc_h": 0.9091458320617676,
+                            "rel_perc_w": 0.543112576007843,
                             "rel_size_perc_h": 1.0,
                             "rel_size_perc_w": 1.0,
                             "shape": {
-                                "h": 79,
-                                "w": 446,
+                                "h": 41,
+                                "w": 93,
                                 "x": 278,
                                 "y": 203
                             },
-                            "updated": false
+                            "updated": true
                         },
                         "shown": true
                     }
@@ -69,16 +69,16 @@
                         "x": 69,
                         "y": 50
                     },
-                    "d_h": -119,
-                    "d_w": -226,
+                    "d_h": 225,
+                    "d_w": -350,
                     "d_x": 4,
                     "d_y": 64,
                     "delta_mode": false,
                     "delta_size": true,
                     "fixed_pos": false,
                     "fixed_size": false,
-                    "rel_perc_h": 0.13987964391708374,
-                    "rel_perc_w": 0.4382849931716919,
+                    "rel_perc_h": 0.2698114514350891,
+                    "rel_perc_w": 0.6310295462608337,
                     "rel_size_perc_h": 0.5,
                     "rel_size_perc_w": 0.5,
                     "shape": {
@@ -87,7 +87,7 @@
                         "x": 60,
                         "y": 60
                     },
-                    "updated": false
+                    "updated": true
                 },
                 "shown": true
             }
@@ -136,7 +136,7 @@
             },
             "shown": true
         },
-        "movable": true,
+        "movable": false,
         "name": "MAIN_MENU",
         "resizable": false,
         "shown": true,
@@ -146,7 +146,7 @@
                 "editable": true,
                 "font_name": "Manrope-Light.ttf",
                 "font_size": 18,
-                "text": "MetteM_FurFur",
+                "text": "Killer",
                 "text_box": {
                     "border_color": {
                         "a": 30,
@@ -165,8 +165,8 @@
                     "pos": {
                         "auto_center": true,
                         "center": {
-                            "x": 67,
-                            "y": 22
+                            "x": 68,
+                            "y": 19
                         },
                         "d_h": 0,
                         "d_w": 0,
@@ -176,13 +176,13 @@
                         "delta_size": true,
                         "fixed_pos": false,
                         "fixed_size": true,
-                        "rel_perc_h": 0.09776999801397324,
-                        "rel_perc_w": 0.6395889520645142,
+                        "rel_perc_h": 0.8427696824073792,
+                        "rel_perc_w": 0.8245888948440552,
                         "rel_size_perc_h": 1.0,
                         "rel_size_perc_w": 1.0,
                         "shape": {
-                            "h": 45,
-                            "w": 134,
+                            "h": 38,
+                            "w": 137,
                             "x": 40,
                             "y": 40
                         },

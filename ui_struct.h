@@ -81,9 +81,10 @@ struct text
 	bool centered = false;
 	bool updated = false;
 	bool editable = false;
-	
+	//
 	TTF_Font * font = NULL;
 	SDL_Texture * lazy_texture = NULL;
+	bool selected = false;
 };
 
 struct button
