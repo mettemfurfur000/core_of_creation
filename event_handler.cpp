@@ -88,10 +88,10 @@ void event_handler::catch_box()
 	if(SDL_IsTextInputActive) SDL_StopTextInput();
 	
 	tsize = this->R.W.menus.size();
-	for(int i=0; i<tsize; i++)
+	for(int i=tsize-1; i>=0; i--)
 	{
 		bsize = R.W.menus[i].buttons.size();
-		for(int j=0; j<bsize; j++)
+		for(int j=bsize-1; j>=0; j--)
 		{
 			if(SDL_PointInRect(&mouse,&R.W.menus[i].buttons[j].text_part.text_box.pos.real_rect))
 			{
@@ -113,7 +113,7 @@ void event_handler::catch_box()
 			}
 		}
 		bsize = R.W.menus[i].texts.size();
-		for(int j=0; j<bsize; j++)
+		for(int j=bsize-1; j>=0; j--)
 		{
 			if(SDL_PointInRect(&mouse,&R.W.menus[i].texts[j].text_box.pos.real_rect))
 			{
@@ -135,7 +135,7 @@ void event_handler::catch_box()
 			}
 		}
 		bsize = R.W.menus[i].images.size();
-		for(int j=0; j<bsize; j++)
+		for(int j=bsize-1; j>=0; j--)
 		{
 			if(SDL_PointInRect(&mouse,&R.W.menus[i].images[j].pos.real_rect))
 			{
@@ -452,7 +452,7 @@ void event_handler::init()
 	edit_mode = check_edit_mode_file();
 	register_things(this->R.W.LW.L);
 	menu main_menu;
-	loadMenu(&R.W,&main_menu,"menusaves","MAIN_MENU");
+	loadMenu(&R.W,&main_menu,"menusaves","START_MENU");
 	R.W.menus.push_back(main_menu);
 	R.W.LW.loadfile_aschunk("init.lua");
 	R.W.LW.loadfile_aschunk("tick.lua");

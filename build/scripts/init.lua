@@ -1,4 +1,4 @@
 function init( window )
-	window:loadMenu("TEST_MENU");
+	--window:loadMenu("TEST_MENU");
 	return;
 end

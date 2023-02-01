@@ -1,0 +1,117 @@
+{
+    "menu": {
+        "buttons_size": 0,
+        "copy_window_rect": true,
+        "images": [
+            {
+                "filename": "background.png",
+                "pos": {
+                    "auto_center": false,
+                    "center": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "d_h": 0,
+                    "d_w": 0,
+                    "d_x": 0,
+                    "d_y": 0,
+                    "delta_mode": false,
+                    "delta_size": false,
+                    "fixed_pos": true,
+                    "fixed_size": false,
+                    "rel_perc_h": 0.0,
+                    "rel_perc_w": 0.0,
+                    "rel_size_perc_h": 1,
+                    "rel_size_perc_w": 1,
+                    "shape": {
+                        "h": 50,
+                        "w": 50,
+                        "x": 1,
+                        "y": 4
+                    },
+                    "updated": true
+                },
+                "shown": true
+            },
+            {
+                "filename": "Reneissance_Politics.png",
+                "pos": {
+                    "auto_center": true,
+                    "center": {
+                        "x": 0,
+                        "y": 0
+                    },
+                    "d_h": 0,
+                    "d_w": 0,
+                    "d_x": 0,
+                    "d_y": 0,
+                    "delta_mode": false,
+                    "delta_size": false,
+                    "fixed_pos": false,
+                    "fixed_size": true,
+                    "rel_perc_h": 0.2300001084804535,
+                    "rel_perc_w": 0.19999979436397552,
+                    "rel_size_perc_h": 1.0,
+                    "rel_size_perc_w": 1.0,
+                    "shape": {
+                        "h": 38,
+                        "w": 344,
+                        "x": 4,
+                        "y": -3
+                    },
+                    "updated": true
+                },
+                "shown": true
+            }
+        ],
+        "images_size": 2,
+        "menu_box": {
+            "border_color": {
+                "a": 0,
+                "b": 10,
+                "g": 90,
+                "r": 50
+            },
+            "border_th": 2,
+            "main_color": {
+                "a": 255,
+                "b": 39,
+                "g": 32,
+                "r": 30
+            },
+            "moving": false,
+            "pos": {
+                "auto_center": false,
+                "center": {
+                    "x": 0,
+                    "y": 0
+                },
+                "d_h": 0,
+                "d_w": 0,
+                "d_x": 0,
+                "d_y": 0,
+                "delta_mode": false,
+                "delta_size": true,
+                "fixed_pos": true,
+                "fixed_size": true,
+                "rel_perc_h": 0.0,
+                "rel_perc_w": 0.0,
+                "rel_size_perc_h": 1.0,
+                "rel_size_perc_w": 1.0,
+                "shape": {
+                    "h": 400,
+                    "w": 600,
+                    "x": 0,
+                    "y": 0
+                },
+                "updated": false
+            },
+            "shown": true
+        },
+        "movable": false,
+        "name": "START_MENU",
+        "resizable": false,
+        "shown": true,
+        "texts_size": 0
+    }
+}
