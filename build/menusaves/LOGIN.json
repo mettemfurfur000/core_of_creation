@@ -5,24 +5,24 @@
         "images_size": 0,
         "menu_box": {
             "border_color": {
-                "a": 200,
-                "b": 160,
-                "g": 119,
-                "r": 217
+                "a": 0,
+                "b": 39,
+                "g": 32,
+                "r": 30
             },
             "border_th": 2,
             "main_color": {
-                "a": 213,
-                "b": 133,
-                "g": 179,
-                "r": 224
+                "a": 255,
+                "b": 39,
+                "g": 32,
+                "r": 30
             },
             "moving": false,
             "pos": {
-                "auto_center": false,
+                "auto_center": true,
                 "center": {
-                    "x": 0,
-                    "y": 0
+                    "x": 175,
+                    "y": 100
                 },
                 "d_h": 0,
                 "d_w": 0,
@@ -30,33 +30,34 @@
                 "d_y": 0,
                 "delta_mode": false,
                 "delta_size": false,
-                "fixed_pos": true,
+                "fixed_pos": false,
                 "fixed_size": true,
-                "rel_perc_h": 0.0,
-                "rel_perc_w": 0.0,
+                "rel_perc_h": 0.5,
+                "rel_perc_w": 0.5,
                 "rel_size_perc_h": 0.0,
                 "rel_size_perc_w": 0.0,
                 "shape": {
-                    "h": 402,
-                    "w": 251,
-                    "x": -251,
-                    "y": 0
+                    "h": 200,
+                    "w": 350,
+                    "x": 300,
+                    "y": 300
                 },
                 "updated": true
             },
             "shown": true
         },
         "movable": true,
-        "name": "TEST_MENU",
+        "name": "LOGIN",
         "resizable": true,
         "shown": true,
         "texts": [
             {
-                "centered": false,
-                "editable": false,
+                "background_text": "Login",
+                "centered": true,
+                "editable": true,
                 "font_name": "default.fon",
                 "font_size": 24,
-                "text": "Your Nickname:",
+                "text": "MetteM_FurFur",
                 "text_box": {
                     "border_color": {
                         "a": 0,
@@ -75,8 +76,8 @@
                     "pos": {
                         "auto_center": true,
                         "center": {
-                            "x": 56,
-                            "y": 9
+                            "x": 106,
+                            "y": 14
                         },
                         "d_h": 0,
                         "d_w": 0,
@@ -91,22 +92,24 @@
                         "rel_size_perc_h": 0.0,
                         "rel_size_perc_w": 0.0,
                         "shape": {
-                            "h": 18,
-                            "w": 113,
-                            "x": 64,
-                            "y": 17
+                            "h": 28,
+                            "w": 212,
+                            "x": 168,
+                            "y": -41
                         },
                         "updated": true
                     },
                     "shown": true
-                }
+                },
+                "use_background_text": true
             },
             {
-                "centered": false,
+                "background_text": "Password",
+                "centered": true,
                 "editable": true,
                 "font_name": "default.fon",
                 "font_size": 24,
-                "text": "MetteM_FurFur",
+                "text": "",
                 "text_box": {
                     "border_color": {
                         "a": 0,
@@ -141,15 +144,16 @@
                         "rel_size_perc_h": 0.0,
                         "rel_size_perc_w": 0.0,
                         "shape": {
-                            "h": 21,
-                            "w": 168,
-                            "x": 3,
-                            "y": 28
+                            "h": 35,
+                            "w": 197,
+                            "x": 74,
+                            "y": -22
                         },
                         "updated": true
                     },
                     "shown": true
-                }
+                },
+                "use_background_text": true
             }
         ],
         "texts_size": 2

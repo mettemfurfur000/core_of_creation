@@ -76,11 +76,14 @@ struct text
 	std::string text;
 	std::string font_name;
 	
+	std::string background_text;
+	
 	int font_size = 12;
 	
 	bool centered = false;
 	bool updated = false;
 	bool editable = false;
+	bool use_background_text = false;
 	//
 	TTF_Font * font = NULL;
 	SDL_Texture * lazy_texture = NULL;
@@ -123,8 +126,8 @@ public:
 	SDL_Rect windowrect = {
 		0,
 		0,
-		600,
-		400
+		960,
+		540
 	};
 	
 	lua_worker LW;

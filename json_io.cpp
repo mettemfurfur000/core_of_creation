@@ -139,10 +139,12 @@ void to_json(json& j, const text& p)
 	{
 		{"text_box",p.text_box},
 		{"text",p.text},
+		{"background_text",p.background_text},
 		{"font_name",p.font_name},
 		{"font_size",p.font_size},
 		{"centered",p.centered},
-		{"editable",p.editable}
+		{"editable",p.editable},
+		{"use_background_text",p.use_background_text}
 	};
 }
 
@@ -150,10 +152,12 @@ void from_json(const json& j, text& p)
 {
 	j.at("text_box").get_to(p.text_box);
 	j.at("text").get_to(p.text);
+	j.at("background_text").get_to(p.background_text);
 	j.at("font_name").get_to(p.font_name);
 	j.at("font_size").get_to(p.font_size);
 	j.at("centered").get_to(p.centered);
 	j.at("editable").get_to(p.editable);
+	j.at("use_background_text").get_to(p.use_background_text);
 }
 
 void to_json(json& j, const image& p) 

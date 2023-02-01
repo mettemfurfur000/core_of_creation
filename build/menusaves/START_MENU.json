@@ -21,13 +21,13 @@
                     "fixed_size": false,
                     "rel_perc_h": 0.0,
                     "rel_perc_w": 0.0,
-                    "rel_size_perc_h": 1,
-                    "rel_size_perc_w": 1,
+                    "rel_size_perc_h": 1.0,
+                    "rel_size_perc_w": 1.0,
                     "shape": {
                         "h": 50,
                         "w": 50,
-                        "x": 1,
-                        "y": 4
+                        "x": 0,
+                        "y": 0
                     },
                     "updated": true
                 },
@@ -38,8 +38,8 @@
                 "pos": {
                     "auto_center": true,
                     "center": {
-                        "x": 0,
-                        "y": 0
+                        "x": 172,
+                        "y": 19
                     },
                     "d_h": 0,
                     "d_w": 0,
@@ -49,8 +49,8 @@
                     "delta_size": false,
                     "fixed_pos": false,
                     "fixed_size": true,
-                    "rel_perc_h": 0.2300001084804535,
-                    "rel_perc_w": 0.19999979436397552,
+                    "rel_perc_h": 0.17000000178813934,
+                    "rel_perc_w": 0.5,
                     "rel_size_perc_h": 1.0,
                     "rel_size_perc_w": 1.0,
                     "shape": {
@@ -99,8 +99,8 @@
                 "rel_size_perc_h": 1.0,
                 "rel_size_perc_w": 1.0,
                 "shape": {
-                    "h": 400,
-                    "w": 600,
+                    "h": 540,
+                    "w": 960,
                     "x": 0,
                     "y": 0
                 },

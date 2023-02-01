@@ -2,7 +2,7 @@
 
 bool renderer::sdl_init()
 {
-	Uint32 flags = SDL_WINDOW_RESIZABLE;
+	Uint32 flags = 0;//SDL_WINDOW_RESIZABLE;
 	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
 	{
 		printf( "[RENDERER][E] - SDL_INIT_VIDEO Error: %s\n", SDL_GetError() );
@@ -124,7 +124,7 @@ void renderer::render(menu* m)
 	}
 	
 //first, render menu
-	render(&m->menu_box);
+	render(&m->menu_box,this->W.windowrect);
 //images	
 	tsize = m->images.size();
 
@@ -327,11 +327,18 @@ void renderer::render(button* b, SDL_Rect rel_rect)
 
 void renderer::render(text* t,bool do_render_box, SDL_Rect rel_rect)
 {
+	const static SDL_Color defcolor = {255,255,255,255};
+	const static SDL_Color defcolor2 = {128,128,128,128};
+	
 	if(t->text_box.shown == false) return;
 	
-	t->text_box.pos.relative_rect = rel_rect;
+	if(t->text_box.pos.auto_center)
+	{
+		t->text_box.pos.center.x = t->text_box.pos.shape.w/2;
+		t->text_box.pos.center.y = t->text_box.pos.shape.h/2;
+	}
 	
-	const SDL_Color defcolor = {255,255,255,255};
+	t->text_box.pos.relative_rect = rel_rect;
 	
 	SDL_Rect strrect,tshape;
 	
@@ -352,15 +359,18 @@ void renderer::render(text* t,bool do_render_box, SDL_Rect rel_rect)
 	}
 	
 	if(!t->lazy_texture)
-	{ 
-		//text rendering
-		SDL_Surface * tmp = TTF_RenderUTF8_Blended_Wrapped(
+	{
+		SDL_Surface * tmp;
+		
+		bool use_back = t->text.length() == 0 && t->use_background_text;
+		
+		tmp = TTF_RenderUTF8_Blended_Wrapped(
 			t->font,
-			t->text.c_str(),
-			defcolor,
+			( use_back ? t->background_text : t->text ).c_str(),
+			( use_back ? defcolor2 : defcolor ),
 			t->text_box.pos.shape.w
 		);
-		
+		//text rendering
 		t->lazy_texture = SDL_CreateTextureFromSurface(this->base_renderer, tmp);
 		
 		SDL_FreeSurface(tmp);
